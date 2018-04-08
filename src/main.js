@@ -8,31 +8,18 @@ import App from './App';
 import routes from './router/router';
 import http from './http';
 import store from './store';
-import  { ToastPlugin, LoadingPlugin } from 'vux'
+import  { ToastPlugin, LoadingPlugin} from 'vux'
 
 import {routerMode} from './config/env'
 import './config/rem'
-
-
-// Vue.use(ToastPlugin)
-// Vue.use(LoadingPlugin)
-
-// FastClick.attach(document.body);
-
-// Vue.config.productionTip = false;
-// /* eslint-disable no-new */
-// new Vue({
-//   router,
-//   store,
-//   render: h => h(App),
-// }).$mount('#app-box');
 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {
       FastClick.attach(document.body);
   }, false);
 }
-
+Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 Vue.use(VueRouter)
 const router = new VueRouter({
 routes,

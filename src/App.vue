@@ -1,13 +1,5 @@
 <template>
     <div>
-        <!-- <router-view style="flex:1"></router-view> -->
-
-        <!-- <div style="background-color:green; height:50px" @click="onTap">示例1111111</div>
-                
-        <cell style="background-color:yellow;">示例2222</cell>
-
-        <cell title="卡号：" value="239847238957857845"></cell> -->
-
         <transition name="router-fade" mode="out-in">
 			<keep-alive>
 			    <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -38,16 +30,6 @@ export default {
         };
     },
     methods: {
-        onTap() {
-            console.log('66666666666');
-
-            this.$router.push('/one', function(){
-                console.log('complete');
-            }, function(){
-                console.log('abort');
-            });
-
-        }
     },
     computed: {
         
