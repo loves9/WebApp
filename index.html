@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>vue-demo</title>
+
+    <style>
+      html, body {
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+          -webkit-tap-highlight-color: transparent;
+          padding: 0;
+          margin: 0;
+          width: 100%;
+          height: 100%;
+          overflow-x: hidden;
+      }
+    </style>
+
+  </head>
+  <body>
+      <div id="app-box">
+          <router-view></router-view>
+      </div>
+    <!-- built files will be auto injected -->
+    <script>
+        window.onload = function() {
+            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+        }
+        function onDeviceReady() {
+            console.log('ondeviceready');
+            MXSetting && 
+            typeof MXSetting.setConsoleLogEnabled === 'function' &&
+            MXSetting.setConsoleLogEnabled();
+            console.log({a:1,b:2},[1,2,3]);
+        }
+    </script>
+  </body>
+</html>
