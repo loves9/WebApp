@@ -27,6 +27,7 @@ let webpackConfig = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'jquery': 'jquery'
     }
   },
   module: {
@@ -76,10 +77,19 @@ let webpackConfig = {
         }
       }
     ]
-  }
+  },   
 }
 
 
 module.exports = vuxLoader.merge(webpackConfig, {
-  plugins: ['vux-ui', 'progress-bar', 'duplicate-style']
+  plugins: ['vux-ui', 'progress-bar', 'duplicate-style',
+  {
+    name: 'less-theme',
+    path: 'src/style/theme.less'
+  },
+  {
+    jQuery: "jquery",
+     $: [ "jquery", "plugins/jquery.panzoom" ]
+  }
+  ]
 })

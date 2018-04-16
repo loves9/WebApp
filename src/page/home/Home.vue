@@ -1,47 +1,34 @@
 <template>
+    <div>
+        <!-- push -->
+        <div style="background-color:green; height:50px" @click="onTap">push</div>
 
-    <div id="app" >
+        <div style="background-color:yellow; height:50px" @click="previewPic">iframe预览图片、word、pdf等</div>
 
-       <group title="">
-        <popup-picker :title="title1" :data="list1" v-model="value1" @on-change="change1"></popup-picker>
-        <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
-        <popup-picker :title="title3" :data="list3" v-model="value3"></popup-picker>
-        <datetime v-model="value4" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change4" :title="title4"></datetime>
-        <datetime v-model="value5" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change5" :title="title5"></datetime>
-       </group>
-       <!-- <div v-transfer-dom>
-        <loading :show="loadingShow" :text='loadingtText'></loading>
-       </div> -->
-       <!-- <toast type="text" :time="800" is-show-mask text="Hello World">{{ $t('Basic Usage') }}</toast> -->
-       <div style="bottom:0;position:absolute; width:100%">
-           <flexbox orient="honrizontal" :gutter="0">
-            <flexbox-item><div class="button" @click="clickLeftBtn">重置</div></flexbox-item>
-            <flexbox-item><div class="button" @click="clickRightBtn">查询</div></flexbox-item>
-           </flexbox>
-       </div>
+        <!-- 被修改后的vux组件颜色 -->
+        <x-button type="primary">submit</x-button>
+
+        <!-- 图片引入  -->
+        <img src="../../assets/vue.jpg" style="width:80px; height:80px" />
+
+        <!-- iframe -->
+        <div v-transfer-dom>
+            <popup v-model="showpop" position="bottom">
+                <div style="padding: 15px;">
+                    <x-button @click.native="showpop = false" plain type="default"> Close Me </x-button>
+                </div>
+                <iframe id="imageurl" frameborder=0 :src="getPDFUrl()" width="100%" :height="popheight" :onload="onload()"/>
+                <!-- <iframe width="100%" height="500" src="/static/web/viewer.html?file=/static/test.pdf"></iframe> -->
+                <!-- <pdf src="/static/test.pdf"></pdf> -->
+
+                <!-- <pdfshower :pdfurl="getPDFUrl()" scale="1.2"></pdfshower> -->
+            </popup>
+        </div>
 
     </div>
 </template>
 <script>
 import {
-  Radio,
-  Drawer,
-  Group,
-  Cell,
-  ViewBox,
-  XHeader,
-  Toast,
-  Picker,
-  PopupPicker,
-  Datetime,
-  Flexbox,
-  FlexboxItem,
-  Loading
-} from "vux";
-import index from "vue";
-
-export default {
-  components: {
     Radio,
     Drawer,
     Group,
@@ -49,103 +36,94 @@ export default {
     ViewBox,
     XHeader,
     Toast,
-    Picker,
-    PopupPicker,
-    Datetime,
-    Flexbox,
-    FlexboxItem,
-    Loading
-  },
-  data() {
-    return {
-      reuestParam: {
-        1: ""
-      },
-      title1: "单据类型",
-      value1: ["选择"],
-      list1: [[]],
-      dataSource1: [],
+    XButton,
+    Popup
+} from "vux";
 
-      title2: "费用类别",
-      value2: ["选择"],
-      list2: [
-        ["小米", "iPhone", "华为", "情怀", "三星", "其他", "不告诉你"],
-        ["小米1", "iPhone2", "华为3", "情怀4", "三星5", "其他6", "不告诉你7"]
-      ],
+import pdf from "vue-pdf";
+import pdfshower from "vue-pdf-shower";
 
-      title3: "审批状态",
-      value3: ["选择"],
-      list3: [
-        ["小米", "iPhone", "华为", "情怀", "三星", "其他", "不告诉你"],
-        ["小米1", "iPhone2", "华为3", "情怀4", "三星5", "其他6", "不告诉你7"]
-      ],
+import $ from 'jquery'
+import panzoom from 'jquery.panzoom'
 
-      title4: "起始时间",
-      value4: "选择",
+export default {
+    components: {
+        Radio,
+        Drawer,
+        Group,
+        Cell,
+        ViewBox,
+        XHeader,
+        Toast,
+        XButton,
+        Popup,
+        pdf,
+        pdfshower
+    },
+    data() {
+        return {
+            pageCount: 2,
+            popheight: window.screen.height,
+            showpop: false,
+            iframeWidth: "100%",
+            iframeHeight: "100%",
+            pdfUrl:
+                "http://10.80.38.161:9701/jiuqiapp/image_item_app?billId=62B8C4FC60000001A0770D7CACD810E9&modelId=ACD1019256F3DF780066CC6E22E5FDBA&saveType=1&location=0",
+            imageUrl:
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523445254717&di=975d87e9ecc7c36f550b2f1ec789aca8&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F203fb80e7bec54e7dad8a1a9bf389b504fc26a55.jpg"
+        };
+    },
+    mounted() {
+        console.log("homepage");
+        // this.reinitIframe()
+    },
+    methods: {
+        onTap() {
+            this.$router.push({ path: "/approve" });
+        },
 
-      title5: "结束时间",
-      value5: "选择"
-    };
-  },
-  mounted() {
-    var me = this;
-    this.$vux.loading.show({
-      text: "Loading"
-    });
-    MXCommon.ajax({
-      type: "POST",
-      url: "http://10.1.1.118/jiuqiapp/flow_info_app",
-      data: {
-        action: "billtype",
-        type: 1
-      },
-      dataType: "json",
-      async: true,
-      complete: function() {
-        me.$vux.loading.hide();
-      },
-      success: function(data, status, xhr) {
-        data = JSON.parse(data);
-        me.dataSource1 = data.billtype;
-        for (var index in data.billtype) {
-          me.list1[0].push(data.billtype[index].text);
+        previewPic() {
+            this.showpop = true;
+        },
+        reinitIframe() {
+            var ifm= document.getElementById("imageurl");
+	        if( ifm != null) {
+	    	ifm.height = window.screen.height;
+	    	ifm.width = "100%";
+	        }
+        },
+        onload(){
+            $("#imageurl").panzoom();
+
+            // var $panzoom = null;
+            // var cifm = $("#imageurl").contents().find("iframe");
+            // var testtst = $("#imageurl").contents().children("iframe").prevObject;
+    		// if(cifm.length == 0){ 
+	    	// 	$panzoom = $("#imageurl").contents().find("body").panzoom({
+	    	// 			minScale: 0.4,
+	    	// 	        $reset: $(".reset")
+	    	// 	});
+	   	    //  	$panzoom.panzoom("option", {
+	   	    //  		window: document.getElementById("imageurl").contentWindow
+            //     });
+                
+    		// } 
+    		//  if(cifm.length != 0){
+   			// 	temp = cifm.eq(0);
+   			// 	$panzoom = temp.contents().find("body").panzoom({
+	   		// 		 minScale: 0.4,
+	   		//          $reset: $(".reset")
+	   		// 	}); 
+	  	    //  	$panzoom.panzoom("option", {
+	  	    //  		window:cifm[0].contentWindow
+			// 	});
+    		//  }
+        },
+        getPDFUrl() {
+            return "/static/test.pdf";
         }
-      },
-      error: function(data, status, xhr) {}
-    });
-  },
-  methods: {
-    clickRightBtn() {
-      this.$vux.toast.text("请选择", "middle");
     },
-    clickLeftBtn() {
-      this.$vux.toast.text("已重置", "middle");
-    },
-
-    change1(value) {
-      console.log("new Value111", value);
-
-      alert(this.getValueWithKey(value));
-    },
-
-    change4(value) {
-      console.log("new Value", value);
-    },
-    change5(value) {
-      console.log("new Value", value);
-    },
-
-    getValueWithKey(key) {
-      for (var index in this.dataSource1) {
-        if (this.dataSource1[index].text == key) {
-          return this.dataSource1[index].value;
-        }
-      }
-
-      return "";
-    }
-  },
-  computed: {}
+    computed: {}
 };
 </script>
 <style lang='less'>
@@ -155,25 +133,14 @@ export default {
 
 html,
 body {
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 body {
-  background-color: #fbf9fe;
+    background-color: #fbf9fe;
 }
 #app {
-  height: 100%;
-}
-
-.button {
-  font-size: 16px;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
-  color: #fff;
-  background-color: #20b907;
-  border-radius: 4px;
-  background-clip: padding-box;
+    height: 100%;
 }
 </style>

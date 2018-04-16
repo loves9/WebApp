@@ -9,10 +9,10 @@ export default [{
     children: [ //二级路由。对应App.vue
         //地址为空时跳转home页面
         {
-            path: '',
+            path: '', 
             redirect: '/home'
         },
-        //首页城市列表页
+        //首页
         {
             path: '/home',
             component: home

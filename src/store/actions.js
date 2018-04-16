@@ -1,7 +1,7 @@
-import { login } from '../http/login';
-import { getList, getDetail } from '../http/list';
-import * as types from './types.js';
-const ls = window.localStorage;
+// import { login } from '../http/login';
+// import { getList, getDetail } from '../http/list';
+// import * as types from './types.js';
+// const ls = window.localStorage;
 // export const loginFn = ({
 //     commit,
 //     state

@@ -8,36 +8,38 @@ import App from './App';
 import routes from './router/router';
 import http from './http';
 import store from './store';
-import  { ToastPlugin, LoadingPlugin} from 'vux'
+import { ToastPlugin, LoadingPlugin } from 'vux'
 
-import {routerMode} from './config/env'
+import { routerMode } from './config/env'
 import './config/rem'
 
-if ('addEventListener' in document) {
-  document.addEventListener('DOMContentLoaded', function() {
-      FastClick.attach(document.body);
-  }, false);
-}
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
 Vue.use(VueRouter)
+
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    FastClick.attach(document.body);
+  }, false);
+}
+
 const router = new VueRouter({
-routes,
-mode: routerMode,
-strict: process.env.NODE_ENV !== 'production',
-scrollBehavior (to, from, savedPosition) {
+  routes,
+  mode: routerMode,
+  strict: process.env.NODE_ENV !== 'production',
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
-  } else {
-    if (from.meta.keepAlive) {
-      from.meta.savedPosition = document.body.scrollTop;
-    }
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop;
+      }
       return { x: 0, y: to.meta.savedPosition || 0 }
+    }
   }
-}
 })
 
 new Vue({
-	router,
-	store,
+  router,
+  store,
 }).$mount('#app-box')

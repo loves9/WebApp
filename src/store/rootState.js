@@ -5,17 +5,17 @@ const state = {
         token: ""
     },
 
-    list: {
-        query: {
-            page: 1,
-            limit: 5,
-            cate: null,
-        },
-        full: false,
-        data: [],
-        detail:{},
-        scrollTop: null
-    },
+    // list: {
+    //     query: {
+    //         page: 1,
+    //         limit: 5,
+    //         cate: null,
+    //     },
+    //     full: false,
+    //     data: [],
+    //     detail:{},
+    //     scrollTop: null
+    // },
 }
 
 // init state
