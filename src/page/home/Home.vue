@@ -1,15 +1,17 @@
 <template>
     <div>
         <!-- push -->
-        <div style="background-color:green; height:50px" @click="onTap">push</div>
+        <group>
+            <cell title="push" value="" @click.native="onTap" is-link></cell>
+        </group>
 
-        <div style="background-color:yellow; height:50px" @click="previewPic">iframe预览图片、word、pdf等</div>
+        <group>
+            <cell title="iframe预览图片、word、pdf等" value="" @click.native="previewPic" is-link></cell>
+        </group>
+
 
         <!-- 被修改后的vux组件颜色 -->
-        <x-button type="primary">submit</x-button>
-
-        <!-- 图片引入  -->
-        <img src="../../assets/vue.jpg" style="width:80px; height:80px" />
+        <x-button type="primary" style="margin-top:10px">submit</x-button>
 
         <!-- iframe -->
         <div v-transfer-dom>
@@ -17,9 +19,9 @@
                 <div style="padding: 15px;">
                     <x-button @click.native="showpop = false" plain type="default"> Close Me </x-button>
                 </div>
-                <iframe id="imageurl" frameborder=0 :src="getPDFUrl()" width="100%" :height="popheight" :onload="onload()"/>
+                <iframe id="imageurl" frameborder=0 :src="getPDFUrl()" width="100%" :height="popheight" :onload="onload()" />
                 <!-- <iframe width="100%" height="500" src="/static/web/viewer.html?file=/static/test.pdf"></iframe> -->
-                <!-- <pdf src="/static/test.pdf"></pdf> -->
+                <!-- <pdf src="/static/test.pdf" ></pdf> -->
 
                 <!-- <pdfshower :pdfurl="getPDFUrl()" scale="1.2"></pdfshower> -->
             </popup>
@@ -43,8 +45,8 @@ import {
 import pdf from "vue-pdf";
 import pdfshower from "vue-pdf-shower";
 
-import $ from 'jquery'
-import panzoom from 'jquery.panzoom'
+import $ from "jquery";
+// import panzoom from 'jquery.panzoom'
 
 export default {
     components: {
@@ -74,8 +76,22 @@ export default {
         };
     },
     mounted() {
-        console.log("homepage");
-        // this.reinitIframe()
+        // 入口处需要等待 MXSetting 初始化后才能调用native方法
+        window.onload = function() {
+            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+        };
+        function onDeviceReady() {
+            console.log("ondeviceready");
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === "function" &&
+                MXSetting.setConsoleLogEnabled();
+
+
+            // your code here
+            console.log("homepage");
+
+            
+        }
     },
     methods: {
         onTap() {
@@ -86,38 +102,36 @@ export default {
             this.showpop = true;
         },
         reinitIframe() {
-            var ifm= document.getElementById("imageurl");
-	        if( ifm != null) {
-	    	ifm.height = window.screen.height;
-	    	ifm.width = "100%";
-	        }
+            var ifm = document.getElementById("imageurl");
+            if (ifm != null) {
+                ifm.height = window.screen.height;
+                ifm.width = "100%";
+            }
         },
-        onload(){
-            $("#imageurl").panzoom();
-
+        onload() {
+            // $("#imageurl").panzoom();
             // var $panzoom = null;
             // var cifm = $("#imageurl").contents().find("iframe");
             // var testtst = $("#imageurl").contents().children("iframe").prevObject;
-    		// if(cifm.length == 0){ 
-	    	// 	$panzoom = $("#imageurl").contents().find("body").panzoom({
-	    	// 			minScale: 0.4,
-	    	// 	        $reset: $(".reset")
-	    	// 	});
-	   	    //  	$panzoom.panzoom("option", {
-	   	    //  		window: document.getElementById("imageurl").contentWindow
+            // if(cifm.length == 0){
+            // 	$panzoom = $("#imageurl").contents().find("body").panzoom({
+            // 			minScale: 0.4,
+            // 	        $reset: $(".reset")
+            // 	});
+            //  	$panzoom.panzoom("option", {
+            //  		window: document.getElementById("imageurl").contentWindow
             //     });
-                
-    		// } 
-    		//  if(cifm.length != 0){
-   			// 	temp = cifm.eq(0);
-   			// 	$panzoom = temp.contents().find("body").panzoom({
-	   		// 		 minScale: 0.4,
-	   		//          $reset: $(".reset")
-	   		// 	}); 
-	  	    //  	$panzoom.panzoom("option", {
-	  	    //  		window:cifm[0].contentWindow
-			// 	});
-    		//  }
+            // }
+            //  if(cifm.length != 0){
+            // 	temp = cifm.eq(0);
+            // 	$panzoom = temp.contents().find("body").panzoom({
+            // 		 minScale: 0.4,
+            //          $reset: $(".reset")
+            // 	});
+            //  	$panzoom.panzoom("option", {
+            //  		window:cifm[0].contentWindow
+            // 	});
+            //  }
         },
         getPDFUrl() {
             return "/static/test.pdf";

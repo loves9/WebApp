@@ -1,4 +1,4 @@
-// export const AUTH_LOGIN = 'Auth login';
+export const AUTH_LOGIN = 'Auth login';
 // export const AUTH_LOGOUT = 'Auth logout';
 // export const QUERY_LOAD_MORE = 'Query load more';
 // export const LIST_QUERY_INIT = 'List query init';

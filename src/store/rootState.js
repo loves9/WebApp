@@ -1,8 +1,8 @@
 const state = {
     user: {
-        id: "",
-        name: "",
-        token: ""
+        id: "9527",
+        name: "ifeng",
+        token: "access"
     },
 
     // list: {
