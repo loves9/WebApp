@@ -9,7 +9,6 @@
             <cell title="iframe预览图片、word、pdf等" value="" @click.native="previewPic" is-link></cell>
         </group>
 
-
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px">submit</x-button>
 

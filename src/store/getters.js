@@ -1,5 +1,5 @@
 
-// export const getUser = state => state.user;
+export const getUser = state => state.user;
 // export const getList = state => state.list;
 // export const getListData = state => getList(state).data;
 // export const getListQuery = state => getList(state).query;

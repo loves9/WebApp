@@ -12,10 +12,8 @@
 
 </template>
 <script>
-
 export default {
-    components: {
-    },
+    components: {},
     data() {
         return {};
     },
@@ -42,5 +40,4 @@ body {
 #app {
     height: 100%;
 }
-
 </style>
