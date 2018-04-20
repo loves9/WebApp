@@ -19,10 +19,7 @@
                     <x-button @click.native="showpop = false" plain type="default"> Close Me </x-button>
                 </div>
                 <iframe id="imageurl" frameborder=0 :src="getPDFUrl()" width="100%" :height="popheight" :onload="onload()" />
-                <!-- <iframe width="100%" height="500" src="/static/web/viewer.html?file=/static/test.pdf"></iframe> -->
                 <!-- <pdf src="/static/test.pdf" ></pdf> -->
-
-                <!-- <pdfshower :pdfurl="getPDFUrl()" scale="1.2"></pdfshower> -->
             </popup>
         </div>
 
@@ -42,10 +39,6 @@ import {
 } from "vux";
 
 import pdf from "vue-pdf";
-import pdfshower from "vue-pdf-shower";
-
-import $ from "jquery";
-// import panzoom from 'jquery.panzoom'
 
 export default {
     components: {
@@ -58,8 +51,7 @@ export default {
         Toast,
         XButton,
         Popup,
-        pdf,
-        pdfshower
+        pdf
     },
     data() {
         return {
@@ -68,10 +60,8 @@ export default {
             showpop: false,
             iframeWidth: "100%",
             iframeHeight: "100%",
-            pdfUrl:
-                "http://10.80.38.161:9701/jiuqiapp/image_item_app?billId=62B8C4FC60000001A0770D7CACD810E9&modelId=ACD1019256F3DF780066CC6E22E5FDBA&saveType=1&location=0",
-            imageUrl:
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523445254717&di=975d87e9ecc7c36f550b2f1ec789aca8&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F203fb80e7bec54e7dad8a1a9bf389b504fc26a55.jpg"
+            pdfUrl: "",
+            imageUrl: ""
         };
     },
     mounted() {
@@ -84,13 +74,9 @@ export default {
             MXSetting &&
                 typeof MXSetting.setConsoleLogEnabled === "function" &&
                 MXSetting.setConsoleLogEnabled();
-
-
-            // your code here
-            console.log("homepage");
-
-            
         }
+
+
     },
     methods: {
         onTap() {
@@ -108,29 +94,6 @@ export default {
             }
         },
         onload() {
-            // $("#imageurl").panzoom();
-            // var $panzoom = null;
-            // var cifm = $("#imageurl").contents().find("iframe");
-            // var testtst = $("#imageurl").contents().children("iframe").prevObject;
-            // if(cifm.length == 0){
-            // 	$panzoom = $("#imageurl").contents().find("body").panzoom({
-            // 			minScale: 0.4,
-            // 	        $reset: $(".reset")
-            // 	});
-            //  	$panzoom.panzoom("option", {
-            //  		window: document.getElementById("imageurl").contentWindow
-            //     });
-            // }
-            //  if(cifm.length != 0){
-            // 	temp = cifm.eq(0);
-            // 	$panzoom = temp.contents().find("body").panzoom({
-            // 		 minScale: 0.4,
-            //          $reset: $(".reset")
-            // 	});
-            //  	$panzoom.panzoom("option", {
-            //  		window:cifm[0].contentWindow
-            // 	});
-            //  }
         },
         getPDFUrl() {
             return "/static/test.pdf";
