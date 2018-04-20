@@ -35,7 +35,8 @@ import {
     XHeader,
     Toast,
     XButton,
-    Popup
+    Popup,
+    Calendar
 } from "vux";
 
 import pdf from "vue-pdf";
