@@ -10,7 +10,12 @@
         </group>
 
         <!-- 被修改后的vux组件颜色 -->
-        <x-button type="primary" style="margin-top:10px">submit</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="clickBtn">submit</x-button>
+
+        <!-- 动态绑定 -->
+        <group>
+            <cell title="name" v-for="(item, index) in dataList" :key="item" :value="dataList[index].text"></cell>
+        </group>
 
         <!-- iframe -->
         <div v-transfer-dom>
@@ -41,6 +46,9 @@ import {
 
 import pdf from "vue-pdf";
 
+import { AUTH_LOGIN } from "@/store/types.js";
+import requestInstance from "@/http/index.js";
+
 export default {
     components: {
         Radio,
@@ -62,14 +70,25 @@ export default {
             iframeWidth: "100%",
             iframeHeight: "100%",
             pdfUrl: "",
-            imageUrl: ""
+            imageUrl: "",
+            dataList: [
+                {
+                    text: "111111"
+                },
+                {
+                    text: "222222"
+                },
+                {
+                    text: "333333"
+                }
+            ],
+            dText0: ""
         };
     },
     mounted() {
         // 入口处需要等待 MXSetting 初始化后才能调用native方法
-        window.onload = function() {
-            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-        };
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
         function onDeviceReady() {
             console.log("ondeviceready");
             MXSetting &&
@@ -77,11 +96,40 @@ export default {
                 MXSetting.setConsoleLogEnabled();
         }
 
+        this.$store.commit(AUTH_LOGIN, {
+            name: '鸣人',
+            age: '18',
+            gender: 'male'
+        })
 
+        var request = requestInstance.queryFeeCategory();
+        request.complete = function() {
+            // me.$vux.loading.hide();
+        };
+        request.success = function(data, status, xhr) {
+            data = JSON.parse(data);
+        };
+        request.error = function(data, status, xhr) {
+            me.$vux.toast.text(status, "middle");
+        };
+        // 发送请求
+        MXCommon.ajax(request);
     },
     methods: {
         onTap() {
             this.$router.push({ path: "/approve" });
+        },
+
+        clickBtn() {
+            this.dataList[0].text = 55555;
+        },
+
+        gernerateId(index) {
+            return "id_" + index;
+        },
+
+        getValue(index) {
+            return "dText_" + index;
         },
 
         previewPic() {
@@ -94,8 +142,7 @@ export default {
                 ifm.width = "100%";
             }
         },
-        onload() {
-        },
+        onload() {},
         getPDFUrl() {
             return "/static/test.pdf";
         }

@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <button-tab style="padding: 20px">
-            <button-tab-item>昨天</button-tab-item>
-            <button-tab-item selected>今天</button-tab-item>
-            <button-tab-item>明天</button-tab-item>
+            <button-tab-item>审批人</button-tab-item>
+            <button-tab-item selected>已办</button-tab-item>
+            <button-tab-item>待办</button-tab-item>
         </button-tab>
 
         <group>
@@ -12,7 +12,9 @@
         </group>
 
         <group>
-            <cell title="store" value="" :value="count"></cell>
+            <cell title="姓名" value="" :value="nameDesc"></cell>
+            <cell title="年龄" value="" :value="ageDesc"></cell>
+            <cell title="性别" value="" :value="genderDesc"></cell>
         </group>
     </div>
 </template>
@@ -27,6 +29,8 @@ import {
     ButtonTab,
     ButtonTabItem
 } from "vux";
+
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -50,7 +54,17 @@ export default {
             console.log("66666666666");
         }
     },
-    computed: {},
+    computed: {
+        nameDesc(){
+            return ''
+        },
+        ageDesc(){
+            return ''
+        },
+        genderDesc(){
+            return ''
+        }
+    },
     watch: {}
 };
 </script>

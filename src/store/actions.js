@@ -1,4 +1,4 @@
-// import { login } from '../http/login';
+import { login } from '../http/login';
 // import { getList, getDetail } from '../http/list';
 import * as types from './types.js';
 const ls = window.localStorage;
@@ -10,7 +10,9 @@ export const loginFn = ({
         .then(user => {
             ls['VUE_DEMO_USER'] = JSON.stringify(user);
             commit(types.AUTH_LOGIN, user);
+            alert('666')
         });
+
 }
 
 // export const logoutFn = ({

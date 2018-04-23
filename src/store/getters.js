@@ -5,3 +5,5 @@ export const getUser = state => state.user;
 // export const getListQuery = state => getList(state).query;
 // export const getDetail = state => getList(state).detail;
 // export const getScrollTop = state => getList(state).scrollTop;
+
+export const getName = state => state.parameter.name;
