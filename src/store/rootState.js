@@ -1,21 +1,20 @@
 const state = {
     user: {
-        id: "9527",
-        name: "ifeng",
-        token: "access"
+        id: "",
+        name: "",
+        token: ""
     },
 
-    // list: {
-    //     query: {
-    //         page: 1,
-    //         limit: 5,
-    //         cate: null,
-    //     },
-    //     full: false,
-    //     data: [],
-    //     detail:{},
-    //     scrollTop: null
-    // },
+    list: {
+        query: {
+            page: 1,
+            limit: 5,
+            cate: null,
+        },
+        arrow: false,
+        data: [],
+        detail:{}
+    }
 }
 
 // init state

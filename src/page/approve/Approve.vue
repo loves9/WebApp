@@ -12,9 +12,19 @@
         </group>
 
         <group>
-            <cell title="姓名" value="" :value="nameDesc"></cell>
-            <cell title="年龄" value="" :value="ageDesc"></cell>
-            <cell title="性别" value="" :value="genderDesc"></cell>
+            <cell title="姓名" :value="nameDesc"></cell>
+            <cell title="年龄" :value="ageDesc"></cell>
+            <cell title="性别" :value="genderDesc"></cell>
+        </group>
+
+        <group>
+            <x-icon type="ios-ionic-outline" size="30"></x-icon>
+            <x-icon type="ios-arrow-back" size="30"></x-icon>
+            <x-icon type="ios-arrow-forward" size="30"></x-icon>
+            <x-icon type="ios-arrow-up" size="30"></x-icon>
+            <x-icon type="ios-arrow-thin-right" size="30"></x-icon>
+            <x-icon type="ios-arrow-thin-down" size="30"></x-icon>
+            <x-icon type="ios-arrow-thin-left" size="30"></x-icon>
         </group>
     </div>
 </template>
@@ -30,7 +40,7 @@ import {
     ButtonTabItem
 } from "vux";
 
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
     components: {
@@ -44,9 +54,7 @@ export default {
         ButtonTabItem
     },
     data() {
-        return {
-            
-        };
+        return {};
     },
     mounted() {},
     methods: {
@@ -55,14 +63,14 @@ export default {
         }
     },
     computed: {
-        nameDesc(){
-            return ''
+        nameDesc() {
+            return this.$store.state.user.name;
         },
-        ageDesc(){
-            return ''
+        ageDesc() {
+            return "";
         },
-        genderDesc(){
-            return ''
+        genderDesc() {
+            return "";
         }
     },
     watch: {}
@@ -85,4 +93,9 @@ body {
 #app {
     height: 100%;
 }
+
+.vux-x-icon {
+  fill: @red;
+}
+
 </style>

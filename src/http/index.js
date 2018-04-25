@@ -32,7 +32,12 @@ const requestInstance = {
 
 	},
 
-	// 请求费用类别
+	/**
+	 * 请求费用类别
+	 * 
+	 * @params 参数
+	 * return object
+	 */ 
 	queryFeeCategory(params) {
 		var args = {
 			url: '/jiuqiapp/flow_info_app',

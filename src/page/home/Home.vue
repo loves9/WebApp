@@ -5,19 +5,18 @@
             <cell title="push" value="" @click.native="onTap" is-link></cell>
         </group>
 
-        <group>
-            <cell title="iframe预览图片、word、pdf等" value="" @click.native="previewPic" is-link></cell>
-        </group>
-
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px" @click.native="clickBtn">submit</x-button>
 
-        <!-- 动态绑定 -->
+        <!-- 列表 -->
         <group>
             <cell title="name" v-for="(item, index) in dataList" :key="item" :value="dataList[index].text"></cell>
         </group>
 
         <!-- iframe -->
+        <group>
+            <cell title="iframe" value="" @click.native="previewPic" is-link></cell>
+        </group>
         <div v-transfer-dom>
             <popup v-model="showpop" position="bottom">
                 <div style="padding: 15px;">
@@ -81,14 +80,12 @@ export default {
                 {
                     text: "333333"
                 }
-            ],
-            dText0: ""
+            ]
         };
     },
     mounted() {
         // 入口处需要等待 MXSetting 初始化后才能调用native方法
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-
         function onDeviceReady() {
             console.log("ondeviceready");
             MXSetting &&
@@ -96,24 +93,7 @@ export default {
                 MXSetting.setConsoleLogEnabled();
         }
 
-        this.$store.commit(AUTH_LOGIN, {
-            name: '鸣人',
-            age: '18',
-            gender: 'male'
-        })
-
-        var request = requestInstance.queryFeeCategory();
-        request.complete = function() {
-            // me.$vux.loading.hide();
-        };
-        request.success = function(data, status, xhr) {
-            data = JSON.parse(data);
-        };
-        request.error = function(data, status, xhr) {
-            me.$vux.toast.text(status, "middle");
-        };
-        // 发送请求
-        MXCommon.ajax(request);
+        this.sendRequest();
     },
     methods: {
         onTap() {
@@ -124,19 +104,12 @@ export default {
             this.dataList[0].text = 55555;
         },
 
-        gernerateId(index) {
-            return "id_" + index;
-        },
-
-        getValue(index) {
-            return "dText_" + index;
-        },
-
         previewPic() {
             this.showpop = true;
         },
+
         reinitIframe() {
-            var ifm = document.getElementById("imageurl");
+            let ifm = document.getElementById("imageurl");
             if (ifm != null) {
                 ifm.height = window.screen.height;
                 ifm.width = "100%";
@@ -145,6 +118,29 @@ export default {
         onload() {},
         getPDFUrl() {
             return "/static/test.pdf";
+        },
+        sendRequest() {
+            var me = this;
+            // this.$vux.loading.show({
+            //     text: "Loading"
+            // });
+            let request = requestInstance.queryFeeCategory();
+            request.complete = function() {
+                me.$vux.loading.hide();
+            };
+            request.success = function(data, status, xhr) {
+                data = JSON.parse(data);
+            };
+            request.error = function(data, status, xhr) {
+                me.$vux.toast.text(status, "middle");
+            };
+            // 发送请求
+            MXCommon.ajax(request);
+        }
+    },
+    watch: {
+        showpop(n, o) {
+            console.log(n);
         }
     },
     computed: {}
