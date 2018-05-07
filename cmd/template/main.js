@@ -6,11 +6,11 @@ import FastClick from 'fastclick';
 
 import App from './App';
 import routes from './router/router';
-import http from './http';
+import http from '@/http';
 import store from './store';
 import { ToastPlugin, LoadingPlugin } from 'vux'
 
-import { routerMode } from './config/env'
+import { routerMode } from '@/config/env'
 
 
 Vue.use(ToastPlugin)
