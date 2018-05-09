@@ -5,8 +5,7 @@ import VueRouter from 'vue-router';
 import FastClick from 'fastclick';
 
 import App from './App';
-import routes from './router/router';
-import http from '@/http';
+import routes from './router';
 import store from './store';
 import { ToastPlugin, LoadingPlugin } from 'vux'
 

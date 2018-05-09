@@ -1,5 +1,3 @@
-
-
 const fs = require('fs');
 const path = require('path')
 const ora = require('ora')
@@ -38,44 +36,6 @@ let writeTemplateFile = (filename, modulePath) => {
     })
 }
 
-let copyFolder = (srcDir, tarDir, cb) => {
-    fs.readdir(srcDir, function (err, files) {
-        var count = 0
-        var checkEnd = function () {
-            ++count == files.length && cb && cb()
-        }
-
-        if (err) {
-            checkEnd()
-            return
-        }
-
-        files.forEach(function (file) {
-            var srcPath = path.join(srcDir, file)
-            var tarPath = path.join(tarDir, file)
-
-            fs.stat(srcPath, function (err, stats) {
-                if (stats.isDirectory()) {
-                    console.log('mkdir', tarPath)
-                    fs.mkdir(tarPath, function (err) {
-                        if (err) {
-                            console.log(err)
-                            return
-                        }
-
-                        copyFolder(srcPath, tarPath, checkEnd)
-                    })
-                } else {
-                    copyFile(srcPath, tarPath, checkEnd)
-                }
-            })
-        })
-
-        //为空时直接回调
-        files.length === 0 && cb && cb()
-    })
-}
-
 const modulePath = resolveSrc('module');
 
 if (argv.module && argv.module.length != 0 && typeof argv.module === 'string') {
@@ -91,37 +51,31 @@ if (argv.module && argv.module.length != 0 && typeof argv.module === 'string') {
     }
 
     writeTemplateFile('App.vue', createModulePath)
-    writeTemplateFile('main.js', createModulePath)
+    // writeTemplateFile('main.js', createModulePath)
     writeTemplateFile('router.js', createModulePath)
-    // copyFolder('store', createModulePath, function(err){
-    //     logRed(err);
-    // })
 
     logCyan('creating store/index.js')
     const moduleStorePath = path.resolve(createModulePath, 'store')
     if (!fs.existsSync(moduleStorePath)) {
         fs.mkdirSync(moduleStorePath)
     }
-    fs.writeFile(`${moduleStorePath}/index.js`, `import store from '@/store'
-
+    fs.writeFile(`${moduleStorePath}/index.js`, `
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as actions from './actions'
 import * as getters from './getters'
 import mutations from './mutations'
-import state from './rootState'
+import state from './${moduleName}State'
 
 
 Vue.use(Vuex);
 
-const ${moduleName}Store = new Vuex.Store({
+const store = {
     state,
     getters,
     actions,
     mutations,
-});
-
-store.registerModule('${moduleName}', ${moduleName}Store);
+}
 
 export default store
     `, (err) => {
@@ -149,7 +103,7 @@ export default store
     })
 
     fs.writeFile(`${moduleStorePath}/mutations.js`, `
-    import * as types from './types.js'
+import * as types from './types.js'
 
 export default {
     // [types.AUTH_LOGIN](state, payload) {
@@ -164,27 +118,27 @@ export default {
         }
     })
 
-    fs.writeFile(`${moduleStorePath}/rootState.js`, `
-    const state = {
+    fs.writeFile(`${moduleStorePath}/${moduleName}State.js`, `
+const state = {
 
-    }
+}
+
+// init state
+if (window.localStorage['VUE_DEMO_USER']) {
+    // state.user = JSON.parse(window.localStorage['VUE_DEMO_USER']);
+}
     
-    // init state
-    if (window.localStorage['VUE_DEMO_USER']) {
-        // state.user = JSON.parse(window.localStorage['VUE_DEMO_USER']);
-    }
-    
-    export default state;
+export default state;
     `, (err) => {
         if (err) {
             logRed(err);
         } else {
-            logGreen('The store/rootState.js was saved!');
+            logGreen(`The store/${moduleName}State.js was saved!`);
         }
     })
 
     fs.writeFile(`${moduleStorePath}/types.js`, `
-    // export const AUTH_LOGIN = 'Auth login';
+// export const AUTH_LOGIN = 'Auth login';
     `, (err) => {
         if (err) {
             logRed(err);
@@ -192,6 +146,10 @@ export default {
             logGreen('The store/types.js was saved!');
         }
     })
+
+    // 创建views文件夹
+    const viewsPath = path.resolve(createModulePath, 'views')
+    fs.mkdirSync(viewsPath)
 
     spinner.stop()
 } else if (argv.view && argv.view.length != 0 && typeof argv.view === 'string') {

@@ -36,8 +36,6 @@ import {
     Group,
     Cell,
     ViewBox,
-    XHeader,
-    Toast,
     XButton,
     Popup,
     Calendar
@@ -55,8 +53,6 @@ export default {
         Group,
         Cell,
         ViewBox,
-        XHeader,
-        Toast,
         XButton,
         Popup,
         pdf
@@ -85,19 +81,23 @@ export default {
     },
     mounted() {
         // 入口处需要等待 MXSetting 初始化后才能调用native方法
-        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-        function onDeviceReady() {
-            console.log("ondeviceready");
-            MXSetting &&
-                typeof MXSetting.setConsoleLogEnabled === "function" &&
-                MXSetting.setConsoleLogEnabled();
-        }
+        // document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+        // function onDeviceReady() {
+        //     console.log("ondeviceready");
+        //     MXSetting &&
+        //         typeof MXSetting.setConsoleLogEnabled === "function" &&
+        //         MXSetting.setConsoleLogEnabled();
+        // }
 
-        this.sendRequest();
+        // this.sendRequest();
+
+        this.$store.dispatch("savePassText", {text: '第二页数据初始化！'});
+
+        
     },
     methods: {
         onTap() {
-            this.$router.push({ path: "/approve" });
+            this.$router.push({ path: "/query" });
         },
 
         clickBtn() {

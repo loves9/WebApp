@@ -3,19 +3,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import FastClick from 'fastclick';
+import {sync} from 'vuex-router-sync'
+import { routerMode } from './config/env'
 
 import App from './App';
 import routes from './router/router';
-import http from './http';
+
 import store from './store';
+
 import { ToastPlugin, LoadingPlugin } from 'vux'
-
-import { routerMode } from './config/env'
-
 
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
 Vue.use(VueRouter)
+
+// sync(store, router)
 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function () {

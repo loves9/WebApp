@@ -12,13 +12,6 @@
 </template>
 
 <script>
-import {
-    Group,
-    Cell,
-    ViewBox,
-    XButton
-} from "vux";
-
 export default {
     data() {
         return {};

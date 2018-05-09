@@ -8,7 +8,7 @@
 
         <group>
             <!-- 图片引入  -->
-            <img src="../../assets/logo.png" style="width:80px; height:80px" />
+            <img src="@/assets/logo.png" style="width:80px; height:80px" />
         </group>
 
         <group>
