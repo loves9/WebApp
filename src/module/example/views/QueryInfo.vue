@@ -12,7 +12,6 @@ export default {
         return {};
     },
     mounted() {
-        alert('555')
     },
     methods: {},
     computed: {

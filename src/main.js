@@ -11,6 +11,8 @@ import routes from './router/router';
 
 import store from './store';
 
+import Application from '@/application'
+
 import { ToastPlugin, LoadingPlugin } from 'vux'
 
 Vue.use(ToastPlugin)
@@ -40,6 +42,8 @@ const router = new VueRouter({
     }
   }
 })
+
+Application.onCreate();
 
 new Vue({
   router,

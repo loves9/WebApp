@@ -10,14 +10,14 @@
 
         <!-- 列表 -->
         <group>
-            <cell title="name" v-for="(item, index) in dataList" :key="item" :value="dataList[index].text"></cell>
+            <cell title="name" v-for="(item, index) in dataList" :key="index" :value="dataList[index].text"></cell>
         </group>
 
         <!-- iframe -->
         <group>
             <cell title="iframe" value="" @click.native="previewPic" is-link></cell>
         </group>
-        <div v-transfer-dom>
+        <div>
             <popup v-model="showpop" position="bottom">
                 <div style="padding: 15px;">
                     <x-button @click.native="showpop = false" plain type="default"> Close Me </x-button>
@@ -91,7 +91,7 @@ export default {
 
         // this.sendRequest();
 
-        this.$store.dispatch("savePassText", {text: '第二页数据初始化！'});
+        this.$store.dispatch("savePassText", {text: '这是home page 传过来的数据！'});
 
         
     },
