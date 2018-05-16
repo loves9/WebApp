@@ -13,9 +13,15 @@
             <cell title="name" v-for="(item, index) in dataList" :key="index" :value="dataList[index].text"></cell>
         </group>
 
+        <!-- iconfont 样式 -->
+        <!-- <i class="font_family icon-fenxianggongzuo" style="font-size:30px;"></i> -->
+
         <!-- iframe -->
         <group>
-            <cell title="iframe" value="" @click.native="previewPic" is-link></cell>
+            <cell title="iframe" value="" @click.native="previewPic" is-link style="height:27px">
+                <i slot="icon" class="font_family icon-shezhi" style="font-size:30px"></i>
+                <!-- <img slot="icon" width="20" style="display:block;margin-right:5px;" src="@/assets/logo.png"> -->
+            </cell>
         </group>
         <div>
             <popup v-model="showpop" position="bottom">
@@ -91,9 +97,9 @@ export default {
 
         // this.sendRequest();
 
-        this.$store.dispatch("savePassText", {text: '这是home page 传过来的数据！'});
-
-        
+        this.$store.dispatch("savePassText", {
+            text: "这是home page 传过来的数据！"
+        });
     },
     methods: {
         onTap() {
