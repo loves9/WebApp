@@ -13,8 +13,8 @@ import store from './store';
 
 import Application from '@/application'
 
+// 引入vux组件库
 import { ToastPlugin, LoadingPlugin } from 'vux'
-
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
 Vue.use(VueRouter)
