@@ -7,7 +7,7 @@ import {sync} from 'vuex-router-sync'
 import { routerMode } from './config/env'
 
 import App from './App';
-import routes from './router/router';
+import routes from './rootRouter/router';
 
 import store from './store';
 
@@ -17,6 +17,7 @@ import Application from '@/application'
 import { ToastPlugin, LoadingPlugin } from 'vux'
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
+
 Vue.use(VueRouter)
 
 // sync(store, router)
