@@ -5,6 +5,8 @@ import store from '../store'
 
 const requestInstance = {
 	baseRequest(args) {
+		// console.log(process.env.RUNTIME_ENV)
+
 		//公共参数
 		var _parameter = {
 			//这里可添加公共参数，预留
@@ -21,7 +23,6 @@ const requestInstance = {
 		var _url = baseURL + args.url
 
 		var _request = {
-			type: "POST",
 			url: _url,
 			data: _parameter,
 			dataType: "json",
@@ -33,21 +34,35 @@ const requestInstance = {
 	},
 
 	/**
+	 * mock请求示例
+	 * 
+	 */
+	queryMockServer(){
+		var args = {
+			method: "get",
+			url: '/user',
+		};
+
+		return this.baseRequest(args);
+	},
+
+	/**
 	 * 请求费用类别
 	 * 
 	 * @params 参数
 	 * return object
 	 */ 
-	queryFeeCategory(params) {
-		var args = {
-			url: '/jiuqiapp/flow_info_app',
-			parameter: {
-				action: "loadbasedata"
-			}
-		};
+	// queryFeeCategory(params) {
+	// 	var args = {
+	// 		type: "POST",
+	// 		url: '/jiuqiapp/flow_info_app',
+	// 		parameter: {
+	// 			action: "loadbasedata"
+	// 		}
+	// 	};
 
-		return this.baseRequest(args);
-	}
+	// 	return this.baseRequest(args);
+	// }
 
 }
 
