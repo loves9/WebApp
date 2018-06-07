@@ -33,6 +33,8 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="axiosRequest">axiosRequest</x-button>
 
+        <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
+
     </div>
 </template>
 <script>
@@ -113,6 +115,14 @@ export default {
         onload() {},
         getPDFUrl() {
             return "/static/test.pdf";
+        },
+
+        mobilePluginTest() {
+            MXCommon.getCurrentUser(
+                function(result) {
+                    console.log(result);
+                } //这里可以处理获取到的当前用户数据
+            );
         },
 
         /**

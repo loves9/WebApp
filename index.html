@@ -27,18 +27,18 @@
           <router-view></router-view>
       </div>
     <!-- built files will be auto injected -->
-    <!-- <script>
+    <script>
         
-        window.onload = function() {
-            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-        }
+        // window.onload = function() {
+        // }
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
         function onDeviceReady() {
-            console.log('ondeviceready');
             MXSetting && 
             typeof MXSetting.setConsoleLogEnabled === 'function' &&
             MXSetting.setConsoleLogEnabled();
-            console.log({a:1,b:2},[1,2,3]);
+            console.log('ondeviceready');
         }
-    </script> -->
+    </script>
   </body>
 </html>
