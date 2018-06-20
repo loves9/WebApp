@@ -5,7 +5,6 @@
   "author": "",
   "private": true,
   "scripts": {
-    "createModule": "node cmd/module.js --module",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
@@ -13,7 +12,9 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "build": "node build/build.js",
     "mock": "node_modules/.bin/json-server --watch test/mock/db.json --port 3030",
-    "mockdev": "npm run mock & npm run dev"
+    "mockdev": "npm run mock & npm run dev",
+    "createModule": "node cmd/module.js --module",
+    "createView": "node cmd/module.js --view"
   },
   "dependencies": {
     "axios": "^0.17.1",
