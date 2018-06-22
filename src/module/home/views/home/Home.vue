@@ -35,6 +35,9 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
 
+
+        <div :class="true? 'aaa':'bbb'"></div>
+
     </div>
 </template>
 <script>
@@ -86,6 +89,9 @@ export default {
                 }
             ]
         };
+    },
+    created(){
+
     },
     mounted() {
         this.$store.dispatch("savePassText", {
@@ -193,4 +199,17 @@ export default {
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
+
+
+.aaa {
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+}
+
+.bbb {
+    background-color: rgb(255, 136, 0);
+    width: 100px;
+    height: 100px;
+}
 </style>
