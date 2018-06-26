@@ -23,10 +23,9 @@
             </popup>
         </div> -->
 
-        <!-- push -->
-        <!-- <group>
-            <cell title="push" value="" @click.native="onTap" is-link></cell>
-        </group> -->
+        <group>
+            <cell title="金额：" :value="spend" is-link></cell>
+        </group>
 
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px" @click.native="onTap">下一页</x-button>
@@ -34,9 +33,6 @@
         <x-button type="primary" style="margin-top:10px" @click.native="axiosRequest">axiosRequest</x-button>
 
         <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
-
-
-        <div :class="true? 'aaa':'bbb'"></div>
 
     </div>
 </template>
@@ -56,7 +52,8 @@ import { AUTH_LOGIN } from "@/store/types.js";
 import requestInstance from "@/http/index.js";
 
 import axios from "axios";
-import { error } from "util";
+
+import Statistics from "@/core/statistics";
 
 export default {
     components: {
@@ -90,10 +87,17 @@ export default {
             ]
         };
     },
-    created(){
-
-    },
+    created() {},
     mounted() {
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
+        function onDeviceReady() {
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === "function" &&
+                MXSetting.setConsoleLogEnabled();
+            console.log("ondeviceready");
+        }
+
         this.$store.dispatch("savePassText", {
             text: "这是home page 传过来的数据！"
         });
@@ -118,7 +122,6 @@ export default {
                 ifm.width = "100%";
             }
         },
-        onload() {},
         getPDFUrl() {
             return "/static/test.pdf";
         },
@@ -192,24 +195,16 @@ export default {
             console.log(n);
         }
     },
-    computed: {}
+    computed: {
+        spend() {
+            console.log(this.$core);
+            return "";
+        }
+    }
 };
 </script>
 <style lang='less'>
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
-
-
-.aaa {
-    background-color: aqua;
-    width: 100px;
-    height: 100px;
-}
-
-.bbb {
-    background-color: rgb(255, 136, 0);
-    width: 100px;
-    height: 100px;
-}
 </style>

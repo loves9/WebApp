@@ -3,12 +3,11 @@ import '@/lib/iconfont/iconfont.css';
 
 export default {
     /**
-     * 预留
+     * 业务入口，初始化之类的可以写在这里
      *
      * 
      */
-    onCreate(){
-        // 在业务入口 do something
-        
+    onCreate() {
+
     }
 }

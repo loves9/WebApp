@@ -6,10 +6,10 @@ import FastClick from 'fastclick';
 import {sync} from 'vuex-router-sync'
 import { routerMode } from './config/env'
 
-import App from './App';
 import routes from './rootRouter/router';
-
 import store from './store';
+import mixins from '@/common/mixins'
+import core from "@/core";
 
 import Application from '@/application'
 
@@ -46,7 +46,11 @@ const router = new VueRouter({
 
 Application.onCreate();
 
+// 注册全局方法
+Vue.mixin(mixins)
+
 new Vue({
+  core,
   router,
   store,
 }).$mount('#app-box')

@@ -16,7 +16,16 @@ export default {
     data() {
         return {};
     },
-    mounted() {},
+    mounted() {
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
+        function onDeviceReady() {
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === "function" &&
+                MXSetting.setConsoleLogEnabled();
+            console.log("ondeviceready");
+        }
+    },
     methods: {},
     components: {}
 };
