@@ -4,8 +4,8 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const vuxLoader = require('vux-loader')
-
-function resolve (dir) {
+const webpack = require('webpack')
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -26,13 +26,12 @@ let webpackConfig = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      'jquery': 'jquery'
+      '@': resolve('src')
     }
   },
   module: {
     rules: [
-      ...(config.dev.useEslint? [{
+      ...(config.dev.useEslint ? [{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
@@ -77,19 +76,19 @@ let webpackConfig = {
         }
       }
     ]
-  },   
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery'
+    })
+  ]
 }
-
 
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: ['vux-ui', 'progress-bar', 'duplicate-style',
-  {
-    name: 'less-theme',
-    path: 'src/style/theme.less'
-  },
-  {
-    jQuery: "jquery",
-     $: [ "jquery", "plugins/jquery.panzoom" ]
-  }
+    {
+      name: 'less-theme',
+      path: 'src/style/theme.less'
+    }
   ]
 })

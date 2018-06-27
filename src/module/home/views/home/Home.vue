@@ -55,6 +55,7 @@ import axios from "axios";
 
 import Statistics from "@/core/statistics";
 
+
 export default {
     components: {
         Radio,
@@ -101,6 +102,9 @@ export default {
         this.$store.dispatch("savePassText", {
             text: "这是home page 传过来的数据！"
         });
+
+
+        // console.log($)
     },
     methods: {
         onTap() {
