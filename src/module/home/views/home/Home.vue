@@ -34,6 +34,8 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
 
+        <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
+
     </div>
 </template>
 <script>
@@ -54,7 +56,6 @@ import requestInstance from "@/http/index.js";
 import axios from "axios";
 
 import Statistics from "@/core/statistics";
-
 
 export default {
     components: {
@@ -103,10 +104,14 @@ export default {
             text: "这是home page 传过来的数据！"
         });
 
-
         // console.log($)
     },
     methods: {
+        confirm() {
+            NativeApi.dialog.confirm('请评价', '给个好评哦~', function(index) {
+                alert(index)
+            });
+        },
         onTap() {
             this.$router.push({ path: "/query" });
         },

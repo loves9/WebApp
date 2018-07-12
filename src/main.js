@@ -13,6 +13,10 @@ import core from "@/core";
 
 import Application from '@/application'
 
+import  Native from '@/core/native_plugin.js'
+
+window.NativeApi = Native
+
 // 引入vux组件库
 import { ToastPlugin, LoadingPlugin } from 'vux'
 Vue.use(ToastPlugin)
