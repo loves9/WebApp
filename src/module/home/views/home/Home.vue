@@ -108,9 +108,14 @@ export default {
     },
     methods: {
         confirm() {
-            NativeApi.dialog.confirm('请评价', '给个好评哦~', function(index) {
-                alert(index)
-            });
+            console.log(window)
+            // MXWebui.disableBackWhenOccurCloseButton(true)
+
+            this.setTitle('你好啊')
+
+            MXWebui.setNavBarColor('#bebebe')
+
+            MXWebui.hideOptionMenu()
         },
         onTap() {
             this.$router.push({ path: "/query" });

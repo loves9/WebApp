@@ -26,6 +26,8 @@
             <x-icon type="ios-arrow-thin-down" size="30"></x-icon>
             <x-icon type="ios-arrow-thin-left" size="30"></x-icon>
         </group>
+
+
     </div>
 </template>
 <script>
@@ -37,7 +39,8 @@ import {
     ViewBox,
     XHeader,
     ButtonTab,
-    ButtonTabItem
+    ButtonTabItem,
+    XButton
 } from "vux";
 
 import { mapState } from "vuex";
@@ -51,7 +54,8 @@ export default {
         ViewBox,
         XHeader,
         ButtonTab,
-        ButtonTabItem
+        ButtonTabItem,
+        XButton
     },
     data() {
         return {};
@@ -95,7 +99,6 @@ body {
 }
 
 .vux-x-icon {
-  fill: @red;
+    fill: @red;
 }
-
 </style>

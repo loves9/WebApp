@@ -6,19 +6,28 @@
             <div style="background-color:blue;">{{text}}</div>
         </flexbox>
 
+        <x-button type="primary" style="margin-top:10px" @click.native="onTap">native confirm</x-button>
     </div>
 </template>
 
 <script>
-
-import { Flexbox, FlexboxItem } from "vux";
+import { Flexbox, FlexboxItem, XButton } from "vux";
 
 export default {
     data() {
         return {};
     },
     mounted() {},
-    methods: {},
+    methods: {
+        onTap() {
+            // MXWebui.disableBackWhenOccurCloseButton(true);
+
+            this.setTitle('example')
+
+            MXWebui.setNavBarColor('#bebebe')
+            
+        }
+    },
     computed: {
         text() {
             return this.$store.state.home.context.text;
@@ -26,7 +35,8 @@ export default {
     },
     components: {
         Flexbox,
-        FlexboxItem
+        FlexboxItem,
+        XButton
     }
 };
 </script>

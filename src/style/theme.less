@@ -1,131 +1,23 @@
 /***** vux style override *******/
 // 其它控件修改可参考： https://github.com/airyland/vux/blob/v2/src/styles/variable.less
 @red: #C64248;
-// @theme-color: #298CCF; // 蓝  红 #C64248 
-// @theme-color: @red;
-
-// @button-primary-bg-color: @red;
-// @button-primary-active-bg-color: rgb(167, 48, 54);
-
-
+@blue: #298CCF;
 // @namespace: vux;
 
-@theme-color: @red;
+@theme-color: @blue;
 @opacity-disabled: 0.5;
-
-
-/**
-* Button
-*/
-/**
-* en: border radius
-* zh-CN: 圆角边框
-*/
-@button-global-border-radius: 5px;
-/**
-* en: font color
-* zh-CN: 字体颜色
-*/
-@button-global-font-color: #FFFFFF;
-/**
-* en: margin-top value between previous button, not works when there is only one button
-* zh-CN: 与相邻按钮的 margin-top 间隙，只有一个按钮时不生效
-*/
-@button-global-margin-top: 15px;
-/**
-* en: button height
-* zh-CN: 按钮高度
-*/
-@button-global-height: 42px;
-/**
-* en: the font color in disabled
-* zh-CN: disabled状态下的字体颜色
-*/
-@button-global-disabled-font-color: rgba(255,255,255,.6);
-/**
-* en: the font color in disabled
-* zh-CN: disabled状态下的字体颜色
-*/
-@button-global-active-font-color: rgba(255,255,255,.6);
-/**
-* en: font size
-* zh-CN: 字体大小
-*/
-@button-global-font-size: 18px;
 
 /**
 * en: the font size of the mini type
 * zh-CN: mini类型的字体大小
 */
 @button-mini-font-size: 13px;
+
 /**
 * en: the line height of the mini type
 * zh-CN: mini类型的行高
 */
 @button-mini-line-height: 2.3;
-
-/**
-* en: the background color of the warn type
-* zh-CN: warn类型的背景颜色
-*/
-@button-warn-bg-color: @red;
-/**
-* en: the background color of the warn type in active
-* zh-CN: active状态下，warn类型的背景颜色
-*/
-@button-warn-active-color: @red;
-/**
-* en: the background color of the warn type in disabled
-* zh-CN: disabled状态下，warn类型的背景颜色
-*/
-@button-warn-disabled-bg-color: @red;
-
-/**
-* en: the background color of the default type
-* zh-CN: default类型的背景颜色
-*/
-@button-default-bg-color: #F8F8F8;
-/**
-* en: the font color of the default type
-* zh-CN: default类型的字体颜色
-*/
-@button-default-font-color: #000000;
-/**
-* en: the background color of the default type in active
-* zh-CN: active状态下，default类型的背景颜色
-*/
-@button-default-active-bg-color: #DEDEDE;
-/**
-* en: the font color of the default type in disabled
-* zh-CN: disabled状态下，default类型的字体颜色
-*/
-@button-default-disabled-font-color: rgba(0,0,0,.3);
-/**
-* en: the background color of the default type in disabled
-* zh-CN: disabled状态下，default类型的背景颜色
-*/
-@button-default-disabled-bg-color: #F7F7F7;
-/**
-* en: the font color of the default type in active
-* zh-CN: active状态下，default类型的字体颜色
-*/
-@button-default-active-font-color: rgba(0,0,0,.6);
-
-/**
-* en: the background color of the primary type
-* zh-CN: primary类型的背景颜色
-*/
-@button-primary-bg-color:@red;
-/**
-* en: the background color of the primary type in active
-* zh-CN: active状态下，primary类型的背景颜色
-*/
-@button-primary-active-bg-color:@red;
-/**
-* en: the background color of the primary type in disabled
-* zh-CN: disabled状态下，primary类型的背景颜色
-*/
-@button-primary-disabled-bg-color:@red;
 
 /**
 * en: the font color of the plain primary type
@@ -190,99 +82,21 @@
 */
 @button-plain-warn-active-border-color: rgba(198,66,72,.6);
 
-
-
-/**
-* actionsheet
-*/
-/**
-* en: primary type text color of menu item
-* zh-CN: 菜单项primary类型的文本颜色
-*/
-@actionsheet-label-primary-color:@red;
-/**
-* en: warn type text color of menu item
-* zh-CN: 菜单项warn类型的文本颜色
-*/
-@actionsheet-label-warn-color: @red;
-/**
-* en: default type text color of menu item
-* zh-CN: 菜单项default类型的文本颜色
-*/
-@actionsheet-label-default-color: #000;
-/**
-* en: disabled type text color of menu item
-* zh-CN: 菜单项disabled类型的文本颜色
-*/
-@actionsheet-label-disabled-color: #ccc;
-
-
-/**
-* Badge
-*/
-/**
-* en: badge background color
-* zh-CN: badge的背景颜色
-*/
-@badge-bg-color: @red;
-
-
 /**
 * checklist
 */
-@checklist-icon-active-color: @red;
+@checklist-icon-active-color: @theme-color;
 
-
-/**
-* form-preview
-*/
-@form-preview-button-primary-color:@red;
-
-/**
-* icon
-*/
-@icon-success-color: @red;
-
-/**
-* Popover
-*/
-@popover-bg-color: @red;
-@popover-font-color: #fff;
-@popover-border-radius: 3px;
-@popover-border-width: 5px;
-
-/**
-* radio
-*/
 /**
 * en: checked icon color
 * zh-CN: 选中状态的图标颜色
 */
-@radio-checked-icon-color: @red;
-
-/**
-* search
-*/
-/**
-* en: text color of cancel button
-* zh-CN: 取消按钮文本颜色
-*/
-@search-cancel-font-color: @red;
-/**
-* en: background color
-* zh-CN: 背景颜色
-*/
-@search-bg-color: #EFEFF4;
-/**
-* en: text color of placeholder
-* zh-CN: placeholder文本颜色
-*/
-@search-placeholder-font-color: #9B9B9B;
+@radio-checked-icon-color: @theme-color;
 
 /**
 * x-number
 */
-@number-button-font-color: @red;
+@number-button-font-color: @theme-color;
 @number-input-font-color: #666;
 @number-button-enabled-border-color: #ececec;
 @number-square-button-enabled-border-color: @number-button-enabled-border-color;
@@ -296,7 +110,7 @@
 */
 // @namespace: vux;
 
-@theme-color: @red;
+// @theme-color: @red;
 @opacity-disabled: 0.5;
 
 /**
@@ -306,7 +120,7 @@
 * en: primary type text color of menu item
 * zh-CN: 菜单项primary类型的文本颜色
 */
-@actionsheet-label-primary-color: @red;
+@actionsheet-label-primary-color: @theme-color;
 /**
 * en: warn type text color of menu item
 * zh-CN: 菜单项warn类型的文本颜色
@@ -333,7 +147,7 @@
 /**
 * tabbar
 */
-@tabbar-text-active-color: @red;
+@tabbar-text-active-color: @theme-color;
 
 /**
 * tab
@@ -346,7 +160,7 @@
 /**
 * dialog
 */
-@dialog-button-text-primary-color: @red;
+@dialog-button-text-primary-color: @theme-color;
 @dialog-button-text-default-color: #353535;
 @dialog-button-text-warn-color: @red;
 @dialog-width: 80%; // also affects alert confirm
@@ -360,7 +174,7 @@
 /**
 * x-number
 */
-@number-button-font-color: @red;
+@number-button-font-color: @theme-color;
 @number-input-font-color: #666;
 @number-button-enabled-border-color: #ececec;
 @number-square-button-enabled-border-color: @number-button-enabled-border-color;
@@ -371,7 +185,7 @@
 /**
 * checkbox
 */
-@checkbox-icon-color-checked: @red;
+@checkbox-icon-color-checked: @theme-color;
 
 /**
 * check-icon
@@ -411,7 +225,7 @@
 /**
 * Header
 */
-@header-background-color: @red;
+@header-background-color: @theme-color;
 @header-title-color: #fff;
 @header-text-color: #ccc;
 @header-arrow-color: #ccc;
@@ -455,9 +269,9 @@
 @button-default-disabled-bg-color: #F7F7F7;
 @button-default-active-font-color: rgba(0,0,0,.6);
 
-@button-primary-bg-color: @red;
-@button-primary-active-bg-color: @red;
-@button-primary-disabled-bg-color: @red;
+@button-primary-bg-color: @theme-color;
+@button-primary-active-bg-color: @theme-color;
+@button-primary-disabled-bg-color: @theme-color;
 
 /**
 * swipeout
@@ -486,7 +300,7 @@
 /**
 * Popover
 */
-@popover-bg-color: @red;
+@popover-bg-color: @theme-color;
 @popover-font-color: #fff;
 @popover-border-radius: 3px;
 @popover-border-width: 5px;
@@ -561,11 +375,6 @@
 @swiper-indicator-active-color: @theme-color;
 
 /**
-* checklist
-*/
-@checklist-icon-active-color: @red;
-
-/**
 * popup-picker
 */
 @popup-picker-header-text-color: @theme-color;
@@ -593,7 +402,7 @@
 /**
 * form-preview
 */
-@form-preview-button-primary-color: @red;
+@form-preview-button-primary-color: @theme-color;
 
 /**
 * sticky
@@ -620,7 +429,7 @@
 /**
 * icon
 */
-@icon-success-color: @red;
+@icon-success-color: @theme-color;
 
 /**
 * calendar
@@ -634,7 +443,7 @@
 * en: text color of week highlight
 * zh-CN: 周末高亮的文本颜色
 */
-@calendar-highlight-color: @red;
+@calendar-highlight-color: @theme-color;
 /**
 * en: background color when selected
 * zh-CN: 选中时的背景颜色
@@ -685,20 +494,15 @@
 @week-calendar-each-date-item-color: #444;
 @week-calendar-selected-item-bg-color: @theme-color;
 @week-calendar-selected-item-text-color: #fff;
-@week-calendar-dot-color: @red;
+@week-calendar-dot-color: @theme-color;
 @week-calendar-header-day-item-color: #000;
 
 /**
 * search
 */
-@search-cancel-font-color: @red;
+@search-cancel-font-color: @theme-color;
 @search-bg-color: #EFEFF4;
 @search-placeholder-font-color: #9B9B9B;
-
-/**
-* radio
-*/
-@radio-checked-icon-color: @red;
 
 /**
 * loadmore
