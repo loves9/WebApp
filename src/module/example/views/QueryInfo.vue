@@ -20,12 +20,9 @@ export default {
     mounted() {},
     methods: {
         onTap() {
-            // MXWebui.disableBackWhenOccurCloseButton(true);
-
+            console.log(cordova)
+            alert(JSON.stringify(StatusBar))
             this.setTitle('example')
-
-            MXWebui.setNavBarColor('#bebebe')
-            
         }
     },
     computed: {

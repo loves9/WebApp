@@ -30,11 +30,13 @@
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px" @click.native="onTap">下一页</x-button>
 
-        <x-button type="primary" style="margin-top:10px" @click.native="axiosRequest">axiosRequest</x-button>
-
-        <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">Request</x-button>
 
         <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
+
+        <group>
+            <cell title="金额：" :value="message | dirFil" is-link></cell>
+        </group>
 
     </div>
 </template>
@@ -51,9 +53,7 @@ import {
 } from "vux";
 
 import { AUTH_LOGIN } from "@/store/types.js";
-import requestInstance from "@/http/index.js";
-
-import axios from "axios";
+import HttpBusinessRequest from "@/module/api/api.js";
 
 import Statistics from "@/core/statistics";
 
@@ -69,6 +69,7 @@ export default {
     },
     data() {
         return {
+            message: '66666',
             pageCount: 2,
             popheight: window.screen.height,
             showpop: false,
@@ -105,18 +106,23 @@ export default {
         });
 
         // console.log($)
+
+        
+    },
+    filters: {
+        dirFil: function(value) {
+            return value
+        }
     },
     methods: {
         confirm() {
-            console.log(window)
-            // MXWebui.disableBackWhenOccurCloseButton(true)
-
-            this.setTitle('你好啊')
-
-            MXWebui.setNavBarColor('#bebebe')
-
-            MXWebui.hideOptionMenu()
+            let self = this
+            // 模拟网络请求
+            setTimeout(() => {
+                self.message = '89898989'
+            }, 2000);
         },
+
         onTap() {
             this.$router.push({ path: "/query" });
         },
@@ -149,59 +155,22 @@ export default {
         },
 
         /**
-         * axios请求样例
-         *
-         * {
-         *  // `data` 由服务器提供的响应
-         *  data: {},
-         *  // `status` 来自服务器响应的 HTTP 状态码
-         *  status: 200,
-         *  // `statusText` 来自服务器响应的 HTTP 状态信息
-         *  statusText: 'OK',
-         *  // `headers` 服务器响应的头
-         *  headers: {},
-         *  // `config` 是为请求提供的配置信息
-         *  config: {}
-         * }
-         */
-        axiosRequest() {
-            axios(requestInstance.queryMockServer())
-                .then(response => {
-                    console.log(response.data);
-
-                    if (response.status == 200) {
-                        this.$vux.toast.text("请求成功", "middle");
-                    } else {
-                        this.$vux.toast.text("请求失败", "middle");
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.$vux.toast.text("请求失败", "middle");
-                });
-        },
-
-        /**
          * 原生请求示例
          *
          */
         sendRequest() {
-            // var me = this;
-            // this.$vux.loading.show({
-            //     text: "Loading"
-            // });
-            // let request = requestInstance.queryFeeCategory();
-            // request.complete = function() {
-            //     me.$vux.loading.hide();
-            // };
-            // request.success = function(data, status, xhr) {
-            //     data = JSON.parse(data);
-            // };
-            // request.error = function(data, status, xhr) {
-            //     me.$vux.toast.text(status, "middle");
-            // };
+            var me = this;
+            let request = HttpBusinessRequest.queryFeeCategory();
+            request.complete = function() {
+                me.$vux.loading.hide();
+            };
+            request.success = function(data, status, xhr) {
+            };
+            request.error = function(data, status, xhr) {
+                me.$vux.toast.text(status, "middle");
+            };
             // 发送请求
-            // MXCommon.ajax(request);
+            request.send()
         }
     },
     watch: {
