@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { baseURL } from '../config';
+import Statistics from './statistics'
 
 const BusinessRequest = {
     /**
@@ -90,10 +91,10 @@ const BusinessRequest = {
         dataType: 'json'   //内部使用属性，不要访问。
     },
 
-    requestId:'',
+    requestId: '',
 
     //请求队列相关数据
-    requestCount : 0,
+    requestCount: 0,
     requestIdPrefix: (function () { var date = new Date(); return 'R' + date.getHours() + date.getMinutes() + date.getSeconds(); })(),
     getReqeustId() {
         var br = BusinessRequest;
@@ -103,12 +104,12 @@ const BusinessRequest = {
     baseRequest(args) {
         // 初始化 MXCommon
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-            function onDeviceReady() {
-                MXSetting &&
-                    typeof MXSetting.setConsoleLogEnabled === 'function' &&
-                    MXSetting.setConsoleLogEnabled();
-                console.log('ondeviceready---http');
-            }
+        function onDeviceReady() {
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === 'function' &&
+                MXSetting.setConsoleLogEnabled();
+            console.log('ondeviceready---http');
+        }
 
         //公共参数
         var _parameter = {
@@ -161,10 +162,46 @@ const BusinessRequest = {
 
         parameter = parameter || this.config.parameter;
 
-        console.log(window)
-
         // 适配手机端与pc端
-        if (typeof(MXCommon) == undefined) {
+        if (typeof (MXCommon) != undefined) {
+            var hour, minute, second;//时 分 秒
+            hour = minute = second = 0;//初始化
+            var millisecond = 0;//毫秒
+            var int;
+            var timeInterval;
+            //开始函数
+            function start() {
+                int = setInterval(timer, 10);//每隔50毫秒执行一次timer函数
+            }
+            //暂停函数
+            function stop(message) {
+                window.clearInterval(int);
+
+                // 上送数据
+                alert(timeInterval)
+                Statistics.intervalEvent('', this.config.url, message, timeInterval)
+            }
+            //计时函数
+            function timer() {
+                millisecond = millisecond + 10;
+                if (millisecond >= 1000) {
+                    millisecond = 0;
+                    second = second + 1;
+                }
+                if (second >= 60) {
+                    second = 0;
+                    minute = minute + 1;
+                }
+
+                if (minute >= 60) {
+                    minute = 0;
+                    hour = hour + 1;
+                }
+
+                timeInterval = minute + '分' + second + '秒' + millisecond + '毫秒';
+            }
+
+            start() // 开始计时
             MXCommon.ajax({
                 type: _this.config.method,
                 url: _this.config.url,
@@ -172,7 +209,8 @@ const BusinessRequest = {
                 async: true,
                 data: parameter,
                 complete: function () {
-                    if(_this.complete == undefined){
+
+                    if (_this.complete == undefined) {
                         return
                     }
                     _this.complete()
@@ -182,16 +220,23 @@ const BusinessRequest = {
 
                     if (status == 200) {
                         _this.success(data, status, xhr)
-                    }else{
+                    } else {
                         _this.error(data, status, xhr)
+
+                        // 停止计时
+                        stop(data)
                     }
                 },
                 error: function (data, status, xhr) {
                     console.log(data)
                     _this.error(data, status, xhr)
+
+                    // 停止计时
+                    stop(data)
                 }
             })
         } else {
+            alert('aaaa')
             axios({
                 method: _this.config.method,
                 url: _this.config.url,
@@ -204,8 +249,7 @@ const BusinessRequest = {
                 }
 
                 _this.complete()
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.log(error);
                 _this.error(error.data, error.status, '')
                 _this.complete()

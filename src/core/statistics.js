@@ -1,5 +1,3 @@
-import { Toast } from "vux";
-
 /**
  * 数据统计
  * 
@@ -74,7 +72,7 @@ export default {
         this.sendRequest(requestParams)
     },
 
-    sendRequest(param){
+    sendRequest(param) {
         MXCommon.ajax({
             type: "post",
             url: 'http://dt-rxtbak.chamc.com.cn:8080/dt/recv',
@@ -87,7 +85,33 @@ export default {
             error: function (data, status, xhr) {
             }
         })
+    },
+
+    /**
+     * 调用接口时间埋点
+     *
+     * @param {*} appid
+     * @param {*} api
+     * @param {*} describe
+     * @param {*} interval 时间间隔
+     */
+    intervalEvent(appid, api, describe, interval) {
+        let requestParams = {
+            appid: appid,
+            ctime: new Date(),
+            did: device.uuid,
+            event: 'entry',
+            model: device.model,
+            seg: {
+                api: api,
+                dur: '',
+                info: describe,
+                interval: interval
+            },
+            ua: window.agent,
+            uid: ''
+        }
+
+        this.sendRequest(requestParams)
     }
-
-
 }
