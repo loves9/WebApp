@@ -164,41 +164,20 @@ const BusinessRequest = {
 
         // 适配手机端与pc端
         if (typeof (MXCommon) != undefined) {
-            var hour, minute, second;//时 分 秒
-            hour = minute = second = 0;//初始化
-            var millisecond = 0;//毫秒
-            var int;
             var timeInterval;
+            var startTimeStamp
+            var stopTimeStamp
             //开始函数
             function start() {
-                int = setInterval(timer, 10);//每隔50毫秒执行一次timer函数
+                startTimeStamp = new Date().getTime()
             }
             //暂停函数
             function stop(message) {
-                window.clearInterval(int);
+                stopTimeStamp = new Date().getTime()
+                timeInterval = stopTimeStamp - startTimeStamp
 
                 // 上送数据
-                alert(timeInterval)
                 Statistics.intervalEvent('', this.config.url, message, timeInterval)
-            }
-            //计时函数
-            function timer() {
-                millisecond = millisecond + 10;
-                if (millisecond >= 1000) {
-                    millisecond = 0;
-                    second = second + 1;
-                }
-                if (second >= 60) {
-                    second = 0;
-                    minute = minute + 1;
-                }
-
-                if (minute >= 60) {
-                    minute = 0;
-                    hour = hour + 1;
-                }
-
-                timeInterval = minute + '分' + second + '秒' + millisecond + '毫秒';
             }
 
             start() // 开始计时
@@ -209,7 +188,6 @@ const BusinessRequest = {
                 async: true,
                 data: parameter,
                 complete: function () {
-
                     if (_this.complete == undefined) {
                         return
                     }
