@@ -2,11 +2,11 @@
     <div>
         <transition :name="this.$store.state.direction" :css="!!direction">
             <keep-alive>
-                <router-view v-if="$route.meta.keepAlive"></router-view>
+                <router-view v-if="$route.meta.keepAlive" class="router-view"></router-view>
             </keep-alive>
         </transition>
         <transition :name="this.$store.state.direction" :css="!!direction">
-            <router-view v-if="!$route.meta.keepAlive"></router-view>
+            <router-view v-if="!$route.meta.keepAlive" class="router-view"></router-view>
         </transition>
     </div>
 </template>
@@ -26,7 +26,8 @@ export default {
         ...mapState({
             route: state => state.route,
             path: state => state.path,
-            direction: state => state.direction
+            direction: state => state.direction,
+            isLoading: state => state.isLoading
         })
     },
     components: {}
@@ -49,6 +50,9 @@ body {
 }
 #app {
     height: 100%;
+}
+.router-view {
+    width: 100%;
 }
 .turn-on-enter-active,
 .turn-on-leave-active,
