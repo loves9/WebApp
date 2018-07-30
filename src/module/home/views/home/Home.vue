@@ -52,7 +52,6 @@ import {
     Calendar
 } from "vux";
 
-import { AUTH_LOGIN } from "@/store/types.js";
 import HttpBusinessRequest from "@/module/api/api.js";
 
 import Statistics from "@/core/statistics";
@@ -101,9 +100,9 @@ export default {
             console.log("ondeviceready");
         }
 
-        this.$store.dispatch("savePassText", {
-            text: "这是home page 传过来的数据！"
-        });
+        // this.$store.dispatch("savePassText", {
+        //     text: "这是home page 传过来的数据！"
+        // });
 
         // console.log($)
 
@@ -124,7 +123,7 @@ export default {
         },
 
         onTap() {
-            this.$router.push({ path: "/query" });
+            this.$router.push({ path: "/approve" });
         },
 
         clickBtn() {
@@ -190,4 +189,8 @@ export default {
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
+
+body{
+    height: 100%;
+}
 </style>

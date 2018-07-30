@@ -1,7 +1,5 @@
 import Utils from './utils'
 
-
-
 var UA = navigator.userAgent;
 var ipad = !!(UA.match(/(iPad).*OS\s([\d_]+)/)),
     isIphone = !!(!ipad && UA.match(/(iPhone\sOS)\s([\d_]+)/)),
@@ -15,8 +13,6 @@ if (isMobile) {
 }
 
 console.log(UA)
-
-
 
 export default {
     Utils

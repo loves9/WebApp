@@ -27,6 +27,7 @@
             <x-icon type="ios-arrow-thin-left" size="30"></x-icon>
         </group>
 
+        <x-button type="primary" style="margin-top:10px" @click.native="back">back</x-button>
 
     </div>
 </template>
@@ -42,8 +43,6 @@ import {
     ButtonTabItem,
     XButton
 } from "vux";
-
-import { mapState } from "vuex";
 
 export default {
     components: {
@@ -64,11 +63,14 @@ export default {
     methods: {
         onTap() {
             console.log("66666666666");
+        },
+        back() {
+            this.$router.back(-1);
         }
     },
     computed: {
         nameDesc() {
-            return this.$store.state.user.name;
+            return "8090";
         },
         ageDesc() {
             return "";

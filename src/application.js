@@ -6,7 +6,7 @@ export default {
      *
      * 
      */
-    onCreate() {
+    onCreate(core) {
         
     }
 }
