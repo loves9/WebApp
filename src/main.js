@@ -100,6 +100,7 @@ router.afterEach(function (to){
 
   if(process.env.NODE_ENV === 'production'){
     ga && ga('set', 'page', to.fullPath)
+    ga && ga('send', 'pageview')
   }
 
 })

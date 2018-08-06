@@ -1,11 +1,11 @@
 <template>
     <div>
-        <transition :name="this.$store.state.direction" :css="!!direction">
+        <transition :name="this.$store.state.direction">
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive" class="router-view"></router-view>
             </keep-alive>
         </transition>
-        <transition :name="this.$store.state.direction" :css="!!direction">
+        <transition :name="this.$store.state.direction">
             <router-view v-if="!$route.meta.keepAlive" class="router-view"></router-view>
         </transition>
     </div>

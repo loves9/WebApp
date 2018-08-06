@@ -19,12 +19,10 @@ export default [
                 path: '',
                 redirect: '/home'
             },
-            
 
+            // 添加模块
+            homeModuleRoutes,
+            exampleModuleRoutes
         ]
-    },
-
-    // 添加模块
-    homeModuleRoutes,
-    exampleModuleRoutes
+    }
 ]

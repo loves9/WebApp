@@ -1,17 +1,19 @@
 <template>
     <div>
-        <transition name="router-fade" mode="out-in">
+        <transition :name="this.$store.state.direction">
             <keep-alive>
-                <router-view v-if="$route.meta.keepAlive"></router-view>
+                <router-view v-if="$route.meta.keepAlive" class="router-view"></router-view>
             </keep-alive>
         </transition>
-        <transition name="router-fade" mode="out-in">
-            <router-view v-if="!$route.meta.keepAlive"></router-view>
+        <transition :name="this.$store.state.direction">
+            <router-view v-if="!$route.meta.keepAlive" class="router-view"></router-view>
         </transition>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import {
     Group,
     Cell,
@@ -25,7 +27,14 @@ export default {
     },
     mounted() {},
     methods: {},
-    components: {}
+    computed: {
+        ...mapState({
+            route: state => state.route,
+            path: state => state.path,
+            direction: state => state.direction,
+            isLoading: state => state.isLoading
+        })
+    }
 };
 </script>
 
@@ -45,5 +54,35 @@ body {
 }
 #app {
     height: 100%;
+}
+.router-view {
+    width: 100%;
+}
+.turn-on-enter-active,
+.turn-on-leave-active,
+.turn-off-enter-active,
+.turn-off-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+.turn-off-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.turn-off-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.turn-on-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.turn-on-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 </style>

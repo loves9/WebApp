@@ -20,14 +20,15 @@ export default {
     mounted() {},
     methods: {
         onTap() {
-            console.log(cordova)
-            alert(JSON.stringify(StatusBar))
-            this.setTitle('example')
+            // this.setTitle('example')
+
+            // exsub
+            this.$router.push({ path: "/exsub" });
         }
     },
     computed: {
         text() {
-            return this.$store.state.home.context.text;
+            return "text"; // this.$store.state.home.context.text;
         }
     },
     components: {
