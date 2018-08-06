@@ -114,6 +114,7 @@ const BusinessRequest = {
         //公共参数
         var _parameter = {
             //这里可添加公共参数，预留
+            _Guid: this.getReqeustId()
         };
 
         //合并业务请求参数

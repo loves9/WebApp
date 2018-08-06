@@ -162,6 +162,7 @@ export default {
             let request = HttpBusinessRequest.queryMockServer();
             request.complete = function() {
                 me.$vux.loading.hide();
+                console.log('complete')
             };
             request.success = function(data, status, xhr) {
                 console.log(data)
@@ -169,6 +170,7 @@ export default {
             request.error = function(data, status, xhr) {
                 console.log(data)
                 me.$vux.toast.text(data, "middle");
+
             };
             // 发送请求
             request.send()
