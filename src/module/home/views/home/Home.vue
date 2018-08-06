@@ -30,7 +30,7 @@
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px" @click.native="onTap">下一页</x-button>
 
-        <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">Request</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">axios Request</x-button>
 
         <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
 
@@ -159,14 +159,16 @@ export default {
          */
         sendRequest() {
             var me = this;
-            let request = HttpBusinessRequest.queryFeeCategory();
+            let request = HttpBusinessRequest.queryMockServer();
             request.complete = function() {
                 me.$vux.loading.hide();
             };
             request.success = function(data, status, xhr) {
+                console.log(data)
             };
             request.error = function(data, status, xhr) {
-                me.$vux.toast.text(status, "middle");
+                console.log(data)
+                me.$vux.toast.text(data, "middle");
             };
             // 发送请求
             request.send()

@@ -9,7 +9,7 @@ const HttpBusinessRequest = {
 	queryMockServer(){
 		var args = {
 			method: "get",
-			url: '/user',
+			url: 'api://user',
 		};
 
 		return BusinessRequest.baseRequest(args);

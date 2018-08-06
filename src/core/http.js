@@ -163,7 +163,7 @@ const BusinessRequest = {
         parameter = parameter || this.config.parameter;
 
         // 适配手机端与pc端
-        if (typeof (MXCommon) != undefined) {
+        if ((typeof (MXCommon) != 'undefined')) {
             var timeInterval;
             var startTimeStamp
             var stopTimeStamp
@@ -214,7 +214,7 @@ const BusinessRequest = {
                 }
             })
         } else {
-            alert('aaaa')
+            console.log(_this.config.url)
             axios({
                 method: _this.config.method,
                 url: _this.config.url,
