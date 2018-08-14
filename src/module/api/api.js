@@ -12,7 +12,7 @@ const HttpBusinessRequest = {
 			url: 'api://user',
 		};
 
-		return BusinessRequest.baseRequest(args);
+		return new BusinessRequest().baseRequest(args);
 	},
 
 	/**
@@ -30,7 +30,7 @@ const HttpBusinessRequest = {
 			}
 		};
 
-		return BusinessRequest.baseRequest(args);
+		return new BusinessRequest().baseRequest(args);
 	}
 
 }

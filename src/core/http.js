@@ -2,11 +2,14 @@ import axios from 'axios'
 import { baseURL } from '../config';
 import Statistics from './statistics'
 
-const BusinessRequest = {
+class BusinessRequest {
+    constructor(options = {}) {
+
+    }
     /**
      *  http 状态码对应的文本
      */
-    statusReasons: {
+    statusReasons = {
         100: 'Continue',
         101: 'Switching Protocols',
         102: 'Processing',
@@ -60,13 +63,13 @@ const BusinessRequest = {
         1008: 'Not Connected To Internet',
         4000: 'Transaction fail',
         4001: 'Parse data fail'
-    },
+    }
 
     //----------------- 请求数据 ---------------
-    config: {
+    config = {
         method: 'GET',
         url: '',
-        parameter: null,
+        parameter: {},
 
         /**
          *  ProgressBar 要显示的文字，该属性可以有三种状态：
@@ -89,17 +92,17 @@ const BusinessRequest = {
          *
          */
         dataType: 'json'   //内部使用属性，不要访问。
-    },
+    }
 
-    requestId: '',
+    requestId = ''
 
     //请求队列相关数据
-    requestCount: 0,
-    requestIdPrefix: (function () { var date = new Date(); return 'R' + date.getHours() + date.getMinutes() + date.getSeconds(); })(),
+    requestCount = 0
+    requestIdPrefix = (function () { var date = new Date(); return 'R' + date.getHours() + date.getMinutes() + date.getSeconds(); })()
     getReqeustId() {
         var br = BusinessRequest;
         return br.requestIdPrefix + br.requestCount++;
-    },
+    }
 
     baseRequest(args) {
         // 初始化 MXCommon
@@ -145,7 +148,7 @@ const BusinessRequest = {
         }
 
         return this;
-    },
+    }
 
     /**
      * Application.BusinessRequest
@@ -159,7 +162,7 @@ const BusinessRequest = {
      */
     send(parameter) {
         //执行本地Http请求。
-        var _this = this;
+        let _this = this;
 
         parameter = parameter || this.config.parameter;
 
@@ -178,7 +181,7 @@ const BusinessRequest = {
                 timeInterval = stopTimeStamp - startTimeStamp
 
                 // 上送数据
-                Statistics.intervalEvent('', this.config.url, message, timeInterval)
+                Statistics.intervalEvent('', _this.config.url, message, timeInterval)
             }
 
             start() // 开始计时
@@ -192,22 +195,22 @@ const BusinessRequest = {
                     if (_this.complete == undefined) {
                         return
                     }
+
                     _this.complete()
                 },
                 success: function (data, status, xhr) {
                     data = JSON.parse(data);
 
-                    if (status == 200) {
+                    if (xhr.status == 200) {
                         _this.success(data, status, xhr)
                     } else {
                         _this.error(data, status, xhr)
-
-                        // 停止计时
-                        stop(data)
                     }
+
+                    // 停止计时
+                    stop(data)
                 },
                 error: function (data, status, xhr) {
-                    console.log(data)
                     _this.error(data, status, xhr)
 
                     // 停止计时
