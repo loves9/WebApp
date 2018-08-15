@@ -8,10 +8,23 @@
     "did": "string",    // 设备id（如imei或serial number），必要时MD5(?)
     "event": "string",  // 上报事件名
     "model": "string",  // 机型（如能取到）
+    "approvalUser":{
+        name:"",
+        loginName:"",
+        deptName:''
+    },
     "seg": {            // 事件属性，与事件有关，可以根据实际情况设置
-      "api": "string",  // 调用的接口
-      "dur": "string",  // 调用时间
-      "info": "string"  // 异常信息
+        "req": {
+		    "api": '',
+		    "param": '',
+	    },
+	    "res": {
+		    "status": '',
+		    "statusText": ''
+	    },
+        "dur": "string",  // 调用时间
+        "info": "string"  // 异常信息
+        "interval": ''
     },
     "ua": "string",     // 浏览器 (?)
     "uid": "string"     // 系统赋予的账号或id，必要时MD5加密(?)

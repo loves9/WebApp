@@ -1,28 +1,5 @@
 <template>
     <div>
-        <!-- 列表 -->
-        <!-- <group>
-            <cell title="name" v-for="(item, index) in dataList" :key="index" :value="dataList[index].text"></cell>
-        </group> -->
-
-        <!-- iconfont 样式 -->
-        <!-- <i class="font_family icon-fenxianggongzuo" style="font-size:30px;"></i> -->
-
-        <!-- iframe -->
-        <!-- <group>
-            <cell title="iframe" value="" @click.native="previewPic" is-link style="height:27px">
-                <i slot="icon" class="font_family icon-shezhi" style="font-size:30px"></i>
-            </cell>
-        </group>
-        <div>
-            <popup v-model="showpop" position="bottom">
-                <div style="padding: 15px;">
-                    <x-button @click.native="showpop = false" plain type="default"> Close Me </x-button>
-                </div>
-                <iframe id="imageurl" frameborder=0 :src="getPDFUrl()" width="100%" :height="popheight" :onload="onload()" />
-            </popup>
-        </div> -->
-
         <group>
             <cell title="金额：" :value="spend" is-link></cell>
         </group>
@@ -34,9 +11,7 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
 
-        <group>
-            <cell title="金额：" :value="message | dirFil" is-link></cell>
-        </group>
+        <x-button type="primary" style="margin-top:10px" @click.native="upgradePage">upgrade page</x-button>
 
     </div>
 </template>
@@ -68,7 +43,7 @@ export default {
     },
     data() {
         return {
-            message: '66666',
+            message: "66666",
             pageCount: 2,
             popheight: window.screen.height,
             showpop: false,
@@ -105,20 +80,18 @@ export default {
         // });
 
         // console.log($)
-
-        
     },
     filters: {
         dirFil: function(value) {
-            return value
+            return value;
         }
     },
     methods: {
         confirm() {
-            let self = this
+            let self = this;
             // 模拟网络请求
             setTimeout(() => {
-                self.message = '89898989'
+                self.message = "89898989";
             }, 2000);
         },
 
@@ -134,12 +107,8 @@ export default {
             this.showpop = true;
         },
 
-        reinitIframe() {
-            let ifm = document.getElementById("imageurl");
-            if (ifm != null) {
-                ifm.height = window.screen.height;
-                ifm.width = "100%";
-            }
+        upgradePage() {
+            this.$router.push({ path: "/upgradePage" });
         },
         getPDFUrl() {
             return "/static/test.pdf";
@@ -162,18 +131,17 @@ export default {
             let request = HttpBusinessRequest.queryMockServer();
             request.complete = function() {
                 me.$vux.loading.hide();
-                console.log('complete')
+                console.log("complete");
             };
             request.success = function(data, status, xhr) {
-                console.log(data)
+                console.log(data);
             };
             request.error = function(data, status, xhr) {
-                console.log(data)
+                console.log(data);
                 me.$vux.toast.text(data, "middle");
-
             };
             // 发送请求
-            request.send()
+            request.send();
         }
     },
     watch: {
@@ -194,7 +162,7 @@ export default {
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
 
-body{
+body {
     height: 100%;
 }
 </style>

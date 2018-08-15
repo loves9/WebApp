@@ -55,5 +55,22 @@ export default {
         }
         // 调用示例
         // NativeApi.navigation.disableBackButton()
+    },
+
+    session: {
+        /**
+         * 获取当前用户
+         * login_name
+         * name
+         * dept_name
+         * @param {*} callBack
+         */
+        getUser(callBack){
+            MXCommon.getCurrentUser(
+                function(result){
+                    return callBack(result)
+                }
+            )
+        }
     }
  }

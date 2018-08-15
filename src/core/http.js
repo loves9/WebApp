@@ -156,7 +156,6 @@ class BusinessRequest {
      * @method send
      *
      * 发送 http 请求
-
      * @param parameter {Object}
      * 请求参数字典
      */
