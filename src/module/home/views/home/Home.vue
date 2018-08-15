@@ -46,22 +46,7 @@ export default {
             message: "66666",
             pageCount: 2,
             popheight: window.screen.height,
-            showpop: false,
-            iframeWidth: "100%",
-            iframeHeight: "100%",
-            pdfUrl: "",
-            imageUrl: "",
-            dataList: [
-                {
-                    text: "111111"
-                },
-                {
-                    text: "222222"
-                },
-                {
-                    text: "333333"
-                }
-            ]
+            showpop: false
         };
     },
     created() {},
@@ -108,7 +93,8 @@ export default {
         },
 
         upgradePage() {
-            this.$router.push({ path: "/upgradePage" });
+            this.easyPush('/upgradePage', {name: 'fffff'})
+            // this.$router.push({ path: "/upgradePage" });
         },
         getPDFUrl() {
             return "/static/test.pdf";
@@ -145,13 +131,10 @@ export default {
         }
     },
     watch: {
-        showpop(n, o) {
-            console.log(n);
-        }
     },
     computed: {
         spend() {
-            console.log(this.$core);
+            // console.log(this.$core);
             return "";
         }
     }

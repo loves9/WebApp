@@ -8,9 +8,6 @@ class HRStore extends Vuex.Store {
     constructor(options = {}) {
         super(options);
 
-
-        console.log(options)
-
     }
 }
 
@@ -36,17 +33,13 @@ const store = new HRStore({
         },
 
         updateDemoPosition (state, payload){
-            console.log('posi', payload)
 
             state.demoScrollTop = payload.top
         },
         updateLoadingStatus (state, payload){
-            console.log('loading', payload)
-
             state.isLoading = payload.isLoading
         },
         updateDirection(state, payload){
-            console.log('dir', payload)
             state.direction = payload.direction
         }
     },

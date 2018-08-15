@@ -1,22 +1,23 @@
 <template>
     <div>
-        <error-page type="upgrade" buttonTitle="返回" v-on:HREVENT_errorButtonClick="errorButtonClick"></error-page>
-        
+        <error-page type="system" buttonTitle="返回" v-on:HREVENT_errorButtonClick="errorButtonClick"></error-page>
+
     </div>
 </template>
 
 <script>
 import ErrorPage from "@/components/errorpage/ErrorPage.vue";
 
-
 export default {
     data() {
         return {};
     },
-    mounted() {},
+    mounted() {
+        console.log('fff', this.easyGetParams());
+    },
     methods: {
-        errorButtonClick: function(){
-            alert('submit')
+        errorButtonClick: function() {
+            this.easyPop();
         }
     },
     components: {
@@ -26,5 +27,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

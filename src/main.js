@@ -105,14 +105,12 @@ router.afterEach(function (to){
 
 })
 
-
 Application.onCreate(core);
 
 // 注册全局方法
 Vue.mixin(mixins)
-
+Vue.prototype.$core = core 
 new Vue({
-  core,
   router,
   store,
 }).$mount('#app-box')

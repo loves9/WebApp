@@ -1,4 +1,5 @@
 import Utils from './utils'
+import RouterManager from './router_manager'
 
 var UA = navigator.userAgent;
 var ipad = !!(UA.match(/(iPad).*OS\s([\d_]+)/)),
@@ -15,5 +16,5 @@ if (isMobile) {
 console.log(UA)
 
 export default {
-    Utils
+    Utils, RouterManager
 }

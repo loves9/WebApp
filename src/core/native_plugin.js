@@ -50,7 +50,6 @@ export default {
          * 使导航栏左侧按钮失效
          */
         disableBackButton(){
-            alert('3333')
             MXWebui.disableBackKey()
         }
         // 调用示例

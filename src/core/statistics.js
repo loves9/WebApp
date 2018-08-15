@@ -45,6 +45,11 @@ export default {
             did: device.uuid,
             event: 'exception',
             model: device.model,
+            approvalUser:{
+                name:"",
+                loginName:"",
+                deptName:''
+            },
             seg: {
                 api: api,
                 dur: '',
@@ -109,14 +114,27 @@ export default {
      * @param {*} interval 时间间隔
      */
     intervalEvent(appid, api, describe, interval) {
+        let _this = this;
         let requestParams = {
             appid: appid,
             ctime: new Date(),
             did: device.uuid,
             event: 'entry',
             model: device.model,
+            approvalUser:{
+                name:"",
+                loginName:"",
+                deptName:''
+            },
             seg: {
-                api: api,
+                req: {
+                    api: '',
+                    param: '',
+                },
+                res: {
+                    status: '',
+                    statusText: ''
+                },
                 dur: '',
                 info: describe,
                 interval: interval
@@ -125,6 +143,12 @@ export default {
             uid: ''
         }
 
-        this.sendRequest(requestParams)
+        NativeApi.session.getUser(function(user){
+            requestParams.approvalUser.name = user.name
+            requestParams.approvalUser.loginName = user.login_name
+            requestParams.approvalUser.deptName = user.result.dept_name
+
+            _this.sendRequest(requestParams)
+        })
     }
 }
