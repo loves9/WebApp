@@ -1,11 +1,13 @@
 <template>
-    <div style="background-color:#fff; height:100vh">
-        <upgrade-page></upgrade-page>
+    <div>
+        <error-page type="upgrade" buttonTitle="返回"></error-page>
+        
     </div>
 </template>
 
 <script>
-import UpgradePage from "@/components/upgradepage/UpgradePage.vue";
+import ErrorPage from "@/components/errorpage/ErrorPage.vue";
+
 
 export default {
     data() {
@@ -14,7 +16,7 @@ export default {
     mounted() {},
     methods: {},
     components: {
-        UpgradePage
+        ErrorPage
     }
 };
 </script>
