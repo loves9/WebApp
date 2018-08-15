@@ -1,6 +1,6 @@
 <template>
     <div>
-        <error-page type="upgrade" buttonTitle="返回"></error-page>
+        <error-page type="upgrade" buttonTitle="返回" v-on:HREVENT_errorButtonClick="errorButtonClick"></error-page>
         
     </div>
 </template>
@@ -14,7 +14,11 @@ export default {
         return {};
     },
     mounted() {},
-    methods: {},
+    methods: {
+        errorButtonClick: function(){
+            alert('submit')
+        }
+    },
     components: {
         ErrorPage
     }

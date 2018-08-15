@@ -11,7 +11,7 @@
         </div>
 
         <div class="error_btn_cls">
-            <x-button style="background-color:#fff">{{buttonTitle}}</x-button>
+            <x-button style="background-color:#fff" @click.native="errorButtonClick">{{buttonTitle}}</x-button>
         </div>
     </div>
 
@@ -56,7 +56,11 @@ export default {
     computed: {
 
     },
-    methods: {},
+    methods: {
+        errorButtonClick(){
+            this.$emit('HREVENT_errorButtonClick')
+        }
+    },
     components: {
         XButton
     }

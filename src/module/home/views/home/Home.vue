@@ -11,7 +11,7 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
 
-        <x-button type="primary" style="margin-top:10px" @click.native="upgradePage">upgrade page</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="upgradePage">error page</x-button>
 
     </div>
 </template>
