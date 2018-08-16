@@ -2,9 +2,7 @@
     <div>
     </div>
 </template>
-<style scoped>
 
-</style>
 <script>
 export default {
     data() {
@@ -15,3 +13,7 @@ export default {
     components: {}
 };
 </script>
+
+<style lang="less">
+
+</style>

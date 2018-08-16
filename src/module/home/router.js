@@ -1,4 +1,4 @@
-import App from './App'
+import App from '@/App'
 
 const home = r => require.ensure([], () => r(require('./views/home/Home.vue')), 'home')
 const approve = r => require.ensure([], () => r(require('./views/approve/Approve.vue')), 'approve')

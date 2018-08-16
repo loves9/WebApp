@@ -3,11 +3,11 @@
  * 
  */
 
-import App from '../App'
+import App from '@/App'
 
 // 引入模块
 import homeModuleRoutes from '@/module/home/router.js'
-import exampleModuleRoutes from '@/module/example/router.js'
+import sampleModuleRoutes from '@/module/sample/router.js'
 
 export default [
     {
@@ -17,12 +17,12 @@ export default [
             //地址为空时跳转home页面
             {
                 path: '',
-                redirect: '/home'
+                redirect: '/entry'
             },
 
             // 添加模块
             homeModuleRoutes,
-            exampleModuleRoutes
+            sampleModuleRoutes
         ]
     }
 ]

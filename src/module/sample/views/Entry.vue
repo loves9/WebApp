@@ -1,10 +1,8 @@
 <template>
-    <div style="height:500px; background-color: red">
+    <div style="background-color:red; height:100vh">
     </div>
 </template>
-<style scoped>
 
-</style>
 <script>
 export default {
     data() {
@@ -15,3 +13,7 @@ export default {
     components: {}
 };
 </script>
+
+<style lang="less">
+
+</style>

@@ -14,13 +14,20 @@
 <script>
 import { mapState } from 'vuex'
 
+import {
+    Group,
+    Cell,
+    ViewBox,
+    XButton
+} from "vux";
+
 export default {
     data() {
         return {};
     },
     mounted() {},
     methods: {},
-    components: {
+    computed: {
         ...mapState({
             route: state => state.route,
             path: state => state.path,
