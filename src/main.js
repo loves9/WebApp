@@ -110,7 +110,9 @@ Application.onCreate(core);
 // 注册全局方法
 Vue.mixin(mixins)
 Vue.prototype.$core = core 
-new Vue({
+let globalVueObject = new Vue({
   router,
   store,
 }).$mount('#app-box')
+
+window.GlobalVueObject = globalVueObject

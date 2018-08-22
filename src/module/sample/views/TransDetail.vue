@@ -11,7 +11,7 @@
             <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
             <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
             <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
-            <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item>
+            <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
         </tab>
 
         <div v-show="!gruopIsHidden">
@@ -36,12 +36,12 @@
         <h-doc-cell v-show="!hDocIsHidden" title="2018号文件" image="/static/pdf.png"></h-doc-cell>
         <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
 
-        <div v-show="!hIframeIsHidden" class="formData">
+        <!-- <div v-show="!hIframeIsHidden" class="formData">
             <div class="box">
                 <iframe ref="iframe" frameborder="0" class="iframe_cls" style="zoom:100%" src="http://10.80.38.205/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"></iframe>
             </div>
 
-        </div>
+        </div> -->
     </div>
 </template>
 

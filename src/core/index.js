@@ -1,5 +1,7 @@
 import Utils from './utils'
 import RouterManager from './router_manager'
+import NativeApi from './native_plugin'
+import Http from './http'
 
 var UA = navigator.userAgent;
 var ipad = !!(UA.match(/(iPad).*OS\s([\d_]+)/)),
@@ -16,5 +18,5 @@ if (isMobile) {
 console.log(UA)
 
 export default {
-    Utils, RouterManager
+    Utils, RouterManager, NativeApi, Http
 }

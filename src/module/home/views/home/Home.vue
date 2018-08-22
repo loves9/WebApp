@@ -7,12 +7,9 @@
         <!-- 被修改后的vux组件颜色 -->
         <x-button type="primary" style="margin-top:10px" @click.native="onTap">下一页</x-button>
 
-        <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">axios Request</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">Request</x-button>
 
         <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
-
-        <x-button type="primary" style="margin-top:10px" @click.native="upgradePage">error page</x-button>
-
     </div>
 </template>
 <script>
@@ -116,7 +113,6 @@ export default {
             var me = this;
             let request = HttpBusinessRequest.queryMockServer();
             request.complete = function() {
-                me.$vux.loading.hide();
                 console.log("complete");
             };
             request.success = function(data, status, xhr) {
@@ -124,7 +120,6 @@ export default {
             };
             request.error = function(data, status, xhr) {
                 console.log(data);
-                me.$vux.toast.text(data, "middle");
             };
             // 发送请求
             request.send();

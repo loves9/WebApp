@@ -71,6 +71,8 @@ class BusinessRequest {
         url: '',
         parameter: {},
 
+        mask: true,
+
         /**
          *  ProgressBar 要显示的文字，该属性可以有三种状态：
          *
@@ -78,7 +80,7 @@ class BusinessRequest {
          *  2. null  :空值，发送http请求的过程中不显示 ProgressBar。
          *  3. string:非空字符串，发送http请求的过程中显示一个 ProgressBar，其中的文字为该属性设定的值。
          */
-        maskMsg: '',
+        maskMsg: '请稍后...',
 
         /**
          *  http请求出错时是否自动显示 toast 消息，测试环境下此值无效，强制弹出错误 toast 。
@@ -137,17 +139,23 @@ class BusinessRequest {
             _url = args.url
         }
 
-
-        this.config = {
-            method: args.method ? args.method : 'json',
-            url: _url,
-            parameter: _parameter,
-            maskMsg: args.maskMsg,
-            autoToast: args.autoToast,
-            dataType: args.dataType
-        }
+        this.config.method = args.method ? args.method : 'json'
+        this.config.url = _url
+        this.config.parameter = _parameter
+        this.config.maskMsg = args.maskMsg? args.maskMsg: this.config.maskMsg
+        this.config.autoToast = args.autoToast? true:false
+        this.config.dataType = args.dataType
+        this.config.mask = args.mask? true:false
 
         return this;
+    }
+
+    beforeRequest() {
+        if (this.config.mask) {
+            GlobalVueObject.$vux.loading.show({
+                text: this.config.maskMsg
+            })
+        }
     }
 
     /**
@@ -160,6 +168,8 @@ class BusinessRequest {
      * 请求参数字典
      */
     send(parameter) {
+        this.beforeRequest()
+
         //执行本地Http请求。
         let _this = this;
 
@@ -191,6 +201,8 @@ class BusinessRequest {
                 async: true,
                 data: parameter,
                 complete: function () {
+                    GlobalVueObject.$vux.loading.hide()
+
                     if (_this.complete == undefined) {
                         return
                     }
@@ -198,6 +210,8 @@ class BusinessRequest {
                     _this.complete()
                 },
                 success: function (data, status, xhr) {
+                    GlobalVueObject.$vux.loading.hide()
+
                     data = JSON.parse(data);
 
                     if (xhr.status == 200) {
@@ -210,6 +224,14 @@ class BusinessRequest {
                     stop(data)
                 },
                 error: function (data, status, xhr) {
+                    GlobalVueObject.$vux.loading.hide()
+
+                    if (_this.config.autoToast) {
+                        GlobalVueObject.$vux.toast.show({
+                            text: data
+                        })
+                    }
+
                     _this.error(data, status, xhr)
 
                     // 停止计时
@@ -223,6 +245,8 @@ class BusinessRequest {
                 url: _this.config.url,
                 data: parameter
             }).then(response => {
+                GlobalVueObject.$vux.loading.hide()
+
                 if (response.status == 200) {
                     _this.success(response.data, response.status, '')
                 } else {
@@ -232,6 +256,13 @@ class BusinessRequest {
                 _this.complete()
             }).catch(error => {
                 console.log(error);
+                GlobalVueObject.$vux.loading.hide()
+
+                if (_this.config.autoToast) {
+                    GlobalVueObject.$vux.toast.show({
+                        text: error.data
+                    })
+                }
                 _this.error(error.data, error.status, '')
                 _this.complete()
             });
