@@ -14,77 +14,50 @@
 
 <script>
 import { HList } from "hrkj-vux-components";
-
 import { Tab, TabItem } from "vux";
+import HttpBusinessRequest from "@/module/api/api.js";
 
 export default {
     data() {
         return {
             listDataSource: [
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                },
-                {
-                    title: '固定收益-新增菜单',
-                    title1: '分公司投放条件审批流程',
-                    tab: '部门负责人审核',
-                    time: '到达：2018-03-22'
-                }
             ],
 
             noData: false
         };
     },
-    mounted() {},
+    mounted() {
+        this.workflowTodoRequest();
+    },
     methods: {
-        itemTabClick(index){
-            if(index == 1){
-                this.noData = true
-            }else{
-                this.noData = false
+        itemTabClick(index) {
+            if (index == 1) {
+                this.noData = true;
+            } else {
+                this.noData = false;
             }
         },
-        itemClick(item){
-            this.easyPush('/transDetail', item)
+        itemClick(item) {
+            this.easyPush("/transDetail", item);
+        },
+        workflowTodoRequest() {
+            let request = HttpBusinessRequest.workflowTodo();
+            request.complete = function() {};
+            request.success = (data, status, xhr) => {
+                this.analysisData(data);
+            };
+            request.error = (data, status, xhr) => {};
+            // 发送请求
+            request.send();
+        },
+        analysisData(responesData) {
+            for (let index in responesData.content) {
+                console.log(item);
+                let item = responesData.content[index];
+                item.time = item.createTime;
+
+                this.listDataSource.push(item);
+            }
         }
     },
     components: {

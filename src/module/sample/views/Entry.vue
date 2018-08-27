@@ -17,29 +17,25 @@ export default {
                     name: "待办事宜",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "我的请求",
                     iconClass: "ic-wodeqingqiu-l",
                     fontSize: "30px",
-                    color: "#FFB000",
-                    path: "handle"
+                    color: "#FFB000"
                 },
                 {
                     name: "已办事宜",
                     iconClass: "ic-yiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "办结事宜",
                     iconClass: "ic-banjie-l",
                     fontSize: "30px",
-                    color: "#00A79F",
-                    path: "handle"
+                    color: "#00A79F"
                 }
             ],
             dataSourceNew: [
@@ -47,65 +43,54 @@ export default {
                     name: "上网申请",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "请假申请",
                     iconClass: "ic-wodeqingqiu-l",
                     fontSize: "30px",
-                    color: "#FFB000",
-                    path: "handle"
+                    color: "#FFB000"
                 },
                 {
                     name: "简单流转",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "会议申请",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "申报管理",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "报销申请",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 },
                 {
                     name: "签报流转",
                     iconClass: "ic-daiban-l",
                     fontSize: "30px",
-                    color: "#47B3E1",
-                    path: "handle"
+                    color: "#47B3E1"
                 }
             ]
         };
     },
-    mounted() {
-        
-    },
+    mounted() {},
     methods: {
-        itemClick(item){
-            this.easyPush('/handle', item)
+        itemClick(item) {
+            this.easyPush("/handle", item);
         },
-        itemClick_two(item){
-
-            this.easyPush('/upgradePage', item)
-
+        itemClick_two(item) {
+            this.easyPush("/upgradePage", item);
         }
     },
     components: {

@@ -102,8 +102,7 @@ class BusinessRequest {
     requestCount = 0
     requestIdPrefix = (function () { var date = new Date(); return 'R' + date.getHours() + date.getMinutes() + date.getSeconds(); })()
     getReqeustId() {
-        var br = BusinessRequest;
-        return br.requestIdPrefix + br.requestCount++;
+        return this.requestIdPrefix + this.requestCount++;
     }
 
     baseRequest(args) {
@@ -129,7 +128,6 @@ class BusinessRequest {
                 _parameter[key] = args.parameter[key];
             });
         }
-
 
         var _url = ''
         // url如果包含api://就拼接baseurl
@@ -239,7 +237,6 @@ class BusinessRequest {
                 }
             })
         } else {
-            console.log(_this.config.url)
             axios({
                 method: _this.config.method,
                 url: _this.config.url,

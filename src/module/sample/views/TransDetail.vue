@@ -1,10 +1,10 @@
 <template>
     <div>
         <div style="background-color:#fff; padding:20px 15px 20px; 15px;">
-            <span style="font-size:18px">请假申请流程</span>
+            <span style="font-size:18px">{{workflowTitle}}</span>
             <div>
-                <span style="font-size:14px; color:#606266">苗译元</span>
-                <span style="font-size:12px; margin-left:10px; color:#909399">2018-06-02 09:30</span>
+                <span style="font-size:14px; color:#606266">{{workflowPerson}}</span>
+                <span style="font-size:12px; margin-left:10px; color:#909399">{{workflowDate}}</span>
             </div>
         </div>
         <tab>
@@ -16,11 +16,7 @@
 
         <div v-show="!gruopIsHidden">
             <group gutter="0px">
-                <cell title="审批编号" value="2397428356527856375856"></cell>
-                <cell title="所在部门" value="华融科技/软件开发部"></cell>
-                <cell title="请假类型" value="事假"></cell>
-                <cell title="开始时间" value="2018-06-08 13:30"></cell>
-                <cell title="结束时间" value="2018-06-08 17:30"></cell>
+                <cell v-for="item in detailData" :key="item.title" :title="item.title" :value="item.detail"></cell>
             </group>
 
             <group style="border-color:red">
@@ -28,12 +24,16 @@
             </group>
 
             <div class="button_container_cls">
-                <x-button class="button_cls">拒绝</x-button>
-                <x-button class="button_cls" style="background-color:#298CCF; margin-left:2px; color:#fff; margin-top:10px">同意</x-button>
+                <x-button v-show="!leftButtonHidden" class="button_cls" @click.native="leftButtonClick(leftButtonData)">{{leftButtonTitle}}</x-button>
+                <x-button v-show="!rightButtonHidden" type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick(rightButtonData)">{{rightButtonTitle}}</x-button>
             </div>
         </div>
 
-        <h-doc-cell v-show="!hDocIsHidden" title="2018号文件" image="/static/pdf.png"></h-doc-cell>
+        <div v-for="item in docListData" :key="item.title">
+            <h-doc-cell v-show="!hDocIsHidden" :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
+            <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
+        </div>
+
         <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
 
         <!-- <div v-show="!hIframeIsHidden" class="formData">
@@ -47,98 +47,135 @@
 
 <script>
 import { HTransinfo, HDocCell } from "hrkj-vux-components";
-
 import { Tab, TabItem, Cell, Group, XTextarea, XButton } from "vux";
+import HttpBusinessRequest from "@/module/api/api.js";
+import workflowData from "../workflow_data.js";
 
 export default {
     data() {
         return {
-            transInfoData: [
+            docListData: [
                 {
-                    id: "12312323",
-                    processInstanceId: "",
-                    createTime: "2018-06-29 17:41",
-                    startTime: "2018-06-29 17:41",
-                    endTime: "2018-06-29 17:41",
-                    durationInMillis: "0",
-                    dueDate: null,
-                    deleteReason: null,
-                    participant: {
-                        id: "21631480110521698",
-                        code: "miaoshipeng@chamc.com.cn@25470",
-                        name: "苗世鹏",
-                        org: "ORG100002274",
-                        orgName: "软件开发部",
-                        type: null
-                    },
-                    comment: null
+                    title: "2018号文件",
+                    subTitle: "19.9k",
+                    image: "/static/pdf.png"
                 },
                 {
-                    id: "347692",
-                    processInstanceId: null,
-                    executionId: null,
-                    name: "领导审批",
-                    createTime: "2018-06-29 17:41",
-                    startTime: "2018-06-29 17:41",
-                    endTime: "2018-06-29 17:42",
-                    durationInMillis: "66000",
-                    dueDate: null,
-                    deleteReason: null,
-                    participant: {
-                        id: "21631475849108832",
-                        code: "wangzeyu@chamc.com.cn@25403",
-                        name: "王泽宇",
-                        org: "ORG100002274",
-                        orgName: "软件开发部",
-                        type: null
-                    },
-                    comment: {
-                        id: null,
-                        author: "wangzeyu@chamc.com.cn@25403",
-                        message:
-                            "agree|这里显示审批意见内容。这里显示审批意见内容。这里显示审批意见内容。 ",
-                        createTime: null
-                    }
-                },
-                {
-                    id: "347692",
-                    processInstanceId: null,
-                    executionId: null,
-                    name: "领导审批",
-                    createTime: "2018-06-29 17:41",
-                    startTime: "2018-06-29 17:41",
-                    endTime: "2018-06-29 17:42",
-                    durationInMillis: "66000",
-                    dueDate: null,
-                    deleteReason: null,
-                    participant: {
-                        id: "21631475849108832",
-                        code: "wangzeyu@chamc.com.cn@25403",
-                        name: "王泽宇",
-                        org: "ORG100002274",
-                        orgName: "软件开发部",
-                        type: null
-                    },
-                    comment: {
-                        id: null,
-                        author: "wangzeyu@chamc.com.cn@25403",
-                        message:
-                            "reject|这里显示审批意见内容。这里显示审批意见内容。这里显示审批意见内容。 ",
-                        createTime: null
-                    }
+                    title: "关于年中会议的通知",
+                    subTitle: "33.7k",
+                    image: "/static/doc.png"
                 }
             ],
+            detailData: [
+                {
+                    title: "审批编号",
+                    detail: "2397428356527856375856"
+                },
+                {
+                    title: "所在部门",
+                    detail: "华融科技/软件开发部"
+                },
+                {
+                    title: "请假类型",
+                    detail: "事假"
+                },
+                {
+                    title: "开始时间",
+                    detail: "2018-06-08 13:30"
+                }
+            ],
+            transInfoData: [],
             gruopIsHidden: false,
             tabIndex: 0,
             transIsHidden: true,
             hDocIsHidden: true,
-            hIframeIsHidden: true
+            hIframeIsHidden: true,
+
+            workflowTitle: "",
+            workflowPerson: "",
+            workflowDate: "",
+            leftButtonTitle: "",
+            leftButtonHidden: true,
+            leftButtonData: {},
+            rightButtonTitle: "",
+            rightButtonHidden: true,
+            rightButtonData: {}
         };
     },
     mounted() {
-
+        this.workflowTitle = this.easyGetParams().title
+        this.workflowTodoDetailRequest();
+        this.workflowTransferRequest();
     },
     methods: {
+        workflowTodoDetailRequest() {
+            var me = this;
+            let request = HttpBusinessRequest.workflowTodoDetail();
+            request.complete = function() {};
+            request.success = (data, status, xhr) => {
+                this.analysisTodoDetailData(data);
+            };
+            request.error = function(data, status, xhr) {};
+            // 发送请求
+            request.send();
+        },
+        analysisTodoDetailData(responeData) {
+            // this.workflowTitle = responeData.processInstance.title;
+            this.workflowPerson =
+                responeData.processInstance.startParticipant.name;
+            this.workflowDate = responeData.createTime;
+
+            this.setButton(responeData.operations);
+        },
+        setButton(buttonData) {
+            if (buttonData.length == 1) {
+                this.leftButtonHidden = false;
+                this.leftButtonTitle =
+                    workflowData.workflowButton[buttonData[0].op];
+                this.leftButtonData = buttonData[0];
+                return;
+            }
+
+            buttonData.forEach(element => {
+                if (element.op == "agree") {
+                    this.rightButtonHidden = false;
+                    this.rightButtonTitle =
+                        workflowData.workflowButton[element.op];
+                    this.rightButtonData = element;
+                } else if (element.op == "terminate") {
+                    this.leftButtonHidden = false;
+                    this.leftButtonTitle =
+                        workflowData.workflowButton[element.op];
+                    this.leftButtonData = element;
+                }
+
+                // TODO: 根据业务情况定义左右按钮的内容
+            });
+        },
+        leftButtonClick(button) {
+            // TODO: 根据业务不同自行处理
+        },
+
+        rightButtonClick(button) {
+            // TODO: 根据业务不同自行处理
+        },
+
+        workflowTransferRequest() {
+            var me = this;
+            let request = HttpBusinessRequest.workflowTransfer();
+            request.complete = function() {};
+            request.success = (data, status, xhr) => {
+                this.analysisTransferData(data);
+            };
+            request.error = function(data, status, xhr) {};
+            // 发送请求
+            request.send();
+        },
+        analysisTransferData(responeData) {
+            console.log(responeData);
+            this.transInfoData = responeData;
+        },
+
         itemTabClick(index) {
             switch (index) {
                 case 0:
@@ -212,17 +249,5 @@ export default {
 .iframe_cls {
     height: 100%;
     width: 100%;
-}
-
-
-.formData{
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.box{
-    width:100%;
-    overflow: hidden;
 }
 </style>

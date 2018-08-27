@@ -31,6 +31,45 @@ const HttpBusinessRequest = {
 		};
 
 		return new BusinessRequest().baseRequest(args);
+	},
+
+	/**
+	 * 工作流-待办
+	 *
+	 */
+	workflowTodo(){
+		var args = {
+			method: "get",
+			url: 'api://todo' 
+		};
+
+		return new BusinessRequest().baseRequest(args);
+	},
+
+	/**
+	 * 工作流-待办详情
+	 *
+	 */
+	workflowTodoDetail(){
+		var args = {
+			method: "get",
+			url: 'api://todoDetail' 
+		};
+
+		return new BusinessRequest().baseRequest(args);
+	},
+
+	/**
+	 * 工作流-流转明细
+	 *
+	 */
+	workflowTransfer(){
+		var args = {
+			method: "get",
+			url: 'api://transfer' 
+		};
+
+		return new BusinessRequest().baseRequest(args);
 	}
 
 }
