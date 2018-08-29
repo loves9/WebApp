@@ -3,9 +3,6 @@ import App from '@/App'
 const home = r => require.ensure([], () => r(require('./views/home/Home.vue')), 'home')
 const approve = r => require.ensure([], () => r(require('./views/approve/Approve.vue')), 'approve')
 
-const upgradePageDemo = r => require.ensure([], () => r(require('./views/UpgradePageDemo.vue')), 'approve')
-
-
 export default {
     path: '/home',
     component: App, //顶层路由，对应index.html
@@ -18,10 +15,6 @@ export default {
         {
             path: '/approve',
             component: approve
-        },
-        {
-            path: '/upgradePage',
-            component: upgradePageDemo
         }
     ]
 }

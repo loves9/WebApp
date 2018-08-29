@@ -9,7 +9,7 @@
 
         <x-button type="primary" style="margin-top:10px" @click.native="sendRequest">Request</x-button>
 
-        <x-button type="primary" style="margin-top:10px" @click.native="confirm">native confirm</x-button>
+        <x-button type="primary" style="margin-top:10px" @click.native="mobilePluginTest">mobilePluginTest</x-button>
     </div>
 </template>
 <script>
@@ -90,7 +90,7 @@ export default {
         },
 
         upgradePage() {
-            this.easyPush('/upgradePage', {name: 'fffff'})
+            
             // this.$router.push({ path: "/upgradePage" });
         },
         getPDFUrl() {
@@ -99,6 +99,12 @@ export default {
 
         mobilePluginTest() {
             MXCommon.getCurrentUser(
+                function(result) {
+                    console.log(result);
+                } //这里可以处理获取到的当前用户数据
+            );
+
+            MXCommon.chooseFile(2, ['file'],
                 function(result) {
                     console.log(result);
                 } //这里可以处理获取到的当前用户数据

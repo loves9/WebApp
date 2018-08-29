@@ -142,6 +142,15 @@
         "plural": false,
         "needUserId": false,
         "url": "/bpm/instance/terminate"
+      },
+      {
+        "op": "delegate",
+        "text": "改派",
+        "key": "delegateProcess",
+        "userRange": null,
+        "plural": false,
+        "needUserId": false,
+        "url": "/bpm/instance/delegate"
       }
     ],
     "activity": {

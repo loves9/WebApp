@@ -11,27 +11,32 @@
             <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
             <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
             <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
-            <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
+            <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item>
         </tab>
 
         <div v-show="!gruopIsHidden">
-            <group gutter="0px">
-                <cell v-for="item in detailData" :key="item.title" :title="item.title" :value="item.detail"></cell>
-            </group>
+            <detail-fragment></detail-fragment>
 
             <group style="border-color:red">
                 <x-textarea :max="20" placeholder="请输入审批意见"></x-textarea>
             </group>
 
             <div class="button_container_cls">
-                <x-button v-show="!leftButtonHidden" class="button_cls" @click.native="leftButtonClick(leftButtonData)">{{leftButtonTitle}}</x-button>
-                <x-button v-show="!rightButtonHidden" type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick(rightButtonData)">{{rightButtonTitle}}</x-button>
+                <!-- <x-button v-show="!leftButtonHidden" class="button_cls" @click.native="leftButtonClick(leftButtonData)">{{leftButtonTitle}}</x-button>
+                <x-button v-show="!rightButtonHidden" type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick(rightButtonData)">{{rightButtonTitle}}</x-button> -->
+
+                <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
+                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">{{item.text}}</x-button>
+                    <div v-if="item.op != optionButtonData[optionButtonData.length - 1].op" style="width:5px; height:2px"></div>
+                </div>
             </div>
         </div>
 
-        <div v-for="item in docListData" :key="item.title">
-            <h-doc-cell v-show="!hDocIsHidden" :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
-            <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
+        <div v-show="!hDocIsHidden">
+            <div v-for="item in docListData" :key="item.title">
+                <h-doc-cell :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
+                <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
+            </div>
         </div>
 
         <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
@@ -51,6 +56,8 @@ import { Tab, TabItem, Cell, Group, XTextarea, XButton } from "vux";
 import HttpBusinessRequest from "@/module/api/api.js";
 import workflowData from "../workflow_data.js";
 
+import DetailFragment from "./DetailFragment.vue";
+
 export default {
     data() {
         return {
@@ -64,24 +71,6 @@ export default {
                     title: "关于年中会议的通知",
                     subTitle: "33.7k",
                     image: "/static/doc.png"
-                }
-            ],
-            detailData: [
-                {
-                    title: "审批编号",
-                    detail: "2397428356527856375856"
-                },
-                {
-                    title: "所在部门",
-                    detail: "华融科技/软件开发部"
-                },
-                {
-                    title: "请假类型",
-                    detail: "事假"
-                },
-                {
-                    title: "开始时间",
-                    detail: "2018-06-08 13:30"
                 }
             ],
             transInfoData: [],
@@ -99,13 +88,32 @@ export default {
             leftButtonData: {},
             rightButtonTitle: "",
             rightButtonHidden: true,
-            rightButtonData: {}
+            rightButtonData: {},
+
+            optionButtonData: []
         };
     },
+    activated() {},
     mounted() {
-        this.workflowTitle = this.easyGetParams().title
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+        function onDeviceReady() {
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === "function" &&
+                MXSetting.setConsoleLogEnabled();
+            console.log("ondeviceready");
+
+            let arr = [{ title: "帮助", key: "help", icon: "" }];
+            MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
+                // 帮助
+            });
+        }
+
+        this.workflowTitle = this.easyGetParams().title;
         this.workflowTodoDetailRequest();
         this.workflowTransferRequest();
+    },
+    destroyed() {
+        MXWebui.hideOptionMenu();
     },
     methods: {
         workflowTodoDetailRequest() {
@@ -128,35 +136,11 @@ export default {
             this.setButton(responeData.operations);
         },
         setButton(buttonData) {
-            if (buttonData.length == 1) {
-                this.leftButtonHidden = false;
-                this.leftButtonTitle =
-                    workflowData.workflowButton[buttonData[0].op];
-                this.leftButtonData = buttonData[0];
-                return;
-            }
-
-            buttonData.forEach(element => {
-                if (element.op == "agree") {
-                    this.rightButtonHidden = false;
-                    this.rightButtonTitle =
-                        workflowData.workflowButton[element.op];
-                    this.rightButtonData = element;
-                } else if (element.op == "terminate") {
-                    this.leftButtonHidden = false;
-                    this.leftButtonTitle =
-                        workflowData.workflowButton[element.op];
-                    this.leftButtonData = element;
-                }
-
-                // TODO: 根据业务情况定义左右按钮的内容
-            });
-        },
-        leftButtonClick(button) {
-            // TODO: 根据业务不同自行处理
+            this.optionButtonData = buttonData;
         },
 
-        rightButtonClick(button) {
+        buttonItemClick(item) {
+            console.log(item);
             // TODO: 根据业务不同自行处理
         },
 
@@ -192,7 +176,6 @@ export default {
                     this.transIsHidden = true;
                     this.hDocIsHidden = false;
                     this.hIframeIsHidden = true;
-
                     break;
                 case 2:
                     this.gruopIsHidden = true;
@@ -200,14 +183,15 @@ export default {
                     this.transIsHidden = false;
                     this.hDocIsHidden = true;
                     this.hIframeIsHidden = true;
-
                     break;
                 case 3:
-                    this.gruopIsHidden = true;
+                    // this.gruopIsHidden = true;
 
-                    this.transIsHidden = true;
-                    this.hDocIsHidden = true;
-                    this.hIframeIsHidden = false;
+                    // this.transIsHidden = true;
+                    // this.hDocIsHidden = true;
+                    // this.hIframeIsHidden = false;
+
+                    window.open("/static/test.html");
 
                     break;
             }
@@ -221,7 +205,8 @@ export default {
         Cell,
         Group,
         XTextarea,
-        XButton
+        XButton,
+        DetailFragment
     }
 };
 </script>
@@ -233,21 +218,21 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0px 15px 0px 15px;
+
+    .button_item_cls {
+        padding-right: 5px;
+        width: 100%;
+    }
 }
 
 .button_cls {
     height: 52px;
     width: 172px;
-    margin-top: 10px;
+    margin: 10px 5px 0px 0px;
 }
 
 .button_agree_cls {
     background-color: #298ccf;
     margin-left: 2px;
-}
-
-.iframe_cls {
-    height: 100%;
-    width: 100%;
 }
 </style>

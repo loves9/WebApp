@@ -3,6 +3,7 @@ import App from '@/App'
 const entry = r => require.ensure([], () => r(require('./views/Entry.vue')), 'entry')
 const handle = r => require.ensure([], () => r(require('./views/Handle.vue')), 'handle')
 const transDetail = r => require.ensure([], () => r(require('./views/TransDetail.vue')), 'transDetail')
+const upgradePageDemo = r => require.ensure([], () => r(require('./views/UpgradePageDemo.vue')), 'approve')
 
 
 export default {
@@ -22,7 +23,14 @@ export default {
         // 详情
         {
             path: '/transDetail',
-            component: transDetail
+            component: transDetail,
+            // meta: {
+            //     keepAlive: true // 需要被缓存
+            // }
+        },
+        {
+            path: '/upgradePage',
+            component: upgradePageDemo
         }
     ]
 }

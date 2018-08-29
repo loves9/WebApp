@@ -1,6 +1,6 @@
 <template>
     <div>
-        <error-page type="system" buttonTitle="返回" v-on:HREVENT_errorButtonClick="errorButtonClick"></error-page>
+        <error-page :type="errorType" buttonTitle="返回" v-on:HREVENT_errorButtonClick="errorButtonClick"></error-page>
 
     </div>
 </template>
@@ -10,10 +10,13 @@ import ErrorPage from "@/components/errorpage/ErrorPage.vue";
 
 export default {
     data() {
-        return {};
+        return {
+            errorType: 'system'
+        };
     },
-    mounted() {
+    created() {
         console.log('fff', this.easyGetParams());
+        this.errorType = this.easyGetParams().type
     },
     methods: {
         errorButtonClick: function() {

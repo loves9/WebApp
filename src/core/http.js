@@ -214,7 +214,8 @@ class BusinessRequest {
 
                     if (xhr.status == 200) {
                         _this.success(data, status, xhr)
-                    } else {
+                    }
+                    else {
                         _this.error(data, status, xhr)
                     }
 
@@ -234,6 +235,14 @@ class BusinessRequest {
 
                     // 停止计时
                     stop(data)
+
+                    if(xhr.status == 400 || xhr.status == 404 || xhr.status == 405 || xhr.status == 415){
+                        GlobalVueObject.easyPush('/upgradePage', {errorData: data, type: 'system'})
+                    }
+                    // TODO: 系统升级
+                    else if(0){
+
+                    }
                 }
             })
         } else {
