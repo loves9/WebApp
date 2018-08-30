@@ -20,14 +20,15 @@ import HttpBusinessRequest from "@/module/api/api.js";
 export default {
     data() {
         return {
-            listDataSource: [
-            ],
+            listDataSource: [],
 
             noData: false
         };
     },
     mounted() {
         this.workflowTodoRequest();
+
+        this.setTitle("待办已办");
     },
     methods: {
         itemTabClick(index) {

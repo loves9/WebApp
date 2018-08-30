@@ -4,6 +4,8 @@ const entry = r => require.ensure([], () => r(require('./views/Entry.vue')), 'en
 const handle = r => require.ensure([], () => r(require('./views/Handle.vue')), 'handle')
 const transDetail = r => require.ensure([], () => r(require('./views/TransDetail.vue')), 'transDetail')
 const upgradePageDemo = r => require.ensure([], () => r(require('./views/UpgradePageDemo.vue')), 'approve')
+const helpList = r => require.ensure([], () => r(require('./views/help/HelpList.vue')), 'helpList')
+const helpDetail = r => require.ensure([], () => r(require('./views/help/HelpDetail.vue')), 'helpDetail')
 
 
 export default {
@@ -24,13 +26,21 @@ export default {
         {
             path: '/transDetail',
             component: transDetail,
-            // meta: {
-            //     keepAlive: true // 需要被缓存
-            // }
+            meta: {
+                keepAlive: true // 需要被缓存
+            }
         },
         {
             path: '/upgradePage',
             component: upgradePageDemo
+        },
+        {
+            path: '/helpList',
+            component: helpList
+        },
+        {
+            path: '/helpDetail',
+            component: helpDetail
         }
     ]
 }

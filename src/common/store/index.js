@@ -40,6 +40,7 @@ const store = new HRStore({
             state.isLoading = payload.isLoading
         },
         updateDirection(state, payload){
+            console.log('ddddddddddddddd')
             state.direction = payload.direction
         }
     },

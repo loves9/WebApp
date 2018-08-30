@@ -93,8 +93,8 @@ export default {
             optionButtonData: []
         };
     },
-    activated() {},
-    mounted() {
+    activated() {
+        let _this = this
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
         function onDeviceReady() {
             MXSetting &&
@@ -102,15 +102,24 @@ export default {
                 MXSetting.setConsoleLogEnabled();
             console.log("ondeviceready");
 
+            _this.setTitle('详情信息')
+
             let arr = [{ title: "帮助", key: "help", icon: "" }];
             MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
                 // 帮助
+                _this.easyPush('/helpList')
             });
         }
+    },
+    mounted() {
+        
 
         this.workflowTitle = this.easyGetParams().title;
         this.workflowTodoDetailRequest();
         this.workflowTransferRequest();
+    },
+    deactivated(){
+        MXWebui.hideOptionMenu();
     },
     destroyed() {
         MXWebui.hideOptionMenu();
