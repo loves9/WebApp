@@ -47,6 +47,19 @@ const HttpBusinessRequest = {
 	},
 
 	/**
+	 * 工作流-待办
+	 *
+	 */
+	workflowDone(){
+		var args = {
+			method: "get",
+			url: 'api://done' 
+		};
+
+		return new BusinessRequest().baseRequest(args);
+	},
+
+	/**
 	 * 工作流-待办详情
 	 *
 	 */

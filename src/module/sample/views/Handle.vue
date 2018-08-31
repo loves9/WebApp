@@ -21,25 +21,37 @@ export default {
     data() {
         return {
             listDataSource: [],
-
+            doneListDataSource: [], // 已办 数据源
+            todoListDataSource: [], // 待办 数据源
             noData: false
         };
     },
     mounted() {
         this.workflowTodoRequest();
+        this.workflowdoneRequest();
 
         this.setTitle("待办已办");
-
     },
     methods: {
         itemTabClick(index) {
-            if (index == 1) {
+            switch (index) {
+                case 0:
+                    this.listDataSource = this.todoListDataSource;
+                    break;
+                case 1:
+                    this.listDataSource = this.doneListDataSource;
+                    break;
+            }
+
+            if(this.listDataSource.length == 0){                
                 this.noData = true;
-            } else {
+
+            }else{
                 this.noData = false;
             }
         },
         itemClick(item) {
+            // 根据数据判断点击已办/待办
             this.easyPush("/transDetail", item);
         },
         workflowTodoRequest() {
@@ -53,12 +65,37 @@ export default {
             request.send();
         },
         analysisData(responesData) {
+            //TODO 当nodata为true时显示无数据
+            if (responesData.content.length == 0) {
+                this.noData = true;
+                return;
+            }
             for (let index in responesData.content) {
-                console.log(item);
                 let item = responesData.content[index];
                 item.time = item.createTime;
 
-                this.listDataSource.push(item);
+                this.todoListDataSource.push(item);
+            }
+
+            this.listDataSource = this.todoListDataSource;
+        },
+        workflowdoneRequest() {
+            let request = HttpBusinessRequest.workflowDone();
+            request.complete = function() {};
+            request.success = (data, status, xhr) => {
+                this.analysisDoneData(data);
+            };
+            request.error = (data, status, xhr) => {};
+            // 发送请求
+            request.send();
+        },
+        analysisDoneData(responesData) {
+            //TODO 当nodata为true时显示无数据
+            for (let index in responesData.content) {
+                let item = responesData.content[index];
+                item.time = item.createTime;
+
+                this.doneListDataSource.push(item);
             }
         }
     },

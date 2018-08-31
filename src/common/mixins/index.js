@@ -61,6 +61,24 @@ export default {
             }
 
             return {}
+        },
+
+        /**
+         * 设置 MX cordova
+         *
+         * @param {*} callBack 回调函数
+         */
+        setDeviceReady(callBack) {
+            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
+            function onDeviceReady() {
+                MXSetting &&
+                    typeof MXSetting.setConsoleLogEnabled === 'function' &&
+                    MXSetting.setConsoleLogEnabled();
+                console.log('ondeviceready-index');
+
+                callBack()
+            }
         }
     }
 }

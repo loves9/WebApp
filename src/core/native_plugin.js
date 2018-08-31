@@ -4,6 +4,20 @@
  * author fenng
  * 时间 2018年07月12日
  */
+
+// 设置mxsetting对象
+function MXOnready(callBack){
+    document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+
+        function onDeviceReady() {
+            MXSetting && 
+            typeof MXSetting.setConsoleLogEnabled === 'function' &&
+            MXSetting.setConsoleLogEnabled();
+            console.log('ondeviceready-index');
+
+            callBack()
+        }
+}
 export default {
     dialog: {
         /**
@@ -50,7 +64,9 @@ export default {
          * 使导航栏左侧按钮失效
          */
         disableBackButton(){
-            MXWebui.disableBackKey()
+            MXOnready(function(){
+                MXWebui.disableBackKey()
+            })
         }
         // 调用示例
         // NativeApi.navigation.disableBackButton()
