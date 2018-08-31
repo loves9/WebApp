@@ -143,7 +143,11 @@ class BusinessRequest {
         this.config.maskMsg = args.maskMsg? args.maskMsg: this.config.maskMsg
         this.config.autoToast = args.autoToast? true:false
         this.config.dataType = args.dataType
-        this.config.mask = args.mask? true:false
+
+        if(args.mask != undefined){
+            this.config.mask = false
+        }
+
 
         return this;
     }
@@ -153,6 +157,9 @@ class BusinessRequest {
             GlobalVueObject.$vux.loading.show({
                 text: this.config.maskMsg
             })
+
+
+            console.log('000')
         }
     }
 

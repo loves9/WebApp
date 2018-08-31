@@ -7,6 +7,14 @@
             </group>
         </div>
 
+        <div class="help_container_cls">
+            <img class="help_image_cls" src="/static/images/workflow_phone.png" />
+            <div class="help_tele_container_cls">
+                <span class="help_tel_span_cls">支持电话</span>
+                <span class="help_tel_num_span_cls">010-xxxxxxxxx</span>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -25,8 +33,8 @@ export default {
         this.setTitle("帮助");
     },
     methods: {
-        cellClick(item){
-            this.easyPush('/helpDetail', item)
+        cellClick(item) {
+            this.easyPush("/helpDetail", item);
         }
     },
     components: {
@@ -43,5 +51,43 @@ export default {
     font-family: PingFangSC-Regular;
     letter-spacing: 0;
     margin: 15px 10px 0px 15px;
+}
+
+.help_container_cls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: white;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 0px;
+}
+
+.help_image_cls {
+    width: 50px;
+    height: 50px;
+}
+
+.help_tele_container_cls {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.help_tel_span_cls {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #298ccf;
+    letter-spacing: 0;
+}
+
+.help_tel_num_span_cls {
+    font-family: PingFangSC-Semibold;
+    font-size: 18px;
+    color: #298ccf;
+    letter-spacing: 0;
 }
 </style>

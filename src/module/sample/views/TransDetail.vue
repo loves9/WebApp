@@ -22,8 +22,6 @@
             </group>
 
             <div class="button_container_cls">
-                <!-- <x-button v-show="!leftButtonHidden" class="button_cls" @click.native="leftButtonClick(leftButtonData)">{{leftButtonTitle}}</x-button>
-                <x-button v-show="!rightButtonHidden" type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick(rightButtonData)">{{rightButtonTitle}}</x-button> -->
 
                 <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
                     <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">{{item.text}}</x-button>
@@ -40,13 +38,6 @@
         </div>
 
         <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
-
-        <!-- <div v-show="!hIframeIsHidden" class="formData">
-            <div class="box">
-                <iframe ref="iframe" frameborder="0" class="iframe_cls" style="zoom:100%" src="http://10.80.38.205/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"></iframe>
-            </div>
-
-        </div> -->
     </div>
 </template>
 
@@ -93,8 +84,9 @@ export default {
             optionButtonData: []
         };
     },
-    activated() {
-        let _this = this
+    activated() {},
+    mounted() {
+        let _this = this;
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
         function onDeviceReady() {
             MXSetting &&
@@ -102,23 +94,20 @@ export default {
                 MXSetting.setConsoleLogEnabled();
             console.log("ondeviceready");
 
-            _this.setTitle('详情信息')
+            _this.setTitle("详情信息");
 
             let arr = [{ title: "帮助", key: "help", icon: "" }];
             MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
                 // 帮助
-                _this.easyPush('/helpList')
+                _this.easyPush("/helpList");
             });
         }
-    },
-    mounted() {
-        
 
         this.workflowTitle = this.easyGetParams().title;
         this.workflowTodoDetailRequest();
         this.workflowTransferRequest();
     },
-    deactivated(){
+    deactivated() {
         MXWebui.hideOptionMenu();
     },
     destroyed() {
@@ -151,6 +140,11 @@ export default {
         buttonItemClick(item) {
             console.log(item);
             // TODO: 根据业务不同自行处理
+
+            if (item.op == "agree") {
+                // this.easyPush('/next')
+                // this.$router.push('/next')
+            }
         },
 
         workflowTransferRequest() {
@@ -200,7 +194,14 @@ export default {
                     // this.hDocIsHidden = true;
                     // this.hIframeIsHidden = false;
 
-                    window.open("/static/test.html");
+                    window.open(
+                        "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"
+                    );
+
+                    let arr = [{ title: "", key: "help", icon: "" }];
+                    MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
+                        // 帮助
+                    });
 
                     break;
             }

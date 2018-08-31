@@ -84,7 +84,9 @@ export default {
             ]
         };
     },
-    mounted() {},
+    mounted() {
+
+    },
     methods: {
         itemClick(item) {
             this.easyPush("/handle", item);

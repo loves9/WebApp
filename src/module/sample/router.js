@@ -3,7 +3,10 @@ import App from '@/App'
 const entry = r => require.ensure([], () => r(require('./views/Entry.vue')), 'entry')
 const handle = r => require.ensure([], () => r(require('./views/Handle.vue')), 'handle')
 const transDetail = r => require.ensure([], () => r(require('./views/TransDetail.vue')), 'transDetail')
+const next = r => require.ensure([], () => r(require('./views/Next.vue')), 'next')
+
 const upgradePageDemo = r => require.ensure([], () => r(require('./views/UpgradePageDemo.vue')), 'approve')
+
 const helpList = r => require.ensure([], () => r(require('./views/help/HelpList.vue')), 'helpList')
 const helpDetail = r => require.ensure([], () => r(require('./views/help/HelpDetail.vue')), 'helpDetail')
 
@@ -25,10 +28,7 @@ export default {
         // 详情
         {
             path: '/transDetail',
-            component: transDetail,
-            meta: {
-                keepAlive: true // 需要被缓存
-            }
+            component: transDetail
         },
         {
             path: '/upgradePage',
@@ -41,6 +41,10 @@ export default {
         {
             path: '/helpDetail',
             component: helpDetail
+        },
+        {
+            path: '/next',
+            component: next
         }
     ]
 }
