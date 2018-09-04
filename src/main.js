@@ -13,7 +13,7 @@ import core from "@/core";
 
 import Application from '@/application'
 
-import  Native from '@/core/native_plugin.js'
+import Native from '@/core/native_plugin.js'
 window.NativeApi = Native
 
 // 引入vux组件库
@@ -61,44 +61,44 @@ document.addEventListener('touchend', () => {
 })
 methods.forEach(key => {
   let method = router[key].bind(router)
-  router[key] = function (...args){
+  router[key] = function (...args) {
     isPush = true
     method.apply(null, args)
   }
 })
 
-router.beforeEach(function(to, from, next){
-  store.commit('updateLoadingStatus', {isLoading: true})
+router.beforeEach(function (to, from, next) {
+  store.commit('updateLoadingStatus', { isLoading: true })
 
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
 
-  if(toIndex){
-    if(!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')){
-      store.commit('updateDirection', {direction: 'turn-on'})
-    }else{
+  if (toIndex) {
+    if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
+      store.commit('updateDirection', { direction: 'turn-on' })
+    } else {
       // 判断左滑返回
-      if(!isPush && (Date.now() - endTime) < 377){
-        store.commit('updateDirection', {direction: ''})
-      }else{
-        store.commit('updateDirection', {direction: 'turn-off'})
+      if (!isPush && (Date.now() - endTime) < 377) {
+        store.commit('updateDirection', { direction: '' })
+      } else {
+        store.commit('updateDirection', { direction: 'turn-off' })
       }
     }
-  }else{
+  } else {
     ++historyCount
     history.setItem('count', historyCount)
     to.path !== '/' && history.setItem(to.path, historyCount)
-    store.commit('updateDirection', {direction: 'turn-on'})
+    store.commit('updateDirection', { direction: 'turn-on' })
   }
 
   next()
 })
 
-router.afterEach(function (to){
+router.afterEach(function (to) {
   isPush = false
-  store.commit('updateLoadingStatus', {isLoading: false})
+  store.commit('updateLoadingStatus', { isLoading: false })
 
-  if(process.env.NODE_ENV === 'production'){
+  if (process.env.NODE_ENV === 'production') {
     ga && ga('set', 'page', to.fullPath)
     ga && ga('send', 'pageview')
   }
@@ -109,10 +109,11 @@ Application.onCreate(core);
 
 // 注册全局方法
 Vue.mixin(mixins)
-Vue.prototype.$core = core 
+Vue.prototype.$core = core
 let globalVueObject = new Vue({
   router,
   store,
 }).$mount('#app-box')
 
 window.GlobalVueObject = globalVueObject
+

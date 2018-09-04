@@ -157,9 +157,6 @@ class BusinessRequest {
             GlobalVueObject.$vux.loading.show({
                 text: this.config.maskMsg
             })
-
-
-            console.log('000')
         }
     }
 

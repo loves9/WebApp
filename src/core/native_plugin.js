@@ -13,7 +13,7 @@ function MXOnready(callBack){
             MXSetting && 
             typeof MXSetting.setConsoleLogEnabled === 'function' &&
             MXSetting.setConsoleLogEnabled();
-            console.log('ondeviceready-index');
+            console.log('ondeviceready-plugin');
 
             callBack()
         }

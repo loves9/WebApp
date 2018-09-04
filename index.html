@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
@@ -12,36 +13,39 @@
 
 
     <style>
-      html, body {
-          -ms-overflow-style: -ms-autohiding-scrollbar;
-          -webkit-overflow-scrolling: touch;
-          -webkit-tap-highlight-color: transparent;
-          padding: 0;
-          margin: 0;
-          width: 100%;
-          height: 100%;
-          overflow-x: hidden;
-      }
+        html,
+        body {
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+            -webkit-overflow-scrolling: touch;
+            -webkit-tap-highlight-color: transparent;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
     </style>
 
-  </head>
-  <body>
-      <div id="app-box">
-          <router-view></router-view>
-      </div>
-    <!-- built files will be auto injected -->
     <script>
-        
+
         // window.onload = function() {
         // }
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
 
         function onDeviceReady() {
-            MXSetting && 
-            typeof MXSetting.setConsoleLogEnabled === 'function' &&
-            MXSetting.setConsoleLogEnabled();
-            console.log('ondeviceready-index'); 
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === 'function' &&
+                MXSetting.setConsoleLogEnabled();
+            console.log('ondeviceready-index');
         }
     </script>
-  </body>
+
+</head>
+
+<body>
+    <div id="app-box">
+        <router-view></router-view>
+    </div>
+</body>
+
 </html>

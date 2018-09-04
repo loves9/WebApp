@@ -85,7 +85,6 @@ export default {
         };
     },
     mounted() {
-
     },
     methods: {
         itemClick(item) {

@@ -75,7 +75,7 @@ export default {
                 MXSetting &&
                     typeof MXSetting.setConsoleLogEnabled === 'function' &&
                     MXSetting.setConsoleLogEnabled();
-                console.log('ondeviceready-index');
+                console.log('ondeviceready-mixin');
 
                 callBack()
             }
