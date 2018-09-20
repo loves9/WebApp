@@ -85,6 +85,16 @@ export default {
         };
     },
     mounted() {
+        let _this = this
+        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+        function onDeviceReady() {
+            MXSetting &&
+                typeof MXSetting.setConsoleLogEnabled === "function" &&
+                MXSetting.setConsoleLogEnabled();
+            console.log("ondeviceready");
+
+            _this.setTitle("首页");
+        }
     },
     methods: {
         itemClick(item) {

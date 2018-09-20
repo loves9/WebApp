@@ -28,7 +28,10 @@ export default {
         // 详情
         {
             path: '/transDetail',
-            component: transDetail
+            component: transDetail,
+            meta: {
+                keepAlive: true
+            }
         },
         {
             path: '/upgradePage',

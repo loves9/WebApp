@@ -103,6 +103,7 @@
     "totalPages": 0
   },
   "todoDetail": {
+    "evalFunc": "toastMessage",
     "id": "500323",
     "name": "提交审核",
     "createTime": "2018-08-14 08:45:01",
@@ -127,7 +128,7 @@
     "operations": [
       {
         "op": "agree",
-        "text": "提交",
+        "text": "同意",
         "key": "submitTask",
         "userRange": null,
         "plural": false,

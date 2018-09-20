@@ -33,6 +33,7 @@ export default {
                         url: options
                     }
                 }
+                
                 this.$core.RouterManager.pop(options, this);
                 return true;
             }

@@ -11,7 +11,13 @@ const routerManager = {
         const Core = $core;
         const VueRouter = $router;
 
-        VueRouter.back();
+        if(!options.url) {
+            VueRouter.go(options)
+        }else{
+            VueRouter.back();
+
+        }
+
     }
 }
 

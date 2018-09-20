@@ -106,14 +106,17 @@ class BusinessRequest {
     }
 
     baseRequest(args) {
-        // 初始化 MXCommon
-        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-        function onDeviceReady() {
-            MXSetting &&
-                typeof MXSetting.setConsoleLogEnabled === 'function' &&
-                MXSetting.setConsoleLogEnabled();
-            console.log('ondeviceready---http');
+        if (typeof (MXCommon) == 'undefined') {
+            // 初始化 MXCommon
+            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+            function onDeviceReady() {
+                MXSetting &&
+                    typeof MXSetting.setConsoleLogEnabled === 'function' &&
+                    MXSetting.setConsoleLogEnabled();
+                console.log('ondeviceready---http');
+            }
         }
+
 
         //公共参数
         var _parameter = {
@@ -140,11 +143,11 @@ class BusinessRequest {
         this.config.method = args.method ? args.method : 'json'
         this.config.url = _url
         this.config.parameter = _parameter
-        this.config.maskMsg = args.maskMsg? args.maskMsg: this.config.maskMsg
-        this.config.autoToast = args.autoToast? true:false
+        this.config.maskMsg = args.maskMsg ? args.maskMsg : this.config.maskMsg
+        this.config.autoToast = args.autoToast ? true : false
         this.config.dataType = args.dataType
 
-        if(args.mask != undefined){
+        if (args.mask != undefined) {
             this.config.mask = false
         }
 
@@ -240,11 +243,11 @@ class BusinessRequest {
                     // 停止计时
                     stop(data)
 
-                    if(xhr.status == 400 || xhr.status == 404 || xhr.status == 405 || xhr.status == 415){
-                        GlobalVueObject.easyPush('/upgradePage', {errorData: data, type: 'system'})
+                    if (xhr.status == 400 || xhr.status == 404 || xhr.status == 405 || xhr.status == 415) {
+                        GlobalVueObject.easyPush('/upgradePage', { errorData: data, type: 'system' })
                     }
                     // TODO: 系统升级
-                    else if(0){
+                    else if (0) {
 
                     }
                 }

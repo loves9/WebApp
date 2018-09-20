@@ -11,7 +11,7 @@
             <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
             <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
             <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
-            <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item>
+            <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
         </tab>
 
         <div v-show="!gruopIsHidden">
@@ -50,6 +50,7 @@ import workflowData from "../workflow_data.js";
 import DetailFragment from "./DetailFragment.vue";
 
 export default {
+    name: "transDetail",
     data() {
         return {
             docListData: [
@@ -84,22 +85,29 @@ export default {
             optionButtonData: []
         };
     },
-    activated() {},
-    mounted() {
-        let _this = this;
-        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-        function onDeviceReady() {
-            MXSetting &&
-                typeof MXSetting.setConsoleLogEnabled === "function" &&
-                MXSetting.setConsoleLogEnabled();
-            console.log("ondeviceready");
+    activated() {
+        if (typeof MXCommon == "undefined") {
+            let _this = this;
+            // 初始化 MXCommon
+            document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
+            function onDeviceReady() {
+                MXSetting &&
+                    typeof MXSetting.setConsoleLogEnabled === "function" &&
+                    MXSetting.setConsoleLogEnabled();
 
-            _this.setTitle("详情信息");
-
+                _this.setTitle("详情信息");
+                let arr = [{ title: "帮助", key: "help", icon: "" }];
+                MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
+                    // 帮助
+                    _this.easyPush("/helpList");
+                });
+            }
+        } else {
+            this.setTitle("详情信息");
             let arr = [{ title: "帮助", key: "help", icon: "" }];
             MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
                 // 帮助
-                _this.easyPush("/helpList");
+                this.easyPush("/helpList");
             });
         }
 
@@ -107,6 +115,8 @@ export default {
         this.workflowTodoDetailRequest();
         this.workflowTransferRequest();
     },
+    created() {},
+    mounted() {},
     deactivated() {
         MXWebui.hideOptionMenu();
     },
@@ -132,9 +142,21 @@ export default {
             this.workflowDate = responeData.createTime;
 
             this.setButton(responeData.operations);
+
+            this.evalFunc(responeData.evalFunc);
         },
         setButton(buttonData) {
             this.optionButtonData = buttonData;
+        },
+        evalFunc(func) {
+            if (func != "") {
+                try {
+                    eval("this." + func + "()");
+                } catch (error) {}
+            }
+        },
+        toastMessage() {
+            this.$vux.toast.text("函数已执行", "middle");
         },
 
         buttonItemClick(item) {
@@ -142,8 +164,7 @@ export default {
             // TODO: 根据业务不同自行处理
 
             if (item.op == "agree") {
-                // this.easyPush('/next')
-                // this.$router.push('/next')
+                this.easyPush('/next')
             }
         },
 
@@ -159,7 +180,6 @@ export default {
             request.send();
         },
         analysisTransferData(responeData) {
-            console.log(responeData);
             this.transInfoData = responeData;
         },
 

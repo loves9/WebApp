@@ -24,14 +24,14 @@ export default {
         return {};
     },
     mounted() {
-        
+        this.setTitle("下一步");
     },
     methods: {
-        leftButtonClick(){
-            
+        leftButtonClick() {
+            this.easyPop();
         },
-        rightButtonClick(){
-            
+        rightButtonClick() {
+            this.easyPop(-2);
         }
     },
     components: {

@@ -24,13 +24,18 @@ import { CellBox, Group } from "vux";
 import helpListDataModel from "./helpdata.json";
 
 export default {
+    name: 'helpList',
     data() {
         return {
             helpListData: helpListDataModel
         };
     },
-    mounted() {
+    created(){
+        MXWebui.hideOptionMenu();
         this.setTitle("帮助");
+    },
+    mounted() {
+        
     },
     methods: {
         cellClick(item) {

@@ -60,7 +60,9 @@ export default {
             request.success = (data, status, xhr) => {
                 this.analysisData(data);
             };
-            request.error = (data, status, xhr) => {};
+            request.error = (data, status, xhr) => {
+                console.log('error', data)
+            };
             // 发送请求
             request.send();
         },
