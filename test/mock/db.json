@@ -136,8 +136,8 @@
         "url": "/bpm/task/agree"
       },
       {
-        "op": "terminate",
-        "text": "结束",
+        "op": "refuse",
+        "text": "拒绝",
         "key": "terminateProcess",
         "userRange": null,
         "plural": false,
@@ -233,5 +233,14 @@
       },
       "comment": null
     }
-  ]
+  ],
+  "getUser": {
+    "selectUser" : [
+      {
+        "imageUrl": "",
+        "title": "",
+        "subTitle": ""
+      }
+    ]
+  }
 }

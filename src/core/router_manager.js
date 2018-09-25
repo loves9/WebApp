@@ -10,11 +10,13 @@ const routerManager = {
     pop(options, { $core, $router, $options, $store }) {
         const Core = $core;
         const VueRouter = $router;
-
-        if(!options.url) {
-            VueRouter.go(options)
-        }else{
+        if (options == undefined) {
             VueRouter.back();
+        }
+        else if (typeof (options) == 'number') {
+            VueRouter.go(options)
+        }
+        else {
 
         }
 

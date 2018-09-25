@@ -18,7 +18,7 @@
             <detail-fragment></detail-fragment>
 
             <group style="border-color:red">
-                <x-textarea :max="20" placeholder="请输入审批意见"></x-textarea>
+                <x-textarea :max="20" placeholder="请输入意见"></x-textarea>
             </group>
 
             <div class="button_container_cls">
