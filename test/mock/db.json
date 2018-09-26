@@ -199,7 +199,7 @@
       },
       "deleteReason": "string",
       "durationInMillis": 0,
-      "endTime": "2018-08-23T06:20:17",
+      "endTime": "2018-08-23 06:20:17",
       "finished": true,
       "participant": {
         "id": "21631475849108832",
@@ -210,7 +210,7 @@
         "type": null
       },
       "procDefId": "string",
-      "startTime": "2018-08-23T06:20:17",
+      "startTime": "2018-08-23 06:20:17",
       "taskId": "string",
       "taskName": "string"
     },

@@ -2,30 +2,54 @@
     <div>
         <div style="background-color:#fff; padding:20px 15px 20px; 15px;">
             <div>
-                <span style="font-size:14px; color:#606266">下一步任务</span>
+                <span style="font-size:14px; color:#606266">请确认下一步任务的办理人</span>
             </div>
             <span style="font-size:18px">部门领导审批</span>
         </div>
 
         <div style="background-color: #fff; margin-top:10px">
-            <i class="iconfont ic-jiahao-yuan-l" style="font-size:50px; color:#298CCF; padding:15px" @click="selectUser"></i>
+            <!-- <i class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; padding:15px" @click="selectUser"></i> -->
 
-            <flexbox orient="vertical">
+            <!-- <flexbox orient="vertical">
                 <flexbox-item v-for="(item, index) in userData" :key="index">
-                    <h-doc-cell :title="item.name" :image="item.avatar_url" :subTitle="item.dept_name"></h-doc-cell>
+                    <div class="display_user_cls">
+                        <h-doc-cell :title="item.name" :image="item.avatar_url" :subTitle="item.dept_name"></h-doc-cell>
+                        <i class="iconfont ic-jianhao-yuan-l" style="font-size:30px; color:red; padding:15px" @click="deletUser"></i>
+                    </div>
                 </flexbox-item>
-            </flexbox>
+            </flexbox> -->
+
+            <grid :show-lr-borders="false" :show-vertical-dividers=true :cols=4>
+                <div v-for="(item, index) in userData" :key="index">
+                    <grid-item :label="item.name">
+                        <!-- <div v-if="!item.addItem">
+
+                        </div> -->
+
+                        <i v-if="!item.addItem" class="iconfont ic-jianhao-yuan-l" style="font-size:20px; color:red; position:absolute; top:5px; right:10px" @click="deletUser(item)"></i>
+                        <img v-if="!item.addItem" slot="icon" :src="item.avatar_url">
+
+                        <x-icon v-if="item.addItem" slot="icon" type="ios-plus-outline" size="30" class="add_icon_cls" style="" @click="selectUser"></x-icon>
+
+                        <!-- <i v-if="item.addItem" slot="icon" class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; margin-top:-50px" @click="selectUser"></i> -->
+                    </grid-item>
+
+                    <!-- <grid-item v-if="item.addItem" label="添加" @on-item-click="selectUser">
+                        <i slot="icon" class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; margin-top:-50px" @click="selectUser"></i>
+
+                    </grid-item> -->
+                </div>
+            </grid>
 
         </div>
 
         <group>
             <x-switch title="邮件提醒" v-model="mailValue"></x-switch>
-            <x-switch title="即时消息提醒" v-model="imValue"></x-switch>
-            <x-switch title="手机应用提醒" v-model="mValue"></x-switch>
-            <x-switch title="手机短信提醒" v-model="phoneMessageValue"></x-switch>
+            <x-switch title="融讯通提醒" v-model="imValue"></x-switch>
+            <x-switch title="短信提醒" v-model="phoneMessageValue"></x-switch>
         </group>
 
-        <div class="button_container_cls">
+        <div class="next_button_container_cls">
             <x-button class="button_cls" @click.native="leftButtonClick">返回</x-button>
 
             <x-button type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick">确定</x-button>
@@ -36,18 +60,15 @@
                 <div>
                     <flexbox orient="vertical">
                         <flexbox-item v-for="(item, index) in limitUserData" :key="index">
-                            <div class="select_item_cls" @click="limitedSelect(item)">
-                                <check-icon :value.sync="item.selected">
+                            <div class="select_item_cls">
+                                <check-icon :value.sync="item.selected" @click.native="limitedSelect(item)">
                                 </check-icon>
                                 <h-doc-cell :title="item.name" :image="item.avatar_url" :subTitle="item.dept_name"></h-doc-cell>
                             </div>
-
                         </flexbox-item>
                     </flexbox>
                 </div>
-
                 <!-- <x-button type="primary" class="select_button_cls" @click.native="selectButtonClick">确定</x-button> -->
-
             </popup>
         </div>
     </div>
@@ -61,7 +82,9 @@ import {
     Flexbox,
     FlexboxItem,
     Popup,
-    CheckIcon
+    CheckIcon,
+    Grid,
+    GridItem
 } from "vux";
 import { HDocCell } from "hrkj-vux-components";
 
@@ -72,11 +95,21 @@ export default {
             imValue: true,
             value: false,
             selectMuti: false,
-            userData: [],
+            userData: [
+                {
+                    addItem: true,
+                    name: "添加"
+                }
+            ],
+            addItem: {
+                addItem: true,
+                name: "添加"
+            },
             selectedUser: [],
             phoneMessageValue: false,
             mValue: false,
             showPop: false,
+            checkState: false,
             limitUserData: [
                 {
                     avatar_url: "http://10.64.140.238/photos/user_photo_4",
@@ -101,6 +134,18 @@ export default {
                     name: "韩梅梅",
                     dept_name: "经理",
                     selected: false
+                },
+                {
+                    avatar_url: "http://10.64.140.238/photos/user_photo_4",
+                    name: "李磊",
+                    dept_name: "经理",
+                    selected: false
+                },
+                {
+                    avatar_url: "http://10.64.140.238/photos/user_photo_4",
+                    name: "John",
+                    dept_name: "经理",
+                    selected: false
                 }
             ]
         };
@@ -109,8 +154,29 @@ export default {
         this.setTitle("下一步");
     },
     methods: {
+        onItemClick() {
+        },
+        deletUser(item) {
+            console.log(item);
+            // this.userData.pop(item);
+
+            var temArr = []
+            for (let i = 0; i < this.userData.length; i++) {
+                if (this.userData[i].name != item.name) {
+                    temArr.push(this.userData[i])
+                }
+            }
+            this.userData = temArr
+
+            for (let i = 0; i < this.limitUserData.length; i++) {
+                if (this.limitUserData[i].name == item.name) {
+                    this.limitUserData[i].selected = false;
+                }
+            }
+        },
         selectUser() {
             this.userData = [];
+
             if (this.selectMuti) {
                 // MXContacts.selectUsers(
                 //     result => {
@@ -152,6 +218,8 @@ export default {
 
                         console.log(result);
                         this.userData.push(result.data);
+
+
                     },
                     true //是否可以选中部门
                 );
@@ -171,18 +239,35 @@ export default {
         },
         limitedSelect(item) {
             this.showPop = false;
-            item.selected = !item.selected;
+
+            if (this.checkState) {
+            }
 
             for (let i = 0; i < this.limitUserData.length; i++) {
-                if(this.limitUserData[i].selected){
-
-                    let item = {
-                        
-                    }
+                if (this.limitUserData[i].selected) {
+                    let item = {};
                     this.userData.push(this.limitUserData[i]);
                 }
             }
         }
+    },
+    watch: {
+        userData(newValue) {
+            console.log(newValue, "8888");
+
+            if (newValue.length == 0) {
+                // this.userData.push(this.addItem);
+            }
+
+            
+        },
+        showPop(newValue){
+            if(!newValue) {
+                this.userData.push(this.addItem);
+            }
+        }
+                    
+
     },
     components: {
         XButton,
@@ -192,13 +277,32 @@ export default {
         FlexboxItem,
         HDocCell,
         Popup,
-        CheckIcon
+        CheckIcon,
+        Grid,
+        GridItem
     }
 };
 </script>
 
-<style lang="less">
-.button_container_cls {
+<style>
+.add_icon_cls {
+    fill: #7a7e82;
+}
+.select_item_cls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+}
+
+.select_button_cls {
+    position: relative;
+}
+</style>
+
+
+<style lang="less" scoped>
+.next_button_container_cls {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -222,15 +326,10 @@ export default {
     margin-left: 2px;
 }
 
-.select_item_cls {
+.display_user_cls {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: white;
-}
-
-.select_button_cls {
-    position: relative;
-    // dock: bottom;
+    padding-right: 20px;
 }
 </style>

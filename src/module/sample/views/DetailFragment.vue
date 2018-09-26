@@ -1,7 +1,7 @@
 <template>
     <div>
         <group gutter="0px">
-            <cell v-for="item in detailData" :key="item.title" :title="item.title" :value="item.detail"></cell>
+            <cell primary="content" v-for="item in detailData" :key="item.title" :title="item.title" :value="item.detail"></cell>
         </group>
     </div>
 </template>
@@ -27,7 +27,23 @@ export default {
                 },
                 {
                     title: "开始时间",
-                    detail: "2018-06-08 13:30"
+                    detail: "2018-06-08"
+                },
+                {
+                    title: "结束时间",
+                    detail: "2018-06-16"
+                },
+                {
+                    title: "所在公司",
+                    detail: "华融科技"
+                },
+                {
+                    title: "事件描述",
+                    detail: "出国旅游，先去韩国，停留2天后坐船去日本"
+                },
+                {
+                    title: "总天数",
+                    detail: "7天"
                 }
             ]
         };

@@ -17,15 +17,19 @@
         <div v-show="!gruopIsHidden">
             <detail-fragment></detail-fragment>
 
-            <group style="border-color:red">
+            <group>
                 <x-textarea :max="20" placeholder="请输入意见"></x-textarea>
             </group>
+
+            <div style="height:80px"></div>
 
             <div class="button_container_cls">
 
                 <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
-                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">{{item.text}}</x-button>
-                    <div v-if="item.op != optionButtonData[optionButtonData.length - 1].op" style="width:5px; height:2px"></div>
+                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
+                        {{ processButtonText(item.text) }}
+                    </x-button>
+                    <!-- <div v-if="item.op != optionButtonData[optionButtonData.length - 1].op" style="width:5px; height:2px"></div> -->
                 </div>
             </div>
         </div>
@@ -164,7 +168,7 @@ export default {
             // TODO: 根据业务不同自行处理
 
             if (item.op == "agree") {
-                this.easyPush('/next')
+                this.easyPush("/next");
             }
         },
 
@@ -225,6 +229,13 @@ export default {
 
                     break;
             }
+        },
+        processButtonText(text) {
+            var title = text;
+            if (text.length > 3) {
+                title = text.substring(0, 3) + "...";
+            }
+            return title;
         }
     },
     components: {
@@ -242,27 +253,55 @@ export default {
 </script>
 
 <style lang="less">
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    margin: 0;
+}
 .button_container_cls {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0px 15px 0px 15px;
+    // padding: 0px 15px 0px 15px;
 
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // z-index: 940;
+
+    transform: translate3d(0, 0, 0);
     .button_item_cls {
-        padding-right: 5px;
+        // padding-right: 5px;
         width: 100%;
     }
 }
 
 .button_cls {
     height: 52px;
-    width: 172px;
+    width: 80px;
     margin: 10px 5px 0px 0px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .button_agree_cls {
     background-color: #298ccf;
-    margin-left: 2px;
+    // margin-left: 2px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button_text_span_cls {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
