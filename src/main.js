@@ -99,8 +99,8 @@ router.afterEach(function (to) {
   store.commit('updateLoadingStatus', { isLoading: false })
 
   if (process.env.NODE_ENV === 'production') {
-    ga && ga('set', 'page', to.fullPath)
-    ga && ga('send', 'pageview')
+    // ga && ga('set', 'page', to.fullPath)
+    // ga && ga('send', 'pageview')
   }
 
 })
