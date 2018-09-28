@@ -1,63 +1,56 @@
 <template>
     <div>
-        <div style="background-color:#fff; padding:20px 15px 20px; 15px;">
-            <span style="font-size:18px">{{workflowTitle}}</span>
-            <div>
-                <span style="font-size:14px; color:#606266">{{workflowPerson}}</span>
-                <span style="font-size:12px; margin-left:10px; color:#909399">{{workflowDate}}</span>
+
+        <div style="position:absolute; top:0px; width:100%;">
+            <div style="background-color:#fff; padding:20px 15px 20px; 15px;">
+                <span style="font-size:18px">{{workflowTitle}}</span>
+                <div>
+                    <span style="font-size:14px; color:#606266">{{workflowPerson}}</span>
+                    <span style="font-size:12px; margin-left:10px; color:#909399">{{workflowDate}}</span>
+                </div>
             </div>
-        </div>
-        <tab>
-            <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
-            <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
-            <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
-            <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
-        </tab>
+            <tab>
+                <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
+                <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
+                <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
+                <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
+            </tab>
 
-        <div v-show="!gruopIsHidden">
-            <detail-fragment></detail-fragment>
+            <div v-show="!gruopIsHidden">
+                <detail-fragment></detail-fragment>
 
-            <group>
-                <x-textarea :max="20" placeholder="请输入意见"></x-textarea>
-            </group>
+                <group>
+                    <x-textarea v-model="textValue" :max="20" placeholder="请输入意见"></x-textarea>
+                </group>
 
-            <div style="height:80px"></div>
+                <div style="height:100px"></div>
+            </div>
 
-            <div class="button_container_cls">
-
-                <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
-                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
-                        {{ processButtonText(item.text) }}
-                    </x-button>
-                    <!-- <div v-if="item.op != optionButtonData[optionButtonData.length - 1].op" style="width:5px; height:2px"></div> -->
+            <div v-show="!hDocIsHidden">
+                <div v-for="item in docListData" :key="item.title">
+                    <h-doc-cell :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
+                    <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
                 </div>
             </div>
 
+            <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
         </div>
 
-        <div v-show="!hDocIsHidden">
-            <div v-for="item in docListData" :key="item.title">
-                <h-doc-cell :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
-                <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
+        <div class="button_container_cls">
+
+            <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
+                <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
+                    {{ processButtonText(item.text) }}
+                </x-button>
             </div>
         </div>
 
-        <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
     </div>
 </template>
 
 <script>
 import { HTransinfo, HDocCell } from "hrkj-vux-components";
-import {
-    Tab,
-    TabItem,
-    Cell,
-    Group,
-    XTextarea,
-    XButton,
-    Tabbar,
-    TabbarItem
-} from "vux";
+import { Tab, TabItem, Cell, Group, XTextarea, XButton } from "vux";
 import HttpBusinessRequest from "@/module/api/api.js";
 import workflowData from "../workflow_data.js";
 
@@ -96,7 +89,9 @@ export default {
             rightButtonHidden: true,
             rightButtonData: {},
 
-            optionButtonData: []
+            optionButtonData: [],
+
+            textValue: ""
         };
     },
     activated() {
@@ -164,7 +159,7 @@ export default {
         },
         /**
          * 通过服务端返回，动态执行函数
-         * 
+         *
          */
         evalFunc(func) {
             if (func != "") {
@@ -261,14 +256,12 @@ export default {
         Group,
         XTextarea,
         XButton,
-        DetailFragment,
-        Tabbar,
-        TabbarItem
+        DetailFragment
     }
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 html,
 body {
     height: 100%;
@@ -276,42 +269,32 @@ body {
     overflow: auto;
     margin: 0;
 }
+
 .button_container_cls {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    // padding: 0px 15px 0px 15px;
+    width: 100%;
 
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
-    // z-index: 940;
+    // top: 0px;
+    bottom: 0px;
 
-    transform: translate3d(0, 0, 0);
     .button_item_cls {
-        // padding-right: 5px;
         width: 100%;
     }
 }
 
 .button_cls {
     height: 52px;
-    width: 80px;
-    margin: 10px 5px 0px 0px;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
 
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.button_agree_cls {
-    background-color: #298ccf;
-    // margin-left: 2px;
-
-    white-space: nowrap;
-    overflow: hidden;
+    // overflow: hidden;
     text-overflow: ellipsis;
 }
 
