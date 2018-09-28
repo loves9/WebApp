@@ -32,6 +32,7 @@
                     <!-- <div v-if="item.op != optionButtonData[optionButtonData.length - 1].op" style="width:5px; height:2px"></div> -->
                 </div>
             </div>
+
         </div>
 
         <div v-show="!hDocIsHidden">
@@ -47,7 +48,16 @@
 
 <script>
 import { HTransinfo, HDocCell } from "hrkj-vux-components";
-import { Tab, TabItem, Cell, Group, XTextarea, XButton } from "vux";
+import {
+    Tab,
+    TabItem,
+    Cell,
+    Group,
+    XTextarea,
+    XButton,
+    Tabbar,
+    TabbarItem
+} from "vux";
 import HttpBusinessRequest from "@/module/api/api.js";
 import workflowData from "../workflow_data.js";
 
@@ -152,6 +162,10 @@ export default {
         setButton(buttonData) {
             this.optionButtonData = buttonData;
         },
+        /**
+         * 通过服务端返回，动态执行函数
+         * 
+         */
         evalFunc(func) {
             if (func != "") {
                 try {
@@ -247,7 +261,9 @@ export default {
         Group,
         XTextarea,
         XButton,
-        DetailFragment
+        DetailFragment,
+        Tabbar,
+        TabbarItem
     }
 };
 </script>
