@@ -152,6 +152,15 @@
         "plural": false,
         "needUserId": false,
         "url": "/bpm/instance/delegate"
+      },
+      {
+        "op": "addSign",
+        "text": "加签",
+        "key": "delegateProcess",
+        "userRange": null,
+        "plural": false,
+        "needUserId": false,
+        "url": "/bpm/instance/addSign"
       }
     ],
     "activity": {
@@ -170,7 +179,7 @@
       "executionId": null,
       "name": "领导审批",
       "createTime": "2018-06-29 17:41",
-      "startTime": "2018-06-29 17:41",
+      "startTime": "2018-06-29",
       "endTime": "2018-06-29 17:42",
       "durationInMillis": "66000",
       "dueDate": null,
@@ -210,7 +219,7 @@
         "type": null
       },
       "procDefId": "string",
-      "startTime": "2018-08-23 06:20:17",
+      "startTime": "2018-08-23",
       "taskId": "string",
       "taskName": "string"
     },
@@ -218,7 +227,7 @@
       "id": "12312323",
       "processInstanceId": "",
       "createTime": "2018-06-29 17:41",
-      "startTime": "2018-06-29 17:41",
+      "startTime": "2018-06-29",
       "endTime": "2018-06-29 17:41",
       "durationInMillis": "0",
       "dueDate": null,

@@ -23,7 +23,24 @@
                     <x-textarea v-model="textValue" :max="20" placeholder="请输入意见"></x-textarea>
                 </group>
 
-                <div style="height:100px"></div>
+                <div style="height:80px"></div>
+
+                <div class="button_container_cls">
+                    <div v-for="(item, index) in displayOptionButtonData" :key="index" class="button_item_cls">
+                        <x-button v-if="item.op != 'more'" :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
+                            {{ processButtonText(item.text) }}
+                        </x-button>
+
+                        <x-button v-if="item.op == 'more'" :ref="item.op" type="default" class="button_cls" @click.native="moreItemClick(item)">
+                            更多
+                        </x-button>
+
+                        <!-- <x-button v-else-if="index == 2" :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
+                            {{ processButtonText(item.text) }}
+                        </x-button> -->
+
+                    </div>
+                </div>
             </div>
 
             <div v-show="!hDocIsHidden">
@@ -36,13 +53,14 @@
             <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
         </div>
 
-        <div class="button_container_cls">
-
-            <div v-for="item in optionButtonData" :key="item.op" class="button_item_cls">
-                <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
-                    {{ processButtonText(item.text) }}
-                </x-button>
-            </div>
+        <div v-transfer-dom>
+            <popup v-model="mutiButtonShow">
+                <div v-for="(item, index) in optionButtonData" :key="index" class="button_item_cls">
+                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
+                        {{ processButtonText(item.text) }}
+                    </x-button>
+                </div>
+            </popup>
         </div>
 
     </div>
@@ -50,7 +68,16 @@
 
 <script>
 import { HTransinfo, HDocCell } from "hrkj-vux-components";
-import { Tab, TabItem, Cell, Group, XTextarea, XButton } from "vux";
+import {
+    Tab,
+    TabItem,
+    Cell,
+    Group,
+    XTextarea,
+    XButton,
+    Popup,
+    TransferDom
+} from "vux";
 import HttpBusinessRequest from "@/module/api/api.js";
 import workflowData from "../workflow_data.js";
 
@@ -58,6 +85,9 @@ import DetailFragment from "./DetailFragment.vue";
 
 export default {
     name: "transDetail",
+    directives: {
+        TransferDom
+    },
     data() {
         return {
             docListData: [
@@ -90,8 +120,10 @@ export default {
             rightButtonData: {},
 
             optionButtonData: [],
+            displayOptionButtonData: [],
 
-            textValue: ""
+            textValue: "",
+            mutiButtonShow: false
         };
     },
     activated() {
@@ -133,6 +165,9 @@ export default {
         MXWebui.hideOptionMenu();
     },
     methods: {
+        moreItemClick(data) {
+            this.mutiButtonShow = true;
+        },
         workflowTodoDetailRequest() {
             var me = this;
             let request = HttpBusinessRequest.workflowTodoDetail();
@@ -155,7 +190,24 @@ export default {
             this.evalFunc(responeData.evalFunc);
         },
         setButton(buttonData) {
+            this.displayOptionButtonData = []
             this.optionButtonData = buttonData;
+
+            if (buttonData.length > 3) {
+                for (let i = 0; i < buttonData.length; i++) {
+                    if (i < 2) {
+                        this.displayOptionButtonData.push(
+                            this.optionButtonData[i]
+                        );
+                    }
+                }
+                this.displayOptionButtonData.push({
+                    op: "more",
+                    text: "更多",
+                });
+            } else {
+                this.displayOptionButtonData = buttonData;
+            }
         },
         /**
          * 通过服务端返回，动态执行函数
@@ -173,6 +225,7 @@ export default {
         },
 
         buttonItemClick(item) {
+            this.mutiButtonShow = false;
             console.log(item);
             // TODO: 根据业务不同自行处理
 
@@ -256,21 +309,16 @@ export default {
         Group,
         XTextarea,
         XButton,
-        DetailFragment
+        DetailFragment,
+        Popup
     }
 };
 </script>
 
 <style lang="less" scoped>
-html,
-body {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    margin: 0;
-}
 
 .button_container_cls {
+    display: -webkit-flex;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -283,15 +331,21 @@ body {
     // top: 0px;
     bottom: 0px;
 
+    background-color: aquamarine;
+
     .button_item_cls {
-        width: 100%;
+        // width: 100%;
+
+        -webkit-flex: 1;
+        flex: 1;
     }
 }
 
 .button_cls {
     height: 52px;
-    width: 100%;
-    margin: 0px 0px 0px 0px;
+    // width: 100%;
+
+    // margin: 0px 0px 0px 0px;
 
     white-space: nowrap;
     // overflow: hidden;

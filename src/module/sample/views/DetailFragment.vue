@@ -1,7 +1,9 @@
 <template>
     <div>
         <group gutter="0px">
-            <cell primary="content" v-for="item in detailData" :key="item.title" :title="item.title" :value="item.detail"></cell>
+            <cell primary="content" v-for="item in detailData" :key="item.title" :title="item.title">
+                <div class="detail_cls">{{item.detail}}</div>
+            </cell>
         </group>
     </div>
 </template>
@@ -15,7 +17,7 @@ export default {
             detailData: [
                 {
                     title: "审批编号",
-                    detail: "2397428356527856375856"
+                    detail: "GW20180930"
                 },
                 {
                     title: "所在部门",
@@ -26,11 +28,11 @@ export default {
                     detail: "事假"
                 },
                 {
-                    title: "开始时间",
+                    title: "开始日期",
                     detail: "2018-06-08"
                 },
                 {
-                    title: "结束时间",
+                    title: "结束日期",
                     detail: "2018-06-16"
                 },
                 {
@@ -42,7 +44,7 @@ export default {
                     detail: "出国旅游，先去韩国，停留2天后坐船去日本"
                 },
                 {
-                    title: "总天数",
+                    title: "总计天数",
                     detail: "7天"
                 }
             ]
@@ -59,4 +61,8 @@ export default {
 </script>
 
 <style lang="less">
+.detail_cls {
+    margin-left: 50px;
+    text-align: left;
+}
 </style>

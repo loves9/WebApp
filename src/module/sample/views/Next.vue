@@ -4,7 +4,7 @@
             <div>
                 <span style="font-size:14px; color:#606266">请确认下一步任务的办理人</span>
             </div>
-            <span style="font-size:18px">部门领导审批</span>
+            <span style="font-size:18px">"部门领导审批"</span>
         </div>
 
         <div style="background-color: #fff; margin-top:10px">
@@ -308,11 +308,6 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0px 15px 0px 15px;
-
-    .button_item_cls {
-        padding-right: 5px;
-        width: 100%;
-    }
 }
 
 .button_cls {
