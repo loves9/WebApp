@@ -8,16 +8,6 @@
         </div>
 
         <div style="background-color: #fff; margin-top:10px">
-            <!-- <i class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; padding:15px" @click="selectUser"></i> -->
-
-            <!-- <flexbox orient="vertical">
-                <flexbox-item v-for="(item, index) in userData" :key="index">
-                    <div class="display_user_cls">
-                        <h-doc-cell :title="item.name" :image="item.avatar_url" :subTitle="item.dept_name"></h-doc-cell>
-                        <i class="iconfont ic-jianhao-yuan-l" style="font-size:30px; color:red; padding:15px" @click="deletUser"></i>
-                    </div>
-                </flexbox-item>
-            </flexbox> -->
 
             <grid :show-lr-borders="false" :show-vertical-dividers=true :cols=4>
                 <div v-for="(item, index) in userData" :key="index">
@@ -33,11 +23,6 @@
 
                         <!-- <i v-if="item.addItem" slot="icon" class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; margin-top:-50px" @click="selectUser"></i> -->
                     </grid-item>
-
-                    <!-- <grid-item v-if="item.addItem" label="添加" @on-item-click="selectUser">
-                        <i slot="icon" class="iconfont ic-jiahao-yuan-l" style="font-size:40px; color:#298CCF; margin-top:-50px" @click="selectUser"></i>
-
-                    </grid-item> -->
                 </div>
             </grid>
 
@@ -51,8 +36,7 @@
 
         <div class="next_button_container_cls">
             <x-button class="button_cls" @click.native="leftButtonClick">返回</x-button>
-
-            <x-button type="primary" class="button_cls" style="margin-left:5px; color:#fff; margin-top:10px" @click.native="rightButtonClick">确定</x-button>
+            <x-button type="primary" class="button_cls" style="color:#fff; margin-top:10px" @click.native="rightButtonClick">确定</x-button>
         </div>
 
         <div transfer-dom>
@@ -60,8 +44,8 @@
                 <div>
                     <flexbox orient="vertical">
                         <flexbox-item v-for="(item, index) in limitUserData" :key="index">
-                            <div class="select_item_cls">
-                                <check-icon :value.sync="item.selected" @click.native="limitedSelect(item)">
+                            <div class="select_item_cls" @click="limitedSelect(item)">
+                                <check-icon :value="item.selected">
                                 </check-icon>
                                 <h-doc-cell :title="item.name" :image="item.avatar_url" :subTitle="item.dept_name"></h-doc-cell>
                             </div>
@@ -240,8 +224,7 @@ export default {
         limitedSelect(item) {
             this.showPop = false;
 
-            if (this.checkState) {
-            }
+            item.selected = !item.selected
 
             for (let i = 0; i < this.limitUserData.length; i++) {
                 if (this.limitUserData[i].selected) {
@@ -307,18 +290,23 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0px 15px 0px 15px;
+    // padding: 0px 15px 0px 15px;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .button_cls {
     height: 52px;
-    width: 172px;
-    margin: 10px 5px 0px 0px;
+    width: 100%;
+    flex: 1;
+    margin: 10px 0px 0px 0px;
 }
 
 .button_agree_cls {
     background-color: #298ccf;
-    margin-left: 2px;
+    // margin-left: 2px;
 }
 
 .display_user_cls {
