@@ -146,7 +146,4 @@ export default {
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
 
-body {
-    height: 100%;
-}
 </style>
