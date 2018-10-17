@@ -93,7 +93,7 @@ export default {
     sendRequest(param) {
         MXCommon.ajax({
             type: "post",
-            url: 'http://dt-rxtbak.chamc.com.cn:8080/dt/recv',
+            url: process.env.statisticsURL,
             dataType: "json",
             async: true,
             data: param,
