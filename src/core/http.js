@@ -253,6 +253,12 @@ class BusinessRequest {
                 }
             })
         } else {
+            if (process.env == 'development') {
+                GlobalVueObject.$vux.toast.show({
+                    text: 'MXCommon未初始化，正在调用axios'
+                })
+            }
+            
             axios({
                 method: _this.config.method,
                 url: _this.config.url,
