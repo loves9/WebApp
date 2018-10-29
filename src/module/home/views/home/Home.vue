@@ -1,5 +1,15 @@
 <template>
     <div>
+        <div v-transfer-dom>
+      <x-dialog v-model="showDialogStyle" hide-on-blur :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
+        <p style="color:#fff;text-align:center;" @click="showDialogStyle = false">
+          <span style="font-size:30px;">HELLO WORLD</span>
+          <br>
+          <br>
+          <x-icon type="ios-close-outline" style="fill:#fff;"></x-icon>
+        </p>
+      </x-dialog>
+    </div>
         <group>
             <cell title="金额：" :value="spend" is-link></cell>
         </group>
@@ -21,7 +31,8 @@ import {
     ViewBox,
     XButton,
     Popup,
-    Calendar
+    Calendar,
+    XDialog
 } from "vux";
 
 import HttpBusinessRequest from "@/module/api/api.js";
@@ -36,14 +47,16 @@ export default {
         Cell,
         ViewBox,
         XButton,
-        Popup
+        Popup,
+        XDialog
     },
     data() {
         return {
             message: "66666",
             pageCount: 2,
             popheight: window.screen.height,
-            showpop: false
+            showpop: false,
+            showDialogStyle: true
         };
     },
     created() {},
