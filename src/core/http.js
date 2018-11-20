@@ -244,7 +244,7 @@ class BusinessRequest {
                     stop(data)
 
                     if (xhr.status == 400 || xhr.status == 404 || xhr.status == 405 || xhr.status == 415) {
-                        GlobalVueObject.easyPush('/upgradePage', { errorData: data, type: 'system' })
+                        // GlobalVueObject.easyPush('/upgradePage', { errorData: data, type: 'system' })
                     }
                     // TODO: 系统升级
                     else if (0) {
