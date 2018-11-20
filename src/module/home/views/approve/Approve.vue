@@ -1,5 +1,16 @@
 <template>
-    <div id="app">
+    <div>
+        <div v-transfer-dom>
+            <x-dialog v-model="showDialogStyle" hide-on-blur :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
+                <p style="color:#fff;text-align:center;" @click="showDialogStyle = false">
+                    <span style="font-size:30px;">HELLO WORLD</span>
+                    <br>
+                    <br>
+                    <x-icon type="ios-close-outline" style="fill:#fff;"></x-icon>
+                </p>
+            </x-dialog>
+        </div>
+
         <button-tab style="padding: 20px">
             <button-tab-item>审批人</button-tab-item>
             <button-tab-item selected>已办</button-tab-item>
@@ -41,10 +52,15 @@ import {
     XHeader,
     ButtonTab,
     ButtonTabItem,
-    XButton
+    XButton,
+    XDialog,
+    TransferDom
 } from "vux";
 
 export default {
+    directives: {
+        TransferDom
+    },
     components: {
         Radio,
         Drawer,
@@ -54,10 +70,14 @@ export default {
         XHeader,
         ButtonTab,
         ButtonTabItem,
-        XButton
+        XButton,
+        XDialog,
+        TransferDom
     },
     data() {
-        return {};
+        return {
+            showDialogStyle: true
+        };
     },
     mounted() {},
     methods: {
@@ -65,7 +85,8 @@ export default {
             console.log("66666666666");
         },
         back() {
-            this.$router.back(-1);
+            console.log("back");
+            this.easyPop(-1);
         }
     },
     computed: {
@@ -86,19 +107,6 @@ export default {
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
-
-html,
-body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-}
-body {
-    background-color: #fbf9fe;
-}
-#app {
-    height: 100%;
-}
 
 .vux-x-icon {
     fill: @red;

@@ -77,6 +77,7 @@ router.beforeEach(function (to, from, next) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('updateDirection', { direction: 'turn-on' })
     } else {
+
       // 判断左滑返回
       if (!isPush && (Date.now() - endTime) < 377) {
         store.commit('updateDirection', { direction: '' })

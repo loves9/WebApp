@@ -11,10 +11,14 @@ export default {
         {
             path: '/home',
             component: home
+            
         },
         {
             path: '/approve',
-            component: approve
+            component: approve,
+            meta: {
+                keepAlive: true
+            }
         }
     ]
 }

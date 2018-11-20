@@ -1,15 +1,5 @@
 <template>
     <div>
-        <div v-transfer-dom>
-      <x-dialog v-model="showDialogStyle" hide-on-blur :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
-        <p style="color:#fff;text-align:center;" @click="showDialogStyle = false">
-          <span style="font-size:30px;">HELLO WORLD</span>
-          <br>
-          <br>
-          <x-icon type="ios-close-outline" style="fill:#fff;"></x-icon>
-        </p>
-      </x-dialog>
-    </div>
         <group>
             <cell title="金额：" :value="spend" is-link></cell>
         </group>
@@ -55,8 +45,7 @@ export default {
             message: "66666",
             pageCount: 2,
             popheight: window.screen.height,
-            showpop: false,
-            showDialogStyle: true
+            showpop: false
         };
     },
     created() {},
@@ -103,7 +92,6 @@ export default {
         },
 
         upgradePage() {
-            
             // this.$router.push({ path: "/upgradePage" });
         },
         getPDFUrl() {
@@ -117,7 +105,9 @@ export default {
                 } //这里可以处理获取到的当前用户数据
             );
 
-            MXCommon.chooseFile(2, ['file'],
+            MXCommon.chooseFile(
+                2,
+                ["file"],
                 function(result) {
                     console.log(result);
                 } //这里可以处理获取到的当前用户数据
@@ -144,8 +134,7 @@ export default {
             request.send();
         }
     },
-    watch: {
-    },
+    watch: {},
     computed: {
         spend() {
             // console.log(this.$core);
@@ -158,5 +147,4 @@ export default {
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
 @import "~vux/src/styles/tap.less";
-
 </style>
