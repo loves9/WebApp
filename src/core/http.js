@@ -80,7 +80,7 @@ class BusinessRequest {
          *  2. null  :空值，发送http请求的过程中不显示 ProgressBar。
          *  3. string:非空字符串，发送http请求的过程中显示一个 ProgressBar，其中的文字为该属性设定的值。
          */
-        maskMsg: '请稍后...',
+        maskMsg: '请稍候...',
 
         /**
          *  http请求出错时是否自动显示 toast 消息，测试环境下此值无效，强制弹出错误 toast 。
