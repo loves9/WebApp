@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div style="position:absolute; top:0px; width:100%;">
             <div style="background-color:#fff; padding:20px 15px 20px; 15px;">
                 <span style="font-size:18px">{{workflowTitle}}</span>
@@ -13,7 +12,7 @@
                 <tab-item selected @on-item-click="itemTabClick(0)">详情</tab-item>
                 <tab-item @on-item-click="itemTabClick(1)">附件</tab-item>
                 <tab-item @on-item-click="itemTabClick(2)">流转明细</tab-item>
-                <!-- <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item> -->
+                <tab-item @on-item-click="itemTabClick(3)">流转图</tab-item>
             </tab>
 
             <div v-show="!gruopIsHidden">
@@ -26,19 +25,30 @@
                 <div style="height:80px"></div>
 
                 <div class="button_container_cls">
-                    <div v-for="(item, index) in displayOptionButtonData" :key="index" class="button_item_cls">
-                        <x-button v-if="item.op != 'more'" :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
-                            {{ processButtonText(item.text) }}
-                        </x-button>
+                    <div
+                        v-for="(item, index) in displayOptionButtonData"
+                        :key="index"
+                        class="button_item_cls"
+                    >
+                        <x-button
+                            v-if="item.op != 'more'"
+                            :ref="item.op"
+                            :type="item.op == 'agree'? 'primary':'default'"
+                            class="button_cls"
+                            @click.native="buttonItemClick(item)"
+                        >{{ processButtonText(item.text) }}</x-button>
 
-                        <x-button v-if="item.op == 'more'" :ref="item.op" type="default" class="button_cls" @click.native="moreItemClick(item)">
-                            更多
-                        </x-button>
+                        <x-button
+                            v-if="item.op == 'more'"
+                            :ref="item.op"
+                            type="default"
+                            class="button_cls"
+                            @click.native="moreItemClick(item)"
+                        >更多</x-button>
 
                         <!-- <x-button v-else-if="index == 2" :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
                             {{ processButtonText(item.text) }}
-                        </x-button> -->
-
+                        </x-button>-->
                     </div>
                 </div>
             </div>
@@ -46,23 +56,35 @@
             <div v-show="!hDocIsHidden">
                 <div v-for="item in docListData" :key="item.title">
                     <h-doc-cell :title="item.title" :image="item.image" :subTitle="item.subTitle"></h-doc-cell>
-                    <div v-if="item != docListData[docListData.length - 1]" style="height:1px; background-color:#E7E7E7; margin-left:15px"></div>
+                    <div
+                        v-if="item != docListData[docListData.length - 1]"
+                        style="height:1px; background-color:#E7E7E7; margin-left:15px"
+                    ></div>
                 </div>
             </div>
 
             <h-transinfo v-show="!transIsHidden" :transDataModle="transInfoData"></h-transinfo>
+
+            <div v-show="!hIframeIsHidden">
+                <span>
+                    点击可再次打开
+                </span>
+
+            </div>
         </div>
 
         <div v-transfer-dom>
             <popup v-model="mutiButtonShow">
                 <div v-for="(item, index) in optionButtonData" :key="index" class="button_item_cls">
-                    <x-button :ref="item.op" :type="item.op == 'agree'? 'primary':'default'" class="button_cls" @click.native="buttonItemClick(item)">
-                        {{ processButtonText(item.text) }}
-                    </x-button>
+                    <x-button
+                        :ref="item.op"
+                        :type="item.op == 'agree'? 'primary':'default'"
+                        class="button_cls"
+                        @click.native="buttonItemClick(item)"
+                    >{{ processButtonText(item.text) }}</x-button>
                 </div>
             </popup>
         </div>
-
     </div>
 </template>
 
@@ -157,7 +179,8 @@ export default {
         this.workflowTransferRequest();
     },
     created() {},
-    mounted() {},
+    mounted() {
+    },
     deactivated() {
         MXWebui.hideOptionMenu();
     },
@@ -190,7 +213,7 @@ export default {
             this.evalFunc(responeData.evalFunc);
         },
         setButton(buttonData) {
-            this.displayOptionButtonData = []
+            this.displayOptionButtonData = [];
             this.optionButtonData = buttonData;
 
             if (buttonData.length > 3) {
@@ -203,7 +226,7 @@ export default {
                 }
                 this.displayOptionButtonData.push({
                     op: "more",
-                    text: "更多",
+                    text: "更多"
                 });
             } else {
                 this.displayOptionButtonData = buttonData;
@@ -274,20 +297,30 @@ export default {
                     this.hIframeIsHidden = true;
                     break;
                 case 3:
-                    // this.gruopIsHidden = true;
+                    this.gruopIsHidden = true;
+                    this.transIsHidden = true;
+                    this.hDocIsHidden = true;
+                    this.hIframeIsHidden = false;
 
-                    // this.transIsHidden = true;
-                    // this.hDocIsHidden = true;
-                    // this.hIframeIsHidden = false;
-
-                    window.open(
-                        "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"
+                    MXCommon.openUrlPage(
+                        "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485",
+                        function() {
+                            console.log("success");
+                        }
                     );
 
-                    let arr = [{ title: "", key: "help", icon: "" }];
-                    MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
-                        // 帮助
-                    });
+                    // http://192.168.1.126:8080/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processInstanceId=430495&processDefinitionId=tenant-test-1:1:430456
+
+                    // "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"
+
+                    // window.open(
+                    //     "http://192.168.1.126:8080/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processInstanceId=430495&processDefinitionId=tenant-test-1:1:430456"
+                    // );
+
+                    // let arr = [{ title: "", key: "help", icon: "" }];
+                    // MXWebui.setCustomHeaderMenu(JSON.stringify(arr), result => {
+                    //     // 帮助
+                    // });
 
                     break;
             }
@@ -316,7 +349,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .button_container_cls {
     display: -webkit-flex;
     display: flex;

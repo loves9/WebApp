@@ -43,10 +43,9 @@ export default {
                     break;
             }
 
-            if(this.listDataSource.length == 0){                
+            if (this.listDataSource.length == 0) {
                 this.noData = true;
-
-            }else{
+            } else {
                 this.noData = false;
             }
         },
@@ -61,7 +60,7 @@ export default {
                 this.analysisData(data);
             };
             request.error = (data, status, xhr) => {
-                console.log('error', data)
+                console.log("error", data);
             };
             // 发送请求
             request.send();
