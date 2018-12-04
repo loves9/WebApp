@@ -302,8 +302,11 @@ export default {
                     this.hDocIsHidden = true;
                     this.hIframeIsHidden = false;
 
+                    // 由于Android缩放问题 需要在url后面加上 ?enableZoom=true
+                    let url = "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485" + "?enableZoom=true";
+
                     MXCommon.openUrlPage(
-                        "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485",
+                        url,
                         function() {
                             console.log("success");
                         }
@@ -314,7 +317,7 @@ export default {
                     // "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"
 
                     // window.open(
-                    //     "http://192.168.1.126:8080/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processInstanceId=430495&processDefinitionId=tenant-test-1:1:430456"
+                    //     "http://10.64.140.50/workflow-console/workflow-page/diagram-viewer/indexDialog.html?processDefinitionId=zbwsdazl_process:16:212733&processInstanceId=337485"
                     // );
 
                     // let arr = [{ title: "", key: "help", icon: "" }];
