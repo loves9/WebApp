@@ -84,7 +84,20 @@ export default {
             ]
         };
     },
+    created(){
+        console.log('created')
+    },
+    destroyed(){
+                console.log('destroyed')
+
+    },
+    activated(){
+                console.log('activated')
+
+    },
     mounted() {
+                console.log('mounted')
+
         let _this = this
         document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
         function onDeviceReady() {

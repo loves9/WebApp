@@ -18,7 +18,10 @@ export default {
         // 首页
         {
             path: '/entry',
-            component: entry
+            component: entry,
+            meta: {
+                keepAlive: true
+            }
         },
         // 待办 已办
         {

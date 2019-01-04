@@ -23,6 +23,7 @@ const HttpBusinessRequest = {
 	 */ 
 	queryFeeCategory(params) {
 		var args = {
+			maskMsg: false,
 			method: "post",
 			url: 'api://flow_info_app', // 带api://会自动拼接baseurl
 			parameter: {
