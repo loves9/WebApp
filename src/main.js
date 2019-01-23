@@ -17,9 +17,10 @@ import Native from '@/core/native_plugin.js'
 window.NativeApi = Native
 
 // 引入vux组件库
-import { ToastPlugin, LoadingPlugin } from 'vux'
+import { ToastPlugin, LoadingPlugin, TransferDom } from 'vux'
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
+Vue.directive('transfer-dom', TransferDom)
 
 Vue.use(VueRouter)
 

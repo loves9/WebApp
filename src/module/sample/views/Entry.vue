@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h-flexbox :componentListData="dataSource" v-on:HREVENT_itemClick="itemClick"></h-flexbox>
+        <h-grid :dataSource="dataSource" @onPress="itemClick"></h-grid>
         <span class="sub_label_cls">新建流程</span>
-        <h-flexbox :componentListData="dataSourceNew" v-on:HREVENT_itemClick="itemClick_two"></h-flexbox>
+        <h-grid :dataSource="dataSourceNew" @onPress="itemClick_two"></h-grid>
 
     </div>
 </template>
 
 <script>
-import { HFlexbox, HDocCell } from "hrkj-vux-components";
+import { HGrid, HDocCell } from "hrkj-vux-components";
 export default {
     data() {
         return {
@@ -118,7 +118,7 @@ export default {
         }
     },
     components: {
-        HFlexbox,
+        HGrid,
         HDocCell
     }
 };
