@@ -194,8 +194,10 @@ class BusinessRequest {
                 stopTimeStamp = new Date().getTime()
                 timeInterval = stopTimeStamp - startTimeStamp
 
+                const properties = require("../../package.json");
+                const app_id = properties.name;
                 // 上送数据
-                Statistics.intervalEvent('', _this.config.url, message, timeInterval)
+                Statistics.intervalEvent(app_id, _this.config.url, message, timeInterval)
             }
 
             start() // 开始计时

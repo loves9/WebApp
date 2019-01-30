@@ -1,6 +1,6 @@
 /**
  * 数据统计
- * 
+ *
  */
 /*{
     "appid": "string",  // 应用id，可以先行自定义，名称要有意义
@@ -8,29 +8,20 @@
     "did": "string",    // 设备id（如imei或serial number），必要时MD5(?)
     "event": "string",  // 上报事件名
     "model": "string",  // 机型（如能取到）
-    "approvalUser":{
-        name:"",
-        loginName:"",
-        deptName:''
-    },
-    "seg": {            // 事件属性，与事件有关，可以根据实际情况设置
-        "req": {
-		    "api": '',
-		    "param": '',
-	    },
-	    "res": {
-		    "status": '',
-		    "statusText": ''
-	    },
-        "dur": "string",  // 调用时间
-        "info": "string"  // 异常信息
-        "interval": ''
-    },
+    "name": "",
+    "loginName": "",
+    "deptName": "",
+    "reqApi": "",
+    "reqParam": "",
+    "resCode": "",
+    "resStatusText": "",
+    "dur": "string", // 调用时间
+    "info": "string", // 异常信息
+    "interval": "string",
     "ua": "string",     // 浏览器 (?)
     "uid": "string"     // 系统赋予的账号或id，必要时MD5加密(?)
 }*/
 export default {
-
     /**
      * 接口埋点
      *
@@ -43,25 +34,25 @@ export default {
             appid: appid,
             ctime: new Date(),
             did: device.uuid,
-            event: 'exception',
+            event: "exception",
             model: device.model,
-            approvalUser:{
-                name:"",
-                loginName:"",
-                deptName:''
-            },
-            seg: {
-                api: api,
-                dur: '',
-                info: describe
-            },
+            name: "",
+            loginName: "",
+            deptName: "",
+            reqApi: api,
+            reqParam: "",
+            resCode: "",
+            resStatusText: "",
+            dur: "",
+            info: describe,
+            interval: "",
             ua: window.agent,
-            uid: ''
-        }
+            uid: ""
+        };
 
-        console.log(navigator.userAgent)
+        console.log(navigator.userAgent);
 
-        this.sendRequest(requestParams)
+        this.sendRequest(requestParams);
     },
 
     /**
@@ -76,33 +67,39 @@ export default {
             appid: appid,
             ctime: new Date(),
             did: device.uuid,
-            event: 'entry',
+            event: "entry",
             model: device.model,
-            seg: {
-                api: api,
-                dur: '',
-                info: describe
-            },
+            name: "",
+            loginName: "",
+            deptName: "",
+            reqApi: api,
+            reqParam: "",
+            resCode: "",
+            resStatusText: "",
+            dur: "",
+            info: describe,
+            interval: "",
             ua: window.agent,
-            uid: ''
-        }
+            uid: ""
+        };
 
-        this.sendRequest(requestParams)
+        this.sendRequest(requestParams);
     },
 
     sendRequest(param) {
+        if (process.env.statisticsURL == "") {
+            return;
+        }
+
         MXCommon.ajax({
             type: "post",
             url: process.env.statisticsURL,
             dataType: "json",
-            async: true,
             data: param,
-            complete: function () { },
-            success: function (data, status, xhr) {
-            },
-            error: function (data, status, xhr) {
-            }
-        })
+            complete: function() {},
+            success: function(data, status, xhr) {},
+            error: function(data, status, xhr) {}
+        });
     },
 
     /**
@@ -119,36 +116,28 @@ export default {
             appid: appid,
             ctime: new Date(),
             did: device.uuid,
-            event: 'entry',
+            event: "entry",
             model: device.model,
-            approvalUser:{
-                name:"",
-                loginName:"",
-                deptName:''
-            },
-            seg: {
-                req: {
-                    api: '',
-                    param: '',
-                },
-                res: {
-                    status: '',
-                    statusText: ''
-                },
-                dur: '',
-                info: describe,
-                interval: interval
-            },
+            name: "",
+            loginName: "",
+            deptName: "",
+            reqApi: api,
+            reqParam: "",
+            resCode: "",
+            resStatusText: "",
+            dur: "",
+            info: describe,
+            interval: interval,
             ua: window.agent,
-            uid: ''
-        }
+            uid: ""
+        };
 
-        NativeApi.session.getUser(function(user){
-            requestParams.approvalUser.name = user.name
-            requestParams.approvalUser.loginName = user.login_name
-            requestParams.approvalUser.deptName = user.dept_name
+        NativeApi.session.getUser(function(user) {
+            requestParams.approvalUser.name = user.name;
+            requestParams.approvalUser.loginName = user.login_name;
+            requestParams.approvalUser.deptName = user.dept_name;
 
-            _this.sendRequest(requestParams)
-        })
+            _this.sendRequest(requestParams);
+        });
     }
-}
+};
