@@ -133,9 +133,9 @@ export default {
         };
 
         NativeApi.session.getUser(function(user) {
-            requestParams.approvalUser.name = user.name;
-            requestParams.approvalUser.loginName = user.login_name;
-            requestParams.approvalUser.deptName = user.dept_name;
+            requestParams.name = user.name;
+            requestParams.loginName = user.login_name;
+            requestParams.deptName = user.dept_name;
 
             _this.sendRequest(requestParams);
         });
