@@ -180,6 +180,8 @@ class BusinessRequest {
 
         parameter = parameter || this.config.parameter;
 
+        console.log('url=>', this.config.url)
+
         // 适配手机端与pc端
         if ((typeof (MXCommon) != 'undefined')) {
             var timeInterval;
@@ -190,14 +192,14 @@ class BusinessRequest {
                 startTimeStamp = new Date().getTime()
             }
             //暂停函数
-            function stop(message) {
+            function stop(data, status, xhr, reqParams) {
                 stopTimeStamp = new Date().getTime()
                 timeInterval = stopTimeStamp - startTimeStamp
 
                 const properties = require("../../package.json");
                 const app_id = properties.name;
                 // 上送数据
-                Statistics.intervalEvent(app_id, _this.config.url, message, timeInterval)
+                Statistics.intervalEvent(app_id, _this.config.url, timeInterval, data, status, xhr, reqParams)
             }
 
             start() // 开始计时
@@ -229,7 +231,7 @@ class BusinessRequest {
                     }
 
                     // 停止计时
-                    stop(data)
+                    stop(data, status, xhr, parameter)
                 },
                 error: function (data, status, xhr) {
                     GlobalVueObject.$vux.loading.hide()
@@ -243,7 +245,7 @@ class BusinessRequest {
                     _this.error(data, status, xhr)
 
                     // 停止计时
-                    stop(data)
+                    stop(data, status, xhr, parameter)
 
                     if (xhr.status == 400 || xhr.status == 404 || xhr.status == 405 || xhr.status == 415) {
                         // GlobalVueObject.easyPush('/upgradePage', { errorData: data, type: 'system' })

@@ -22,6 +22,32 @@
     "uid": "string"     // 系统赋予的账号或id，必要时MD5加密(?)
 }*/
 export default {
+    getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate =
+            date.getFullYear() +
+            seperator1 +
+            month +
+            seperator1 +
+            strDate +
+            " " +
+            date.getHours() +
+            seperator2 +
+            date.getMinutes() +
+            seperator2 +
+            date.getSeconds();
+        return currentdate;
+    },
     /**
      * 接口埋点
      *
@@ -32,9 +58,9 @@ export default {
     exceptionEvent(appid, api, describe) {
         let requestParams = {
             appid: appid,
-            ctime: new Date(),
+            ctime: this.getNowFormatDate(),
             did: device.uuid,
-            event: "exception",
+            event: "",
             model: device.model,
             name: "",
             loginName: "",
@@ -65,7 +91,7 @@ export default {
     entryEvent(appid, api, describe) {
         let requestParams = {
             appid: appid,
-            ctime: new Date(),
+            ctime: this.getNowFormatDate(),
             did: device.uuid,
             event: "entry",
             model: device.model,
@@ -91,14 +117,20 @@ export default {
             return;
         }
 
+        console.log(JSON.stringify(param))
+
+
         MXCommon.ajax({
             type: "post",
             url: process.env.statisticsURL,
+            contentType: 'application/json',
             dataType: "json",
-            data: param,
+            data: JSON.stringify(param),
             complete: function() {},
-            success: function(data, status, xhr) {},
-            error: function(data, status, xhr) {}
+            success: function(data, status, xhr) {
+            },
+            error: function(data, status, xhr) {
+            }
         });
     },
 
@@ -110,11 +142,11 @@ export default {
      * @param {*} describe
      * @param {*} interval 时间间隔
      */
-    intervalEvent(appid, api, describe, interval) {
+    intervalEvent(appid, api, interval, data, status, xhr, reqParams) {
         let _this = this;
         let requestParams = {
             appid: appid,
-            ctime: new Date(),
+            ctime: this.getNowFormatDate(),
             did: device.uuid,
             event: "entry",
             model: device.model,
@@ -122,11 +154,11 @@ export default {
             loginName: "",
             deptName: "",
             reqApi: api,
-            reqParam: "",
-            resCode: "",
-            resStatusText: "",
+            reqParam: JSON.stringify(reqParams), // ==
+            resCode: xhr.status, // ==
+            resStatusText: xhr.statusText, // ==
             dur: "",
-            info: describe,
+            info: '',
             interval: interval,
             ua: window.agent,
             uid: ""
@@ -136,7 +168,6 @@ export default {
             requestParams.name = user.name;
             requestParams.loginName = user.login_name;
             requestParams.deptName = user.dept_name;
-
             _this.sendRequest(requestParams);
         });
     }

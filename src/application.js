@@ -1,6 +1,8 @@
 // 引入iconfont
 import '@/lib/iconfont/iconfont.css';
 
+import './style/public.less'
+
 var Application = {
     /**
      * 业务入口，初始化之类的可以写在这里
