@@ -27,8 +27,6 @@ import {
 
 import HttpBusinessRequest from "@/module/api/api.js";
 
-import Statistics from "@/core/statistics";
-
 export default {
     components: {
         Radio,
@@ -121,13 +119,13 @@ export default {
         sendRequest() {
             var me = this;
             let request = HttpBusinessRequest.queryMockServer();
-            request.complete = function() {
+            request.complete = () => {
                 console.log("complete");
             };
-            request.success = function(data, status, xhr) {
+            request.success = (data, status, xhr) => {
                 console.log(data);
             };
-            request.error = function(data, status, xhr) {
+            request.error = (data, status, xhr) => {
                 console.log(data);
             };
             // 发送请求
