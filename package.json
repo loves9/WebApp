@@ -14,7 +14,8 @@
     "mock": "node_modules/.bin/json-server --watch test/mock/db.json --port 3030",
     "mockdev": "npm run mock & npm run dev",
     "createModule": "node cmd/module.js --module",
-    "createView": "node cmd/module.js --view"
+    "createView": "node cmd/module.js --view",
+    "package": "node cmd/package.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,7 +27,10 @@
     "vuex": "^3.1.0",
     "vuex-i18n": "^1.11.0",
     "vuex-router-sync": "^5.0.0",
-    "vux": "^2.9.2"
+    "vux": "^2.9.2",
+    "archiver": "^2.1.0",
+    "fs-extra": "^0.30.0",
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
