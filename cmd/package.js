@@ -72,10 +72,10 @@ let build = function({ projectInfo, projectRootPath, savePath, projectName }) {
     }
 };
 
-
+const projPath = process.cwd()
 
 build({
     projectInfo: {frame: 'vue'},
-    projectRootPath: '/Users/ifeng/Documents/GitHub/webapp',
-    savePath: '/Users/ifeng/Documents/GitHub/webapp/build/output'
+    projectRootPath: projPath,
+    savePath: projPath + '/build/output'
 })
