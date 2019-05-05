@@ -27,10 +27,7 @@
     "vuex": "^3.1.0",
     "vuex-i18n": "^1.11.0",
     "vuex-router-sync": "^5.0.0",
-    "vux": "^2.9.2",
-    "archiver": "^2.1.0",
-    "fs-extra": "^0.30.0",
-    "ramda": "^0.25.0"
+    "vux": "^2.9.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -78,6 +75,7 @@
     "url-loader": "^0.5.8",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.7.3",
+    "vue-server-renderer": "^2.6.10",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.22",
     "vux-loader": "^1.2.9",
@@ -87,7 +85,10 @@
     "webpack-dev-server": "^2.11.3",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-merge": "^4.1.4",
-    "yaml-loader": "^0.4.0"
+    "yaml-loader": "^0.4.0",
+    "archiver": "^2.1.0",
+    "fs-extra": "^0.30.0",
+    "ramda": "^0.25.0"
   },
   "engines": {
     "node": ">= 8.0.0",
