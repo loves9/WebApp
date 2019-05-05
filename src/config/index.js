@@ -1,1 +1,1 @@
-export const baseURL = process.env.baseURL
+export const baseURL = process.env.BASE_URL
