@@ -113,7 +113,7 @@ export default {
     },
 
     sendRequest(param) {
-        if (process.env.statisticsURL == "") {
+        if (process.env.STATISTICS_URL == "") {
             return;
         }
 
@@ -122,7 +122,7 @@ export default {
 
         MXCommon.ajax({
             type: "post",
-            url: process.env.statisticsURL,
+            url: process.env.STATISTICS_URL,
             contentType: 'application/json',
             dataType: "json",
             data: JSON.stringify(param),

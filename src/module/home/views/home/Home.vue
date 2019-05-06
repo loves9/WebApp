@@ -48,14 +48,6 @@ export default {
     },
     created() {},
     mounted() {
-        document.addEventListener("deviceready", onDeviceReady, false); //等待cordova加载
-
-        function onDeviceReady() {
-            MXSetting &&
-                typeof MXSetting.setConsoleLogEnabled === "function" &&
-                MXSetting.setConsoleLogEnabled();
-            console.log("ondeviceready");
-        }
 
         // this.$store.dispatch("savePassText", {
         //     text: "这是home page 传过来的数据！"
