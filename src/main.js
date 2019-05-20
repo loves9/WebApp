@@ -5,6 +5,20 @@ import VueRouter from 'vue-router';
 import FastClick from 'fastclick';
 import { sync } from 'vuex-router-sync'
 import { routerMode } from './config/env'
+import App from '@/App'
+
+// Import F7
+import Framework7 from 'framework7/framework7.esm.bundle.js';
+// Import F7 Vue Plugin
+import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
+// Import F7 Styles
+import 'framework7/css/framework7.bundle.css';
+// Import Icons and App Custom Styles
+import IconsStyles from './style/css/icons.css';
+import AppStyles from './style/css/app.css';
+// Init F7 Vue Plugin
+Framework7.use(Framework7Vue)
+
 
 import routes from './rootRouter/router';
 import store from './store';
@@ -24,98 +38,35 @@ Vue.directive('transfer-dom', TransferDom)
 
 Vue.use(VueRouter)
 
-if ('addEventListener' in document) {
-  document.addEventListener('DOMContentLoaded', function () {
-    FastClick.attach(document.body);
-  }, false);
-}
-
-const router = new VueRouter({
-  routes,
-  mode: routerMode,
-  strict: process.env.NODE_ENV !== 'production',
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      if (from.meta.keepAlive) {
-        from.meta.savedPosition = document.body.scrollTop;
-      }
-      return { x: 0, y: to.meta.savedPosition || 0 }
-    }
-  }
-})
-
-sync(store, router)
-
-// push pop history
-const history = window.sessionStorage
-history.clear()
-let historyCount = history.getItem('count') * 1 || 0
-history.setItem('/', 0)
-let isPush = false
-let endTime = Date.now()
-let methods = ['push', 'go', 'replace', 'forward', 'back']
-
-document.addEventListener('touchend', () => {
-  endTime = Date.now()
-})
-methods.forEach(key => {
-  let method = router[key].bind(router)
-  router[key] = function (...args) {
-    isPush = true
-    method.apply(null, args)
-  }
-})
-
-router.beforeEach(function (to, from, next) {
-  store.commit('updateLoadingStatus', { isLoading: true })
-
-  const toIndex = history.getItem(to.path)
-  const fromIndex = history.getItem(from.path)
-
-  if (toIndex) {
-    if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
-      store.commit('updateDirection', { direction: 'turn-on' })
-    } else {
-
-      // 判断左滑返回
-      if (!isPush && (Date.now() - endTime) < 377) {
-        store.commit('updateDirection', { direction: '' })
-      } else {
-        store.commit('updateDirection', { direction: 'turn-off' })
-      }
-    }
-  } else {
-    ++historyCount
-    history.setItem('count', historyCount)
-    to.path !== '/' && history.setItem(to.path, historyCount)
-    store.commit('updateDirection', { direction: 'turn-on' })
-  }
-
-  next()
-})
-
-router.afterEach(function (to) {
-  isPush = false
-  store.commit('updateLoadingStatus', { isLoading: false })
-
-  if (process.env.NODE_ENV === 'production') {
-    // ga && ga('set', 'page', to.fullPath)
-    // ga && ga('send', 'pageview')
-  }
-
-})
+// if ('addEventListener' in document) {
+//   document.addEventListener('DOMContentLoaded', function () {
+//     FastClick.attach(document.body);
+//   }, false);
+// }
 
 Application.onCreate(core);
 
 // 注册全局方法
 Vue.mixin(mixins)
+
 Vue.prototype.$core = core
+
+
+// Init App
 let globalVueObject = new Vue({
-  router,
-  store,
-}).$mount('#app-box')
+  el: '#app',
+  template: '<app/>',
+
+  // Register App Component
+  components: {
+    app: App
+  }
+});
+
+// let globalVueObject = new Vue({
+//   router,
+//   store,
+// }).$mount('#app-box')
 
 window.GlobalVueObject = globalVueObject
 

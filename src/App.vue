@@ -1,84 +1,85 @@
 <template>
-    <div>
-        <transition :name="this.$store.state.direction">
-            <keep-alive>
-                <router-view v-if="$route.meta.keepAlive" class="router-view"></router-view>
-            </keep-alive>
-        </transition>
-        <transition :name="this.$store.state.direction">
-            <router-view v-if="!$route.meta.keepAlive" class="router-view"></router-view>
-        </transition>
-    </div>
+  <!-- App -->
+  <f7-app :params="f7params">
+
+    <!-- Statusbar -->
+    <f7-statusbar></f7-statusbar>
+
+    <!-- Left Panel -->
+    <f7-panel left reveal theme-dark>
+      <f7-view url="/panel-left/"></f7-view>
+    </f7-panel>
+
+    <!-- Right Panel -->
+    <f7-panel right cover theme-dark>
+      <f7-view url="/panel-right/"></f7-view>
+    </f7-panel>
+
+    <!-- Main View -->
+    <f7-view id="main-view" url="/" main class="safe-areas"></f7-view>
+
+    <!-- Popup -->
+    <f7-popup id="popup">
+      <f7-view>
+        <f7-page>
+          <f7-navbar title="Popup">
+            <f7-nav-right>
+              <f7-link popup-close>Close</f7-link>
+            </f7-nav-right>
+          </f7-navbar>
+          <f7-block>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, architecto. Cupiditate laudantium rem nesciunt numquam, ipsam. Voluptates omnis, a inventore atque ratione aliquam. Omnis iusto nemo quos ullam obcaecati, quod.</f7-block>
+        </f7-page>
+      </f7-view>
+    </f7-popup>
+
+    <!-- Login Screen -->
+    <f7-login-screen id="login-screen">
+      <f7-view>
+        <f7-page login-screen>
+          <f7-login-screen-title>Login</f7-login-screen-title>
+          <f7-list form>
+            <f7-list-input
+              label="Username"
+              name="username"
+              placeholder="Username"
+              type="text"
+            />
+            <f7-list-input
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
+          </f7-list>
+          <f7-list>
+            <f7-list-button title="Sign In" login-screen-close></f7-list-button>
+            <f7-block-footer>
+              <p>Click Sign In to close Login Screen</p>
+            </f7-block-footer>
+          </f7-list>
+        </f7-page>
+      </f7-view>
+    </f7-login-screen>
+
+  </f7-app>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// Import Routes
+import routes from './module/home/router';
 
 export default {
-    data() {
-        return {};
-    },
-    mounted() {
-    },
-    methods: {
-    },
-    computed: {
-        ...mapState({
-            route: state => state.route,
-            path: state => state.path,
-            direction: state => state.direction,
-            isLoading: state => state.isLoading
-        })
-    },
-    components: {}
-};
+  data() {
+    return {
+      // Framework7 parameters here
+      f7params: {
+        id: 'io.framework7.testapp', // App bundle ID
+        name: 'Framework7', // App name
+        theme: 'auto', // Automatic theme detection
+        // App routes
+        routes: routes,
+      },
+    }
+  }
+}
 </script>
-
-<style lang='less'>
-@import "~vux/src/styles/reset.less";
-@import "~vux/src/styles/1px.less";
-@import "~vux/src/styles/tap.less";
-
-html,
-body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-}
-body {
-    background-color: #fbf9fe;
-}
-#app {
-    height: 100%;
-}
-.router-view {
-    width: 100%;
-}
-.turn-on-enter-active,
-.turn-on-leave-active,
-.turn-off-enter-active,
-.turn-off-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
-}
-.turn-off-enter {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
-.turn-off-leave-active {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-.turn-on-enter {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-.turn-on-leave-active {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
-</style>
